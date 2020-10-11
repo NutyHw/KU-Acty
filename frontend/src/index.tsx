@@ -4,9 +4,12 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import { Login } from './pages/login/login';
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
+    <Login />
   </React.StrictMode>,
   document.getElementById('root')
 );

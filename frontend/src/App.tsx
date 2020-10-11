@@ -1,13 +1,15 @@
 import React from 'react';
 import logo from './logo.svg';
-import { Login } from './pages/login/login'
 import './App.css';
 import './index.css';
+
+//import { Login } from './pages/login/login'
+import { Register } from './pages/register/register';
 
 function App() {
   return (
     <div className="App">
-      <Login/>
+      <Register />
     </div>
   );
 }
