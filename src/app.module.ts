@@ -6,7 +6,7 @@ import { UsersService } from './users/users.service';
 import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
-  imports: [ MongooseModule.forRoot('mongodb://localhost/KU_ACTY') ,AuthModule , UsersModule],
+  imports: [ MongooseModule.forRoot('mongodb://host.docker.internal/KU_ACTY') ,AuthModule , UsersModule],
   providers : [ AuthService , UsersService ]
 })
 
