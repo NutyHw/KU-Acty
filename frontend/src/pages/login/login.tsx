@@ -30,6 +30,7 @@ const theme = createMuiTheme({
 //-------------------------------------- Styles Part ----------------------------
 const GreenTypography = withStyles({
   root: {
+    fontSize: 90,
     color: "#217318",
   }
 })(Typography);
@@ -65,7 +66,7 @@ type User = {
 export const Login : React.FC = () => {
   const classes = useStyles();
   const { register, handleSubmit, setValue, errors } = useForm<User>();
-  
+
   const onSubmit = async ( user : User ) => {
     const response = await axios.post('http://localhost:3000/auth/login', user )
   }
@@ -107,7 +108,7 @@ export const Login : React.FC = () => {
               type="password"
               inputRef = { register({ required : true }) }
               id="password"
-              //*autoComplete="current-password"
+              //*autoComplete="current-password" 
             />
             <Button
               type="submit"
@@ -127,16 +128,18 @@ export const Login : React.FC = () => {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"ต้องการเป็นผู้จัดกิจกรรม?"}
+                  {"ต้องการเป็นผู้จัดิจกรรม?"}
                 </Link>
               </Grid>
             </Grid>
           </form>
 
-          <Box mt={8}>
+          <Box mt={16}>
+            <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
             <Typography variant="body2" color="textPrimary" align="center">
               Team KU ACTY
             </Typography>
+            </Link>
           </Box>
       </ThemeProvider>
     </Container>
