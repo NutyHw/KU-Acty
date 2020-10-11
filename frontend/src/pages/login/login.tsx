@@ -107,7 +107,7 @@ export const Login : React.FC = () => {
               type="password"
               inputRef = { register({ required : true }) }
               id="password"
-              //*autoComplete="current-password" 
+              //*autoComplete="current-password"
             />
             <Button
               type="submit"
@@ -127,7 +127,7 @@ export const Login : React.FC = () => {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"ต้องการเป็นผู้จัดิจกรรม?"}
+                  {"ต้องการเป็นผู้จัดกิจกรรม?"}
                 </Link>
               </Grid>
             </Grid>
@@ -137,7 +137,7 @@ export const Login : React.FC = () => {
             <Typography variant="body2" color="textPrimary" align="center">
               Team KU ACTY
             </Typography>
-          //</Box>
+          </Box>
       </ThemeProvider>
     </Container>
   );
