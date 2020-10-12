@@ -13,9 +13,26 @@ import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  useHistory,
+  useLocation,
+  useParams
+} from "react-router-dom";
+import { Register } from '../register/register';
 
 //Theme settings
 const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#197C4F',
+      },
+      secondary: {
+        main: '#197C4F',
+      },
+    },
     typography: {
       fontFamily: [
         '-apple-system',
@@ -31,13 +48,13 @@ const theme = createMuiTheme({
 const GreenTypography = withStyles({
   root: {
     fontSize: 90,
-    color: "#217318",
+    color: "#197C4F",
   }
 })(Typography);
 
 const GreenDesc = withStyles({
   root: {
-    color: "#217318",
+    color: "#197C4F",
   }
 })(Typography);
 
@@ -80,7 +97,7 @@ export const Login : React.FC = () => {
           KU ACTY
         </GreenTypography>
         <GreenDesc variant="h6" align="center">
-          เว็บไซต์สำหรับตรวจสอบและค้นหากิจกรรม<br></br>ภายในมหาวิทยาลัยเกษตรศาสตร์
+          เว็บไซต์สำหรับตรวจสอบและค้นหากิจกรรม<br></br>มหาวิทยาลัยเกษตรศาสตร์
         </GreenDesc>
 
         </div>
@@ -94,6 +111,7 @@ export const Login : React.FC = () => {
               label="Username"
               name="username"
               type = "string"
+              color = "primary"
               inputRef = {register({ required : true })}
               //autoComplete="username"
               autoFocus 
@@ -106,6 +124,7 @@ export const Login : React.FC = () => {
               name="password"
               label="Password"
               type="password"
+              color = "primary"
               inputRef = { register({ required : true }) }
               id="password"
               //*autoComplete="current-password" 
@@ -121,14 +140,15 @@ export const Login : React.FC = () => {
             </Button>
 
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
+              <Grid item xs
+                alignItems = "flex-start">
+                <Link href="#" variant="body2" color="primary">
                   ลืมรหัสผ่าน?
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"ต้องการเป็นผู้จัดิจกรรม?"}
+                <Link href="/register" variant="body2" color="primary">
+                  {"ต้องการเป็นผู้จัดกิจกรรม?"}
                 </Link>
               </Grid>
             </Grid>
@@ -136,7 +156,7 @@ export const Login : React.FC = () => {
 
           <Box mt={16}>
             <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
-            <Typography variant="body2" color="textPrimary" align="center">
+            <Typography variant="body2" color="primary" align="center">
               Team KU ACTY
             </Typography>
             </Link>
