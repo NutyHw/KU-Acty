@@ -16,6 +16,14 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 //Theme settings
 const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#197C4F',
+      },
+      secondary: {
+        main: '#197C4F',
+      },
+    },
     typography: {
       fontFamily: [
         '-apple-system',
@@ -28,16 +36,16 @@ const theme = createMuiTheme({
 });
 
 //-------------------------------------- Styles Part ----------------------------
-const BlueTypography = withStyles({
+const GreenTypography = withStyles({
   root: {
     fontSize: 90,
-    color: "#0369ad",
+    color: "#197C4F",
   }
 })(Typography);
 
-const BlueDesc = withStyles({
+const GreenDesc = withStyles({
   root: {
-    color: "#0369ad",
+    color: "#197C4F",
   }
 })(Typography);
 
@@ -107,13 +115,13 @@ export const Register : React.FC = () => {
 
       <ThemeProvider theme={theme}>
         <CssBaseline /><div className={classes.paper}>     
-        <BlueTypography variant='h1' align="center">
+        <GreenTypography variant='h1' align="center" color ="primary">
           KU ACTY
-        </BlueTypography>
+        </GreenTypography>
         <br></br>
-        <BlueDesc variant="h6" align="center">
+        <GreenDesc variant="h6" align="center" color="primary">
           ลงทะเบียนเป็นผู้จัดกิจกรรม
-        </BlueDesc>
+        </GreenDesc>
         <br></br>
 
         </div>
@@ -130,6 +138,30 @@ export const Register : React.FC = () => {
               inputRef = {register({ required : true })}
               //autoComplete="username"
               autoFocus
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Password"
+              type="password"
+              inputRef = { register({ required : true }) }
+              id="password"
+              //*autoComplete="current-password" 
+            />
+            <TextField
+              variant="outlined"
+              margin="normal"
+              required
+              fullWidth
+              name="password"
+              label="Confirm Password"
+              type="password"
+              inputRef = { register({ required : true }) }
+              id="password"
+              //*autoComplete="current-password" 
             />
             <TextField
               variant="outlined"
@@ -167,13 +199,13 @@ export const Register : React.FC = () => {
               color="primary"
               className={classes.submit}
             >
-              สมัครสมาชิก
+              ยืนยันการลงทะเบียน
             </Button>
           </form>
 
           <Box mt={8}>
             <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
-            <Typography variant="body2" color="textPrimary" align="center">
+            <Typography variant="body2" color="primary" align="center">
               Team KU ACTY
             </Typography>
             </Link>
