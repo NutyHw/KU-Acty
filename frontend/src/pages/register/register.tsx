@@ -112,102 +112,119 @@ export const Register : React.FC = () => {
 
   return (
     <Container component="main" maxWidth="xs">
-
       <ThemeProvider theme={theme}>
         <CssBaseline /><div className={classes.paper}>     
-        <GreenTypography variant='h1' align="center" color ="primary">
-          KU ACTY
-        </GreenTypography>
-        <br></br>
-        <GreenDesc variant="h6" align="center" color="primary">
-          ลงทะเบียนเป็นผู้จัดกิจกรรม
-        </GreenDesc>
-        <br></br>
+          <GreenTypography variant='h1' align="center" color ="primary">
+            KU ACTY
+          </GreenTypography>
+          <br></br>
+          <GreenDesc variant="h6" align="center" color="primary">
+            ลงทะเบียนเป็นผู้จัดกิจกรรม
+          </GreenDesc>
+          <br></br>
 
         </div>
           <form className={classes.login} noValidate>
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              type = "string"
-              inputRef = {register({ required : true })}
-              //autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              inputRef = { register({ required : true }) }
-              id="password"
-              //*autoComplete="current-password" 
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Confirm Password"
-              type="password"
-              inputRef = { register({ required : true }) }
-              id="password"
-              //*autoComplete="current-password" 
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="orgname"
-              label="Organizer Name"
-              name="orgname"
-              type = "string"
-              inputRef = {register({ required : true })}
-              //autoComplete="username"
-              autoFocus
-            />
-            <TextField
-              variant="outlined"
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="E-Mail"
-              name="orgname"
-              type = "string"
-              inputRef = {register({ required : true })}
-              //autoComplete="username"
-              autoFocus
-            />
-            
-            <UploadButtons />
+            <Grid container spacing={1}>
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  id="username"
+                  label="Username"
+                  name="username"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
+                />
+              </Grid>
 
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              color="primary"
-              className={classes.submit}
-            >
-              ยืนยันการลงทะเบียน
-            </Button>
+              <Grid item xs={6}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  inputRef = { register({ required : true }) }
+                  id="password"
+                  //*autoComplete="current-password" 
+                />
+              </Grid>
+
+              <Grid item xs={6}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  name="password"
+                  label="Confirm Password"
+                  type="password"
+                  inputRef = { register({ required : true }) }
+                  id="password"
+                  //*autoComplete="current-password" 
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  id="orgname"
+                  label="Organizer Name"
+                  name="orgname"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
+                />
+              </Grid>
+              
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  id="email"
+                  label="E-Mail"
+                  name="orgname"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
+                />
+              </Grid>
+              
+              <Grid item xs={12}>
+                <UploadButtons />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  ยืนยันการลงทะเบียน
+                </Button>
+              </Grid>
+            </Grid>
           </form>
 
           <Box mt={8}>
             <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
-            <Typography variant="body2" color="primary" align="center">
-              Team KU ACTY
-            </Typography>
+              <Typography variant="body2" color="primary" align="center">
+                Team KU ACTY
+              </Typography>
             </Link>
           </Box>
       </ThemeProvider>

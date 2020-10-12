@@ -97,7 +97,7 @@ export const Login : React.FC = () => {
           KU ACTY
         </GreenTypography>
         <GreenDesc variant="h6" align="center">
-          เว็บไซต์สำหรับตรวจสอบและค้นหากิจกรรม<br></br>มหาวิทยาลัยเกษตรศาสตร์
+          ระบบตรวจสอบและค้นหากิจกรรม<br></br>มหาวิทยาลัยเกษตรศาสตร์
         </GreenDesc>
 
         </div>
