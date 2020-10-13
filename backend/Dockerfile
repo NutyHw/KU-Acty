@@ -10,6 +10,8 @@ ENV PATH /app/node_modules/.bin:$PATH
 # install app dependencies
 COPY package.json ./
 COPY package-lock.json ./
+
+RUN mkdir /data
 RUN npm install --silent
 RUN npm install @nestjs/cli -g --silent
 
@@ -17,4 +19,4 @@ RUN npm install @nestjs/cli -g --silent
 COPY . ./
 
 # start app
-CMD ["npm", "start"]
+CMD ["npm", "run", "start:dev"]
