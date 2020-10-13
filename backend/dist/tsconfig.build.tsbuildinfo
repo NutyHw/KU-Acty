@@ -2962,8 +2962,8 @@
         "affectsGlobalScope": false
       },
       "../src/organizers/schema/organizer.schema.ts": {
-        "version": "9da58bf906efc20436371099447b2c306830f82d8f56e99a6c16ea3f58018a0b",
-        "signature": "a45f17e5c63b7b3761308d4547d652694b9832e0a7dcb5bdb8a2659242104f9a",
+        "version": "b9fb5b17f9e091b3d9585a2c0e3c6ee52bbf274ed407643af08252783b08ea3b",
+        "signature": "a49fd5a967db311545780d7464d9f1529224794d05cf680f13fb64e46ad54e29",
         "affectsGlobalScope": false
       },
       "../src/organizers/dto/organizers.dto.ts": {
@@ -2972,8 +2972,8 @@
         "affectsGlobalScope": false
       },
       "../src/organizers/organizers.service.ts": {
-        "version": "0aeb8a5c155a5b2114df0d74b00a128a58e821e59ea113d6bf80922cad97d8a4",
-        "signature": "a135f495743736dc295ec21d373ab79483d629c0e738ca06277487281aa96793",
+        "version": "19a708f8113b01ac97e4cf5417e74be0a35279667ea2ca9bcb1f02b8dfba011b",
+        "signature": "1962b873ea67330339dbe2d3f8ba1a1c12ec0b4e8dd7404958074e23a2a5df19",
         "affectsGlobalScope": false
       },
       "../node_modules/@nestjs/core/adapters/http-adapter.d.ts": {
@@ -3067,7 +3067,7 @@
         "affectsGlobalScope": false
       },
       "../src/organizers/organizers.module.ts": {
-        "version": "297e10f7dd34abc8ae37c0046bf17b1f631b4536ce1d1c4248ab34987e6b9faa",
+        "version": "9ace6637d3f894460e678e63ee848eb583934554269f74198affabc496ad49ad",
         "signature": "8bee5f988926a3a19d31c60c34f98fe9a8aaf2fe2ec95838bc0a92e179e84a0c",
         "affectsGlobalScope": false
       },
@@ -3076,23 +3076,48 @@
         "signature": "a28b5c0c372fb375910b3fe3c3ce4331509bc18ccef7cc39c9ee9d8daf8225d1",
         "affectsGlobalScope": false
       },
+      "../src/events/schema/event.schema.ts": {
+        "version": "81cacd21da2657633028231af35914ff843b182bf5d99313e13e62bd5225113d",
+        "signature": "c8e6ff8ef933bf179f05143cde5a7bdc9bd3db0491f8b9b1a49549fce1b7168e",
+        "affectsGlobalScope": false
+      },
+      "../src/events/schema/follower.schema.ts": {
+        "version": "7a759991adfba3900ea2c0b3e6ee32eaa63c50dafdb6867d98d53a150640bcb5",
+        "signature": "7ff5ef0bd509502f4e01cb8c3714843f172942483f692ccc26533aecce79e498",
+        "affectsGlobalScope": false
+      },
+      "../src/events/dto/create-event.dto.ts": {
+        "version": "dddab47cc2c7526f0c3dc7ef54d003fba2f1416c0fe75b143a0ae440e0ae5130",
+        "signature": "9581e443b7254c1aeab97ced96fa10182dd211349a3dd5d424e0b1710d5da9f4",
+        "affectsGlobalScope": false
+      },
+      "../src/events/dto/follow.dto.ts": {
+        "version": "12bf8afc9eccf278c2d3d57bec85ccba935691df67a4ae3e547ee3bcca098f1e",
+        "signature": "309ddaab8784bd3bee2c01356b0886bed6c455f1b032181e061a21e9b4fd81ba",
+        "affectsGlobalScope": false
+      },
+      "../src/events/dto/query.dto.ts": {
+        "version": "f52f9488d04d47851b307117e0eb5603fa4f757af680d5c5182319a11f3c7597",
+        "signature": "ea9303aeff2219a9264f9d6a6ed0d3a35fa7a6f9eda31b7e487dc13a6bc53b20",
+        "affectsGlobalScope": false
+      },
       "../src/events/events.service.ts": {
-        "version": "02738551b213888d9f26e31ea14f09157ab36383d1582947f7698ecf0ffe5113",
-        "signature": "4023e0572dc9c92f882c7ac2633aa036f933b694442a92af415f588d6c58b2cc",
+        "version": "147ab2b47c597a0f263b6c10e26dde41de06fbc0693d0584923ed6ce2505ae58",
+        "signature": "07442d826fcee454e7bd183c68ce8b5bf535a182ae3bb2753a97f9566e0eef90",
         "affectsGlobalScope": false
       },
       "../src/events/events.controller.ts": {
-        "version": "4a3a977fb466ea17029a153f902a0330507940ec6c092538f97ee9122e6bd1ab",
-        "signature": "605c5ca0896adb2de1c72318f903c86ae7b50d3883a16793a28b6401648a477a",
+        "version": "535c02be1248fafb2a855e5f5e5b4128060a1a34f76151750275da8c3fe932b5",
+        "signature": "5bb8ec4e56881f746ba9a2bc57b47b60a5053a7b4ea6a6720b74ba1b7eb7357d",
         "affectsGlobalScope": false
       },
       "../src/events/events.module.ts": {
-        "version": "ec93bc5172ee662e78cdd8a02786b4ba003aeaef0e143de0bdb47526d49d2daa",
+        "version": "751ae366d79d0b259adced4a5abc7bb7a5afabea106c44dd48fd64d136c3a839",
         "signature": "354b5fa59b2bfccc0758d0835f41034bc595b84e693080e112a292ba0556edbd",
         "affectsGlobalScope": false
       },
       "../src/app.module.ts": {
-        "version": "550730d077028dd1ab05ec56620010bdd5df22f4db1868c9b8dbe2dd2bf9c7fe",
+        "version": "4f150780010e5025ee266467bc79259e796cc41c656cd8777ce29c534afc70fe",
         "signature": "b82491e2990291580288c5602d4c017238977749d52b17391f0e45d9a29be644",
         "affectsGlobalScope": false
       },
@@ -6154,15 +6179,37 @@
         "../src/auth/config/constant.ts"
       ],
       "../src/events/events.controller.ts": [
-        "../node_modules/@nestjs/common/index.d.ts"
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../src/events/dto/create-event.dto.ts",
+        "../src/events/dto/follow.dto.ts",
+        "../src/events/events.service.ts"
       ],
       "../src/events/events.module.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/mongoose/index.d.ts",
         "../src/events/events.controller.ts",
-        "../src/events/events.service.ts"
+        "../src/events/events.service.ts",
+        "../src/events/schema/event.schema.ts",
+        "../src/events/schema/follower.schema.ts"
       ],
       "../src/events/events.service.ts": [
-        "../node_modules/@nestjs/common/index.d.ts"
+        "../node_modules/@nestjs/common/index.d.ts",
+        "../node_modules/@nestjs/mongoose/index.d.ts",
+        "../node_modules/@types/mongoose/index.d.ts",
+        "../src/events/dto/create-event.dto.ts",
+        "../src/events/dto/follow.dto.ts",
+        "../src/events/dto/query.dto.ts",
+        "../src/events/schema/event.schema.ts",
+        "../src/events/schema/follower.schema.ts"
+      ],
+      "../src/events/schema/event.schema.ts": [
+        "../node_modules/@nestjs/mongoose/index.d.ts",
+        "../node_modules/@types/mongoose/index.d.ts",
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../src/events/schema/follower.schema.ts": [
+        "../node_modules/@nestjs/mongoose/index.d.ts",
+        "../node_modules/@types/mongoose/index.d.ts"
       ],
       "../src/main.ts": [
         "../node_modules/@nestjs/core/index.d.ts",
@@ -6187,7 +6234,6 @@
         "../node_modules/@nestjs/common/index.d.ts",
         "../node_modules/@nestjs/mongoose/index.d.ts",
         "../node_modules/@types/mongoose/index.d.ts",
-        "../node_modules/typeorm/index.d.ts",
         "../src/organizers/dto/organizers.dto.ts",
         "../src/organizers/schema/organizer.schema.ts"
       ],
@@ -8770,6 +8816,28 @@
       "../src/auth/jwt.strategy.ts": [
         "../node_modules/@types/passport-jwt/index.d.ts"
       ],
+      "../src/events/events.controller.ts": [
+        "../src/events/dto/create-event.dto.ts",
+        "../src/events/dto/follow.dto.ts",
+        "../src/events/events.service.ts",
+        "../src/events/schema/event.schema.ts",
+        "../src/events/schema/follower.schema.ts"
+      ],
+      "../src/events/events.service.ts": [
+        "../node_modules/@types/mongoose/index.d.ts",
+        "../src/events/dto/create-event.dto.ts",
+        "../src/events/dto/follow.dto.ts",
+        "../src/events/dto/query.dto.ts",
+        "../src/events/schema/event.schema.ts",
+        "../src/events/schema/follower.schema.ts"
+      ],
+      "../src/events/schema/event.schema.ts": [
+        "../node_modules/@types/mongoose/index.d.ts",
+        "../node_modules/typeorm/index.d.ts"
+      ],
+      "../src/events/schema/follower.schema.ts": [
+        "../node_modules/@types/mongoose/index.d.ts"
+      ],
       "../src/organizers/organizers.controller.ts": [
         "../src/organizers/dto/organizers.dto.ts",
         "../src/organizers/organizers.service.ts",
@@ -8777,7 +8845,6 @@
       ],
       "../src/organizers/organizers.service.ts": [
         "../node_modules/@types/mongoose/index.d.ts",
-        "../node_modules/typeorm/index.d.ts",
         "../src/organizers/dto/organizers.dto.ts",
         "../src/organizers/schema/organizer.schema.ts"
       ],
@@ -9492,9 +9559,14 @@
       "../src/auth/config/constant.ts",
       "../src/auth/jwt-auth.guard.ts",
       "../src/auth/jwt.strategy.ts",
+      "../src/events/dto/create-event.dto.ts",
+      "../src/events/dto/follow.dto.ts",
+      "../src/events/dto/query.dto.ts",
       "../src/events/events.controller.ts",
       "../src/events/events.module.ts",
       "../src/events/events.service.ts",
+      "../src/events/schema/event.schema.ts",
+      "../src/events/schema/follower.schema.ts",
       "../src/main.ts",
       "../src/organizers/dto/organizers.dto.ts",
       "../src/organizers/organizers.controller.ts",

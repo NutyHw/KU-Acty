@@ -3,7 +3,6 @@ import { Model, Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 import { Organizer, OrganizerDocument } from './schema/organizer.schema';
 import { OrganizerDto } from './dto/organizers.dto';
-import { ObjectID } from 'typeorm';
 
 @Injectable()
 export class OrganizersService {
@@ -14,7 +13,7 @@ export class OrganizersService {
     return organizer.save()
   }
 
-  async approve( _id : ObjectID ) : Promise<Organizer> {
+  async approve( _id : Types.ObjectId ) : Promise<Organizer> {
     return await this.organizerModel.updateOne({ _id : _id }, { $set : { approve_date : new Date() } });
   }
 

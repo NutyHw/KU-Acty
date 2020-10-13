@@ -7,10 +7,11 @@ import { EventsModule } from './events/events.module';
 
 @Module({
   imports: [ 
-    MongooseModule.forRoot('mongodb://host.docker.internal/KU_ACTY') ,
+    MongooseModule.forRoot('mongodb://localhost/KU_ACTY') ,
     AuthModule , 
     UsersModule, 
-    OrganizersModule, EventsModule ,
+    OrganizersModule, 
+    EventsModule
   ],
 })
 

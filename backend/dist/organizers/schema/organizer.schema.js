@@ -14,13 +14,15 @@ const mongoose_1 = require("@nestjs/mongoose");
 let Organizer = class Organizer {
 };
 __decorate([
-    mongoose_1.Prop({ required: true }),
+    mongoose_1.Prop({
+        required: true
+    }),
     __metadata("design:type", Array)
 ], Organizer.prototype, "user", void 0);
 __decorate([
     mongoose_1.Prop({ required: true }),
     __metadata("design:type", String)
-], Organizer.prototype, "organizerName", void 0);
+], Organizer.prototype, "organizer_name", void 0);
 __decorate([
     mongoose_1.Prop({ default: null }),
     __metadata("design:type", String)
@@ -47,7 +49,7 @@ __decorate([
 ], Organizer.prototype, "approve_date", void 0);
 Organizer = __decorate([
     mongoose_1.Schema({
-        timestamps: { createdAt: 'created_at' }
+        timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }
     })
 ], Organizer);
 exports.Organizer = Organizer;

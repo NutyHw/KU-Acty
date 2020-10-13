@@ -6,7 +6,7 @@ export declare class Organizer {
         type: ObjectID;
         ref: 'users';
     }];
-    organizerName: string;
+    organizer_name: string;
     document_path: string;
     email: string;
     contact: string;

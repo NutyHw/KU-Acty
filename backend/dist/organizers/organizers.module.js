@@ -20,7 +20,7 @@ OrganizersModule = __decorate([
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: organizer_schema_1.Organizer.name, schema: organizer_schema_1.OrganizerSchema }]),
             platform_express_1.MulterModule.register({
-                dest: '/data'
+                dest: '/Users/nuttupoomsaitoh/Desktop/files'
             })
         ],
         providers: [organizers_service_1.OrganizersService],

@@ -4,9 +4,8 @@ import { Document } from 'mongoose';
 
 export type OrganizerDocument = Organizer & Document;
 
-
 @Schema({
-timestamps : { createdAt : 'created_at' }
+timestamps : { createdAt : 'created_at' , updatedAt : 'updated_at' }
 })
 
 export class Organizer {
@@ -17,7 +16,7 @@ export class Organizer {
   user : [{ type : ObjectID, ref : 'users' }]
 
   @Prop({ required : true })
-  organizerName : string
+  organizer_name : string
 
   @Prop({ default : null })
   document_path : string

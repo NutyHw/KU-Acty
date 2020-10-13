@@ -6,25 +6,26 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.AppModule = void 0;
+exports.EventsModule = void 0;
 const common_1 = require("@nestjs/common");
-const auth_module_1 = require("./auth/auth.module");
-const users_module_1 = require("./users/users.module");
+const events_service_1 = require("./events.service");
+const events_controller_1 = require("./events.controller");
 const mongoose_1 = require("@nestjs/mongoose");
-const organizers_module_1 = require("./organizers/organizers.module");
-const events_module_1 = require("./events/events.module");
-let AppModule = class AppModule {
+const event_schema_1 = require("./schema/event.schema");
+const follower_schema_1 = require("./schema/follower.schema");
+let EventsModule = class EventsModule {
 };
-AppModule = __decorate([
+EventsModule = __decorate([
     common_1.Module({
         imports: [
-            mongoose_1.MongooseModule.forRoot('mongodb://localhost/KU_ACTY'),
-            auth_module_1.AuthModule,
-            users_module_1.UsersModule,
-            organizers_module_1.OrganizersModule,
-            events_module_1.EventsModule
+            mongoose_1.MongooseModule.forFeature([
+                { name: event_schema_1.Event.name, schema: event_schema_1.EventSchema },
+                { name: follower_schema_1.Follower.name, schema: follower_schema_1.FollowerSchema }
+            ])
         ],
+        providers: [events_service_1.EventsService],
+        controllers: [events_controller_1.EventsController]
     })
-], AppModule);
-exports.AppModule = AppModule;
-//# sourceMappingURL=app.module.js.map
+], EventsModule);
+exports.EventsModule = EventsModule;
+//# sourceMappingURL=events.module.js.map
