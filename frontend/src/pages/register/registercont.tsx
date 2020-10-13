@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
     },
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(2),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -95,7 +95,7 @@ export function UploadButtons() {
           color="primary" 
           component="span" 
           fullWidth>
-            Upload File
+            อัพโหลดไฟล์หลักฐานการตั้งชมรม
           </Button>
         </label>
       </div>
@@ -133,7 +133,7 @@ export const RegisterCont : React.FC = () => {
                   required
                   fullWidth
                   id="orgname"
-                  label="Organizer Name"
+                  label="ชื่อชมรมหรือหน่วยงาน"
                   name="orgname"
                   type = "string"
                   inputRef = {register({ required : true })}
@@ -159,6 +159,57 @@ export const RegisterCont : React.FC = () => {
               </Grid>
               
               <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  id="location"
+                  label="ที่ตั้งในมหาวิทยาลัย"
+                  name="location"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  id="contact"
+                  label="ช่องทางการติดต่อ"
+                  name="contact"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  variant="outlined"
+                  margin="dense"
+                  required
+                  fullWidth
+                  id="description"
+                  label="คำอธิบายชมรมหรือหน่วยงานโดยย่อ"
+                  name="description"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
+                  multiline
+                  rows = {3}
+                  rowsMax = {4}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
                 <UploadButtons />
 
                 <Button
@@ -174,7 +225,7 @@ export const RegisterCont : React.FC = () => {
             </Grid>
           </form>
 
-          <Box mt={8}>
+          <Box mt={2}>
             <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
               <Typography variant="body2" color="primary" align="center">
                 Team KU ACTY

@@ -165,7 +165,7 @@ export const Register : React.FC = () => {
             </Grid>
           </form>
 
-          <Box mt={8}>
+          <Box mt={10}>
             <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
               <Typography variant="body2" color="primary" align="center">
                 Team KU ACTY
