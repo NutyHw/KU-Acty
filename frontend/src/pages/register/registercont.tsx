@@ -77,8 +77,32 @@ type User = {
   username : string
   password : string
 }
+export function UploadButtons() {
+    const classes = useStyles();
+  
+    return (
+      <div className={classes.root}>
+        <input
+          accept="images/*"
+          className={classes.input}
+          id="contained-button-file"
+          style={{ display: "none" }}
+          type="file"
+        />
+        <label htmlFor="contained-button-file">
+          <Button 
+          variant="outlined" 
+          color="primary" 
+          component="span" 
+          fullWidth>
+            Upload File
+          </Button>
+        </label>
+      </div>
+    );
+}
 
-export const Register : React.FC = () => {
+export const RegisterCont : React.FC = () => {
   const classes = useStyles();
   const { register, handleSubmit, setValue, errors } = useForm<User>();
 
@@ -108,59 +132,44 @@ export const Register : React.FC = () => {
                   margin="dense"
                   required
                   fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
+                  id="orgname"
+                  label="Organizer Name"
+                  name="orgname"
                   type = "string"
                   inputRef = {register({ required : true })}
                   //autoComplete="username"
                   autoFocus
                 />
               </Grid>
-
-              <Grid item xs={6}>
+              
+              <Grid item xs={12}>
                 <TextField
                   variant="outlined"
                   margin="dense"
                   required
                   fullWidth
-                  name="password"
-                  label="Password"
-                  type="password"
-                  inputRef = { register({ required : true }) }
-                  id="password"
-                  //*autoComplete="current-password" 
-                />
-              </Grid>
-
-              <Grid item xs={6}>
-                <TextField
-                  variant="outlined"
-                  margin="dense"
-                  required
-                  fullWidth
-                  name="password"
-                  label="Confirm Password"
-                  type="password"
-                  inputRef = { register({ required : true }) }
-                  id="password"
-                  //*autoComplete="current-password" 
+                  id="email"
+                  label="E-Mail"
+                  name="email"
+                  type = "string"
+                  inputRef = {register({ required : true })}
+                  //autoComplete="username"
+                  autoFocus
                 />
               </Grid>
               
               <Grid item xs={12}>
-                
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    href="registercont"
-                  >
-                    ดำเนินการต่อ
-                  </Button>
-                  
+                <UploadButtons />
+
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  ยืนยันการลงทะเบียน
+                </Button>
               </Grid>
             </Grid>
           </form>
