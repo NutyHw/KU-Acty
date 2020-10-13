@@ -13,6 +13,7 @@ import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
+import GitHubIcon from '@material-ui/icons/GitHub';
 import {
   BrowserRouter as Router,
   Switch,
@@ -72,6 +73,9 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  icon: {
+    margin: theme.spacing(0, 0, 1),
+  }
 }));
 //-------------------------------------- End Styles Part ------------------------
 
@@ -154,13 +158,19 @@ export const Login : React.FC = () => {
             </Grid>
           </form>
 
-          <Box mt={16}>
-            <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
-            <Typography variant="body2" color="primary" align="center">
-              Team KU ACTY
-            </Typography>
+          <Box mt={12}>
+            <Grid container direction="column" alignItems="center">
+              <Grid item>
+                <GitHubIcon className={classes.icon}/>
+              </Grid>
+            </Grid>
+            <Link href="https://github.com/NutyHw/KU-Acty/" target="_blank">
+              <Typography variant="body2" color="textPrimary" align="center">
+                Team KU ACTY
+              </Typography>
             </Link>
           </Box>
+
       </ThemeProvider>
     </Container>
   );

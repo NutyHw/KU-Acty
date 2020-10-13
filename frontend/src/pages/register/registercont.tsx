@@ -225,13 +225,6 @@ export const RegisterCont : React.FC = () => {
             </Grid>
           </form>
 
-          <Box mt={2}>
-            <Link href="https://github.com/NutyHw/KU-Acty/tree/main/frontend" target="_blank">
-              <Typography variant="body2" color="primary" align="center">
-                Team KU ACTY
-              </Typography>
-            </Link>
-          </Box>
       </ThemeProvider>
     </Container>
   );
