@@ -105,9 +105,9 @@ export const NisitFeed : React.FC = () => {
     <AppBar position="static" elevation={0} color="secondary" > 
         <Toolbar variant="dense">
             <ButtonGroup variant="text" color="default" aria-label="text primary button group">
-                <Button href="/nisitfeed"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
-                <Button href="/#"><FormatListBulletedOutlinedIcon/><Box m={0.25} />ตรวจสอบชั่วโมงกิจกรรม</Button>
-                <Button href="/#"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
+                <Button href="/nisit/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
+                <Button><FormatListBulletedOutlinedIcon/><Box m={0.25} />ตรวจสอบชั่วโมงกิจกรรม</Button>
+                <Button><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
                 </ButtonGroup>
         </Toolbar>
       </AppBar>

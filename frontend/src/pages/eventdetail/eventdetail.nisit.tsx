@@ -22,8 +22,6 @@ import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
 
 const theme = createMuiTheme({
     palette: {
@@ -76,6 +74,17 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 0,
     position: 'relative'
   },
+  midpage: {
+    marginTop: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    
+  },
+  login: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
 }));
 
 //-------------------------------------- End Styles Part ------------------------
@@ -85,7 +94,7 @@ type User = {
   password : string
 }
 
-export const OrgFeed : React.FC = () => {
+export const NisitEventDetail : React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -98,10 +107,6 @@ export const OrgFeed : React.FC = () => {
           <Typography align="left" variant="body1" className={classes.title}>
             ระบบตรวจสอบและค้นหากิจกรรม มหาวิทยาลัยเกษตรศาสตร์
           </Typography>
-          <IconButton color="inherit" href="/#">
-              <PersonOutlineOutlinedIcon fontSize="large"/>
-          </IconButton>
-          
           <IconButton color="inherit" href="/login">
               <ExitToAppOutlinedIcon fontSize="large"/>
           </IconButton>
@@ -111,12 +116,93 @@ export const OrgFeed : React.FC = () => {
     <AppBar position="static" elevation={0} color="secondary" > 
         <Toolbar variant="dense">
             <ButtonGroup variant="text" color="default" aria-label="text primary button group">
-                <Button href="/org/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
-                <Button href="/org/createevent"><PostAddOutlinedIcon/><Box m={0.25} />ประกาศกิจกรรม</Button>
-                <Button href="/#"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
+                <Button href="/nisit/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
+                <Button><FormatListBulletedOutlinedIcon/><Box m={0.25} />ตรวจสอบชั่วโมงกิจกรรม</Button>
+                <Button><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
                 </ButtonGroup>
         </Toolbar>
       </AppBar>
+    
+      <Container component="main" maxWidth="md">
+        <ThemeProvider theme={theme}>
+          <CssBaseline /><div className={classes.midpage}>    
+          
+          </div>
+            <form className={classes.login} noValidate></form>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Typography variant="h5">
+                    ชื่อกิจกรรม : 
+                  </Typography>
+                </Grid>
+              
+                <Grid item xs={12}>
+                <Typography variant="h6">
+                    ผู้จัดกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography> 
+                    ประเภทกิจกรรม : 
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Typography>
+                    จำนวนชั่วโมง :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography>
+                    สถานที่ :
+                  </Typography>
+                </Grid>
+
+
+                <Grid item xs={6}>
+                <Typography>
+                    วันที่เริ่มกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography>
+                    เวลาเริ่มกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography>
+                    วันที่สิ้นสุดกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography>
+                    เวลาสิ้นสุดกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography>
+                    ช่องทางการติดต่อ :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography>
+                    รายละเอียดกิจกรรม :
+                  </Typography>
+                </Grid>
+                </Grid>
+            
+            </ThemeProvider>   
+      </Container>
+
+
+
     </ThemeProvider>  
   );
 }

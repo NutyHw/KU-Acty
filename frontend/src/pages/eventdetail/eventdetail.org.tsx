@@ -24,6 +24,8 @@ import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBullete
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const theme = createMuiTheme({
     palette: {
@@ -65,6 +67,13 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
+  midpage: {
+    marginTop: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -76,7 +85,13 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 0,
     position: 'relative'
   },
+  login: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+
 }));
+
 
 //-------------------------------------- End Styles Part ------------------------
 
@@ -85,7 +100,7 @@ type User = {
   password : string
 }
 
-export const OrgFeed : React.FC = () => {
+export const OrgEventDetail : React.FC = () => {
   const classes = useStyles();
 
   return (
@@ -117,6 +132,86 @@ export const OrgFeed : React.FC = () => {
                 </ButtonGroup>
         </Toolbar>
       </AppBar>
+
+      <Container component="main" maxWidth="md">
+        <ThemeProvider theme={theme}>
+          <CssBaseline /><div className={classes.midpage}>    
+          
+          </div>
+            <form className={classes.login} noValidate></form>
+              <Grid container spacing={3}>
+                <Grid item xs={12}>
+                  <Typography variant="h5">
+                    ชื่อกิจกรรม : 
+                  </Typography>
+                </Grid>
+              
+                <Grid item xs={12}>
+                <Typography variant="h6">
+                    ผู้จัดกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography> 
+                    ประเภทกิจกรรม : 
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                  <Typography>
+                    จำนวนชั่วโมง :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography>
+                    สถานที่ :
+                  </Typography>
+                </Grid>
+
+
+                <Grid item xs={6}>
+                <Typography>
+                    วันที่เริ่มกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography>
+                    เวลาเริ่มกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography>
+                    วันที่สิ้นสุดกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={6}>
+                <Typography>
+                    เวลาสิ้นสุดกิจกรรม :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography>
+                    ช่องทางการติดต่อ :
+                  </Typography>
+                </Grid>
+
+                <Grid item xs={12}>
+                <Typography>
+                    รายละเอียดกิจกรรม :
+                  </Typography>
+                </Grid>
+                </Grid>
+            
+            </ThemeProvider>   
+      </Container>
+      <Box mt={10}></Box>
     </ThemeProvider>  
+    
   );
 }
