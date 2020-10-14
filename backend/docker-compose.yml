@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+  database:
+    image: mongo
+    container_name: database
+    ports: 
+      - 27018:27017
+    volumes:
+      - ./database/:/data/db
+    networks: 
+      - webnet
+  backend:
+    container_name: backend
+    build: 
+      context : .
+    volumes:
+      - .:/usr/src/app/
+      - /usr/src/app/node_modules
+    ports :
+      - 3000:3000
+    depends_on :
+      - database
+    networks:
+      - webnet
+    command : npm run start:dev
+networks:
+  webnet:
