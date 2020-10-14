@@ -32,6 +32,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 
+import { OrgHead } from './../header/org.header';
+
 const theme = createMuiTheme({
     palette: {
       primary: {
@@ -181,34 +183,7 @@ export const CreateEvent : React.FC = () => {
   };
   return (
     <ThemeProvider theme={theme}>
-    <div className={classes.root}>
-      <AppBar position="fixed" elevation={0}>
-        <Toolbar>
-          <Typography variant="h4">KU ACTY</Typography>
-          <Box m={1} />
-          <Typography align="left" variant="body1" className={classes.title}>
-            ระบบตรวจสอบและค้นหากิจกรรม มหาวิทยาลัยเกษตรศาสตร์
-          </Typography>
-          <IconButton color="inherit" href="/#">
-              <PersonOutlineOutlinedIcon fontSize="large"/>
-          </IconButton>
-          
-          <IconButton color="inherit" href="/login">
-              <ExitToAppOutlinedIcon fontSize="large"/>
-          </IconButton>
-        </Toolbar>
-      </AppBar> 
-    </div>
-    <AppBar className={classes.bar} position="fixed" elevation={0} color="secondary" > 
-        <Toolbar variant="dense">
-            <ButtonGroup variant="text" color="default" aria-label="text primary button group">
-                <Button href="/org/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
-                <Button><PostAddOutlinedIcon/><Box m={0.25} />ประกาศกิจกรรม</Button>
-                <Button href="/#"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
-                </ButtonGroup>
-        </Toolbar>
-      </AppBar>
-
+      <OrgHead />
       
       <Container component="main" maxWidth="sm">
         <ThemeProvider theme={theme}>

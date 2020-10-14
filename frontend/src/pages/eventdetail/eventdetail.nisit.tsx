@@ -23,6 +23,8 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
+import { NisitHead } from './../header/nisit.header';
+
 const theme = createMuiTheme({
     palette: {
       primary: {
@@ -99,29 +101,7 @@ export const NisitEventDetail : React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-    <div className={classes.root}>
-      <AppBar position="static" elevation={0}>
-        <Toolbar>
-          <Typography variant="h4">KU ACTY</Typography>
-          <Box m={1} />
-          <Typography align="left" variant="body1" className={classes.title}>
-            ระบบตรวจสอบและค้นหากิจกรรม มหาวิทยาลัยเกษตรศาสตร์
-          </Typography>
-          <IconButton color="inherit" href="/login">
-              <ExitToAppOutlinedIcon fontSize="large"/>
-          </IconButton>
-        </Toolbar>
-      </AppBar> 
-    </div>
-    <AppBar position="static" elevation={0} color="secondary" > 
-        <Toolbar variant="dense">
-            <ButtonGroup variant="text" color="default" aria-label="text primary button group">
-                <Button href="/nisit/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
-                <Button><FormatListBulletedOutlinedIcon/><Box m={0.25} />ตรวจสอบชั่วโมงกิจกรรม</Button>
-                <Button><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
-                </ButtonGroup>
-        </Toolbar>
-      </AppBar>
+    <NisitHead />
     
       <Container component="main" maxWidth="md">
         <ThemeProvider theme={theme}>
