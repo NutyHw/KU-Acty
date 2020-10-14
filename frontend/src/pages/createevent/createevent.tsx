@@ -243,7 +243,7 @@ export const CreateEvent : React.FC = () => {
                   >
                     {typenames.map((name) => (
                       <MenuItem key={name} value={name}>
-                        <Checkbox checked={EventType.indexOf(name) > -1} />
+                        <Checkbox color="primary" checked={EventType.indexOf(name) > -1} />
                         <ListItemText primary={name} />
                       </MenuItem>
                     ))}
