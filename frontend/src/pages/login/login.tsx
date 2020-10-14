@@ -146,7 +146,7 @@ export const Login : React.FC = () => {
             <Grid container>
               <Grid item xs
                 alignItems = "flex-start">
-                <Link href="#" variant="body2" color="primary">
+                <Link href="/forgotpassword" variant="body2" color="primary">
                   ลืมรหัสผ่าน?
                 </Link>
               </Grid>

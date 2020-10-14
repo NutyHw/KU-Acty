@@ -60,20 +60,26 @@ const GreenDesc = withStyles({
 })(Typography);
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(0),
-      },
-      input: {
-        display: 'none',
-    },
-  paper: {
+  root: {
     marginTop: theme.spacing(0),
+    },
+    input: {
+      display: 'none',
+  },
+
+  bar: {
+    marginTop: theme.spacing(8),
+    },
+   
+
+  paper: {
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   midpage: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(16),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'left',
@@ -176,7 +182,7 @@ export const CreateEvent : React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
     <div className={classes.root}>
-      <AppBar position="static" elevation={0}>
+      <AppBar position="fixed" elevation={0}>
         <Toolbar>
           <Typography variant="h4">KU ACTY</Typography>
           <Box m={1} />
@@ -193,7 +199,7 @@ export const CreateEvent : React.FC = () => {
         </Toolbar>
       </AppBar> 
     </div>
-    <AppBar position="static" elevation={0} color="secondary" > 
+    <AppBar className={classes.bar} position="fixed" elevation={0} color="secondary" > 
         <Toolbar variant="dense">
             <ButtonGroup variant="text" color="default" aria-label="text primary button group">
                 <Button href="/org/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>

@@ -11,6 +11,9 @@ import { OrgFeed } from './pages/feed/orgfeed';
 import { CreateEvent } from './pages/createevent/createevent'
 import { OrgEventDetail } from './pages/eventdetail/eventdetail.org'
 import { NisitEventDetail } from './pages/eventdetail/eventdetail.nisit'
+import { ChangePassword } from './pages/password/changepassword';
+import { ForgotPassword } from './pages/password/forgotpassword';
+import { ResetPassword } from './pages/password/resetpassword';
 const App = () => {
   return(
       <div>
@@ -22,6 +25,9 @@ const App = () => {
       <Route path="/org/createevent" component={CreateEvent}/>
       <Route path="/org/eventdetail" component={OrgEventDetail}/>
       <Route path="/nisit/eventdetail" component={NisitEventDetail}/>
+      <Route path="/org/changepassword" component={ChangePassword}/> 
+      <Route path="/forgotpassword" component={ForgotPassword}/>
+      <Route path="/resetpassword" component={ResetPassword}/>
       </div>
   );
 };
