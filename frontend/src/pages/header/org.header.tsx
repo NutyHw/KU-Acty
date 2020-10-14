@@ -1,26 +1,16 @@
 import React from 'react';
-import axios from 'axios';
-import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import { relative } from 'path';
 import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
@@ -46,24 +36,32 @@ const theme = createMuiTheme({
 });
 
 //-------------------------------------- Styles Part ----------------------------
-const GreenDesc = withStyles({
-  root: {
-    color: "#197C4F",
-  }
-})(Typography);
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(0),
-      },
-      input: {
-        display: 'none',
-    },
-  paper: {
+  root: {
     marginTop: theme.spacing(0),
+    },
+    input: {
+      display: 'none',
+  },
+
+  bar: {
+    marginTop: theme.spacing(8),
+    },
+   
+
+  paper: {
+    marginTop: theme.spacing(1),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
+  },
+  midpage: {
+    marginTop: theme.spacing(16),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -76,22 +74,32 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 0,
     position: 'relative'
   },
+  login: {
+    width: '100%', // Fix IE 11 issue.
+    marginTop: theme.spacing(1),
+  },
+  submit: {
+    width: '100%'
+  },
+  formControl: {
+    margin: theme.spacing(0),
+    minWidth: 250,
+    maxWidth: 540,
+  },
 }));
+
 
 //-------------------------------------- End Styles Part ------------------------
 
-type User = {
-  username : string
-  password : string
-}
 
-export const OrgFeed : React.FC = () => {
+export const OrgHead : React.FC = () => {
   const classes = useStyles();
+  const [] = React.useState<string[]>([]);
 
   return (
     <ThemeProvider theme={theme}>
     <div className={classes.root}>
-      <AppBar position="static" elevation={0}>
+      <AppBar position="fixed" elevation={0}>
         <Toolbar>
           <Typography variant="h4">KU ACTY</Typography>
           <Box m={1} />
@@ -108,12 +116,12 @@ export const OrgFeed : React.FC = () => {
         </Toolbar>
       </AppBar> 
     </div>
-    <AppBar position="static" elevation={0} color="secondary" > 
+    <AppBar className={classes.bar} position="fixed" elevation={0} color="secondary" > 
         <Toolbar variant="dense">
             <ButtonGroup variant="text" color="default" aria-label="text primary button group">
                 <Button href="/org/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
                 <Button href="/org/createevent"><PostAddOutlinedIcon/><Box m={0.25} />ประกาศกิจกรรม</Button>
-                <Button href="/#"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
+                <Button href="/search"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
                 </ButtonGroup>
         </Toolbar>
       </AppBar>
