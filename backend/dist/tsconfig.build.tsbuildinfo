@@ -1557,7 +1557,7 @@
         "affectsGlobalScope": false
       },
       "../src/auth/auth.service.ts": {
-        "version": "537ae0d847a24acbdd146815b7fc9f73a8e80266795d5c39820f29a9c98652be",
+        "version": "a8a637641ed0128981b04f7b1bdc1a353c977e976aa67f0b3fb65cdd8e339f1c",
         "signature": "b489db00efa50fe5f2ea14bfb9d015cbbdbdde05222623e87a6c337384d4e438",
         "affectsGlobalScope": false
       },
@@ -3296,8 +3296,68 @@
         "signature": "7b5ed961a0e03965299591d73de8b8c41e8a68105ff4fc07a240b0dfb94a5a3d",
         "affectsGlobalScope": false
       },
+      "../src/node_modules/helmet/dist/middlewares/content-security-policy/index.d.ts": {
+        "version": "f8fa57cb69b6b877fee79bf3e19454f7aeb69ae5ce5cce706668e36e6fea7afa",
+        "signature": "f8fa57cb69b6b877fee79bf3e19454f7aeb69ae5ce5cce706668e36e6fea7afa",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/expect-ct/index.d.ts": {
+        "version": "33666bd8eb4412994c97e4967a4415bedb4a814dd1276326077d98dba3bddff9",
+        "signature": "33666bd8eb4412994c97e4967a4415bedb4a814dd1276326077d98dba3bddff9",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/referrer-policy/index.d.ts": {
+        "version": "68272f9c3f2e5c9b0cb8706bdef17bb458621ccff581c2386fa0c25601b1b1d2",
+        "signature": "68272f9c3f2e5c9b0cb8706bdef17bb458621ccff581c2386fa0c25601b1b1d2",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/strict-transport-security/index.d.ts": {
+        "version": "d9451dbbe7a2bb173b3a2fd0e8fdfd4010c876146f60508cd570f5e91074b3d4",
+        "signature": "d9451dbbe7a2bb173b3a2fd0e8fdfd4010c876146f60508cd570f5e91074b3d4",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-content-type-options/index.d.ts": {
+        "version": "c5363f57b49248f01ae435f10da41106dfdf02f232878ac36b45a5c22e734443",
+        "signature": "c5363f57b49248f01ae435f10da41106dfdf02f232878ac36b45a5c22e734443",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-dns-prefetch-control/index.d.ts": {
+        "version": "51518ff599de52e83c256d735b7c05f104d7caf5f4f843bd6405d2db750fab38",
+        "signature": "51518ff599de52e83c256d735b7c05f104d7caf5f4f843bd6405d2db750fab38",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-download-options/index.d.ts": {
+        "version": "f0ad119bef5328988fe4b94f192ab1d4ad7c459a84e4b491a8f2ddb600663e61",
+        "signature": "f0ad119bef5328988fe4b94f192ab1d4ad7c459a84e4b491a8f2ddb600663e61",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-frame-options/index.d.ts": {
+        "version": "115229bbb625e66890bc14400c6a2b14edef8763a5031ad6991d0dbd30b8b5e5",
+        "signature": "115229bbb625e66890bc14400c6a2b14edef8763a5031ad6991d0dbd30b8b5e5",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-permitted-cross-domain-policies/index.d.ts": {
+        "version": "3e484b783ba4129523fedcd853ffe83f2edd599cfac74d361a27bffc79c67a7c",
+        "signature": "3e484b783ba4129523fedcd853ffe83f2edd599cfac74d361a27bffc79c67a7c",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-powered-by/index.d.ts": {
+        "version": "b1df984bc4791f0e3c906a57f4a5ed11bf147e65b592bf763b73f97ad5c6c09d",
+        "signature": "b1df984bc4791f0e3c906a57f4a5ed11bf147e65b592bf763b73f97ad5c6c09d",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/middlewares/x-xss-protection/index.d.ts": {
+        "version": "af06994dbdf1a9e6c06bcca9aac313a88584880617d96d80a2d7b708c338dbb0",
+        "signature": "af06994dbdf1a9e6c06bcca9aac313a88584880617d96d80a2d7b708c338dbb0",
+        "affectsGlobalScope": false
+      },
+      "../src/node_modules/helmet/dist/index.d.ts": {
+        "version": "6d603dbd268fa0b3c44bf49688749bcd6d2a60237b091e597a06f25955ee5b50",
+        "signature": "6d603dbd268fa0b3c44bf49688749bcd6d2a60237b091e597a06f25955ee5b50",
+        "affectsGlobalScope": false
+      },
       "../src/main.ts": {
-        "version": "872416e03f6c4fa244e76ad62223dbfe0de7090d1e0ad40fdf71839aec7aba6c",
+        "version": "ad29a2d845bf4844a497e0f1b752250008f5a0b044e4ea7649f39c0676bf8fc6",
         "signature": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881",
         "affectsGlobalScope": false
       },
@@ -6213,7 +6273,56 @@
       ],
       "../src/main.ts": [
         "../node_modules/@nestjs/core/index.d.ts",
-        "../src/app.module.ts"
+        "../src/app.module.ts",
+        "../src/node_modules/helmet/dist/index.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/content-security-policy/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/expect-ct/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/referrer-policy/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/strict-transport-security/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-content-type-options/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-dns-prefetch-control/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-download-options/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-frame-options/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-permitted-cross-domain-policies/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-powered-by/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-xss-protection/index.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/content-security-policy/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/node/index.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/expect-ct/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/referrer-policy/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/strict-transport-security/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-content-type-options/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-dns-prefetch-control/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-download-options/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-frame-options/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-permitted-cross-domain-policies/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-powered-by/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-xss-protection/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
       ],
       "../src/organizers/organizers.controller.ts": [
         "../node_modules/@nestjs/common/index.d.ts",
@@ -8838,6 +8947,54 @@
       "../src/events/schema/follower.schema.ts": [
         "../node_modules/@types/mongoose/index.d.ts"
       ],
+      "../src/node_modules/helmet/dist/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/content-security-policy/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/expect-ct/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/referrer-policy/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/strict-transport-security/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-content-type-options/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-dns-prefetch-control/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-download-options/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-frame-options/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-permitted-cross-domain-policies/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-powered-by/index.d.ts",
+        "../src/node_modules/helmet/dist/middlewares/x-xss-protection/index.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/content-security-policy/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts",
+        "../node_modules/@types/node/index.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/expect-ct/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/referrer-policy/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/strict-transport-security/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-content-type-options/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-dns-prefetch-control/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-download-options/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-frame-options/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-permitted-cross-domain-policies/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-powered-by/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
+      "../src/node_modules/helmet/dist/middlewares/x-xss-protection/index.d.ts": [
+        "../node_modules/@types/node/http.d.ts"
+      ],
       "../src/organizers/organizers.controller.ts": [
         "../src/organizers/dto/organizers.dto.ts",
         "../src/organizers/organizers.service.ts",
@@ -9568,6 +9725,18 @@
       "../src/events/schema/event.schema.ts",
       "../src/events/schema/follower.schema.ts",
       "../src/main.ts",
+      "../src/node_modules/helmet/dist/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/content-security-policy/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/expect-ct/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/referrer-policy/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/strict-transport-security/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-content-type-options/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-dns-prefetch-control/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-download-options/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-frame-options/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-permitted-cross-domain-policies/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-powered-by/index.d.ts",
+      "../src/node_modules/helmet/dist/middlewares/x-xss-protection/index.d.ts",
       "../src/organizers/dto/organizers.dto.ts",
       "../src/organizers/organizers.controller.ts",
       "../src/organizers/organizers.module.ts",

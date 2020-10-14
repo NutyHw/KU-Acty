@@ -6,6 +6,7 @@ const cookiParser = require("cookie-parser");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     app.use(cookiParser());
+    app.enableCors();
     await app.listen(3000);
 }
 bootstrap();

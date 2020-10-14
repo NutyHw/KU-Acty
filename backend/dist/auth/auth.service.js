@@ -26,9 +26,10 @@ let AuthService = class AuthService {
     }
     async register(userDto) {
         userDto.password = await this.hashPassword(userDto.password);
+        console.log(userDto);
         const user = await this.userService.findOne(userDto.username);
         if (user) {
-            return null;
+            throw new common_1.HttpException('username already in userd', common_1.HttpStatus.BAD_REQUEST);
         }
         return await this.userService.create(userDto);
     }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
 import { UserDto } from '../users/dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
@@ -20,11 +20,12 @@ export class AuthService {
 
   async register( userDto : UserDto ) : Promise<User> {
     userDto.password = await this.hashPassword(userDto.password);
+    console.log(userDto);
     const user = await this.userService.findOne(userDto.username);
 
     if ( user ){
-      return null;
-    } 
+      throw new HttpException('username already in userd', HttpStatus.BAD_REQUEST) 
+    }
     return await this.userService.create(userDto)
   }
 
