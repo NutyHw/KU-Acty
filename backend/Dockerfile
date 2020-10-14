@@ -1,22 +1,7 @@
-# pull official base image
 FROM node:14.9-alpine
-
-# set working directory
-WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-
-RUN mkdir /data
-RUN npm install --silent
-RUN npm install @nestjs/cli -g --silent
-
-# add app
-COPY . ./
-
-# start app
-CMD ["npm", "run", "start:dev"]
+WORKDIR /usr/src/app
+COPY ./package*.json ./
+RUN mkdir /data/
+RUN npm install
+COPY . .
+EXPOSE 3000

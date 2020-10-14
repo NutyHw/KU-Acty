@@ -9,7 +9,7 @@ import { MulterModule } from '@nestjs/platform-express';
   imports : [ 
     MongooseModule.forFeature([ { name : Organizer.name, schema : OrganizerSchema } ]) ,
     MulterModule.register({
-      dest : '/Users/nuttupoomsaitoh/Desktop/files'
+      dest : '/data/'
     })
   ],
   providers : [ OrganizersService ],
