@@ -1,92 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles} from '@material-ui/core/styles';
-import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { useParams } from 'react-router-dom';
+import { GreenTypography, GreenDesc, useStyles , theme } from './style';
+import history from '../../util/history';
+import { Organizer } from './type';
+import { OrganizerSchema } from './validator';
+import { ThemeProvider } from '@material-ui/core/styles/';
 
-//Theme settings
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#197C4F',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
-
-//-------------------------------------- Styles Part ----------------------------
-const GreenTypography = withStyles({
-  root: {
-    fontSize: 90,
-    color: "#197C4F",
-  }
-})(Typography);
-
-const GreenDesc = withStyles({
-  root: {
-    color: "#197C4F",
-  }
-})(Typography);
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(1),
-      },
-      input: {
-        display: 'none',
-    },
-  paper: {
-    marginTop: theme.spacing(2),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  login: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-//-------------------------------------- End Styles Part ------------------------
-
-type User = {
-  username : string
-  password : string
-}
-export function UploadButtons() {
+export const UploadButtons : React.FC<any> = ( prop ) => {
     const classes = useStyles();
-  
+
+
     return (
       <div className={classes.root}>
         <input
-          accept="images/*"
+          accept="application/pdf"
           className={classes.input}
           id="contained-button-file"
           style={{ display: "none" }}
+          onChange = { prop.onFileChange }
           type="file"
         />
         <label htmlFor="contained-button-file">
@@ -104,10 +42,41 @@ export function UploadButtons() {
 
 export const RegisterCont : React.FC = () => {
   const classes = useStyles();
-  const { register, handleSubmit, setValue, errors } = useForm<User>();
+  const { register, handleSubmit } = useForm<Organizer>();
+  const [ selectFile, setSelectFile ] = useState(Object);
 
-  const onSubmit = async ( user : User ) => {
-    const response = await axios.post('http://localhost:3000/auth/login', user )
+  const { id } = useParams();
+
+  const onFileChange = ( event : any ) => {
+    setSelectFile(event.target.files[0])
+  }
+
+  const upload = async () => {
+      const formData = new FormData()
+      formData.append('file',selectFile,selectFile.name );
+      await axios.post(
+          'http://localhost:3000/organizers/upload/' + id,
+            formData,
+            {
+                headers : {
+                    'Content-Type' : 'multipart/form-data'
+                }
+            }
+      )
+  }
+
+  async function onSubmit ( org : Organizer ){
+      try {
+        org.user = id;
+        OrganizerSchema.validate(org)
+        await axios.post('http://localhost:3000/organizers/', org )
+        await upload()
+        history.push('/login');
+        history.go(0);
+      } catch( err ) {
+        throw new Error(err)
+        return;
+      }
   }
 
   return (
@@ -124,7 +93,7 @@ export const RegisterCont : React.FC = () => {
           <br></br>
 
         </div>
-          <form className={classes.login} noValidate>
+          <form className={classes.login} noValidate onSubmit={handleSubmit(onSubmit)}>
             <Grid container spacing={1}>
               <Grid item xs={12}>
                 <TextField
@@ -134,7 +103,7 @@ export const RegisterCont : React.FC = () => {
                   fullWidth
                   id="orgname"
                   label="ชื่อชมรมหรือหน่วยงาน"
-                  name="orgname"
+                  name="organizer_name"
                   type = "string"
                   inputRef = {register({ required : true })}
                   //autoComplete="username"
@@ -153,7 +122,6 @@ export const RegisterCont : React.FC = () => {
                   name="email"
                   type = "string"
                   inputRef = {register({ required : true })}
-                  //autoComplete="username"
                   autoFocus
                 />
               </Grid>
@@ -169,7 +137,6 @@ export const RegisterCont : React.FC = () => {
                   name="location"
                   type = "string"
                   inputRef = {register({ required : true })}
-                  //autoComplete="username"
                   autoFocus
                 />
               </Grid>
@@ -185,7 +152,6 @@ export const RegisterCont : React.FC = () => {
                   name="contact"
                   type = "string"
                   inputRef = {register({ required : true })}
-                  //autoComplete="username"
                   autoFocus
                 />
               </Grid>
@@ -201,7 +167,6 @@ export const RegisterCont : React.FC = () => {
                   name="description"
                   type = "string"
                   inputRef = {register({ required : true })}
-                  //autoComplete="username"
                   autoFocus
                   multiline
                   rows = {3}
@@ -210,7 +175,7 @@ export const RegisterCont : React.FC = () => {
               </Grid>
 
               <Grid item xs={12}>
-                <UploadButtons />
+              <UploadButtons onFileChange = { onFileChange }/>
 
                 <Button
                   type="submit"

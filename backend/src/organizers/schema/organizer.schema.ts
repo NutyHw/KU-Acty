@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ObjectID } from 'typeorm';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 
 export type OrganizerDocument = Organizer & Document;
 
@@ -13,7 +12,7 @@ export class Organizer {
     required : true
   })
 
-  user : [{ type : ObjectID, ref : 'users' }]
+  user : Types.ObjectId
 
   @Prop({ required : true })
   organizer_name : string

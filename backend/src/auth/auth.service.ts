@@ -33,12 +33,12 @@ export class AuthService {
     const user = await this.userService.findOne(userDto.username);
 
     if ( !user ){
-      return null;
+      throw new HttpException('username or password not match', HttpStatus.BAD_REQUEST)
     }
 
     const match = await bcrypt.compare(userDto.password, user.password);
     if ( !match ){
-      return null;
+      throw new HttpException('username or password not match', HttpStatus.BAD_REQUEST)
     }
 
     const payload = await this.createPayload(user.username, user._id);
@@ -47,7 +47,6 @@ export class AuthService {
 
   async createPayload(username : string , userId : string) : Promise<any>{
     const payload = { username : username, userId : userId }
-    console.log(payload)
     return {
       access_token : this.jwtService.sign(payload)
     }

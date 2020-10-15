@@ -1,11 +1,7 @@
-import { ObjectID } from 'typeorm';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
 export declare type OrganizerDocument = Organizer & Document;
 export declare class Organizer {
-    user: [{
-        type: ObjectID;
-        ref: 'users';
-    }];
+    user: Types.ObjectId;
     organizer_name: string;
     document_path: string;
     email: string;

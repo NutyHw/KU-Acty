@@ -1,6 +1,8 @@
+import { Types } from 'mongoose';
+
 export class OrganizerDto {
   organizerName : string
-  user : string
+  user : Types.ObjectId
   email : string
   contact : string
   location : string

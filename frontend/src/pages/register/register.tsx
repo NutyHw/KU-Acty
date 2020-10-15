@@ -4,86 +4,42 @@ import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
-import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { createMuiTheme } from '@material-ui/core/styles';
-
-//Theme settings
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#197C4F',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
-
-//-------------------------------------- Styles Part ----------------------------
-const GreenTypography = withStyles({
-  root: {
-    fontSize: 90,
-    color: "#197C4F",
-  }
-})(Typography);
-
-const GreenDesc = withStyles({
-  root: {
-    color: "#197C4F",
-  }
-})(Typography);
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-      marginTop: theme.spacing(1),
-      },
-      input: {
-        display: 'none',
-    },
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  login: {
-    width: '100%', // Fix IE 11 issue.
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-//-------------------------------------- End Styles Part ------------------------
-
-type User = {
-  username : string
-  password : string
-}
+import { UserSchema } from './validator';
+import { theme, GreenTypography, GreenDesc, useStyles } from './style';
+import { User } from './type';
+import history from '../../util/history';
 
 export const Register : React.FC = () => {
   const classes = useStyles();
-  const { register, handleSubmit, setValue, errors } = useForm<User>();
+  const { register, handleSubmit } = useForm<User>({
+    defaultValues : {
+      username : '',
+      password : '',
+      confirmPassword : ''
+    }
+  })
 
   const onSubmit = async ( user : User ) => {
-    const response = await axios.post('http://localhost:3000/auth/login', user )
+    try{
+      await UserSchema.validate(user);
+
+      const payload = {
+        username : user.username,
+        password : user.password
+      }
+
+      const res = await axios.post('http://localhost:3000/auth/register/', payload );
+      history.push({
+          pathname : '/registercont/' + String(res.data._id)
+      })
+      history.go(0);
+    } catch( err ) {
+      throw new Error(err)
+      return;
+    }
   }
 
   return (
@@ -100,8 +56,8 @@ export const Register : React.FC = () => {
           <br></br>
 
         </div>
-          <form className={classes.login} noValidate>
-            <Grid container spacing={1}>
+          <form className={classes.login} onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={1}>
               <Grid item xs={12}>
                 <TextField
                   variant="outlined"
@@ -113,7 +69,6 @@ export const Register : React.FC = () => {
                   name="username"
                   type = "string"
                   inputRef = {register({ required : true })}
-                  //autoComplete="username"
                   autoFocus
                 />
               </Grid>
@@ -129,7 +84,6 @@ export const Register : React.FC = () => {
                   type="password"
                   inputRef = { register({ required : true }) }
                   id="password"
-                  //*autoComplete="current-password" 
                 />
               </Grid>
 
@@ -139,12 +93,11 @@ export const Register : React.FC = () => {
                   margin="dense"
                   required
                   fullWidth
-                  name="password"
+                  name="confirmPassword"
                   label="Confirm Password"
                   type="password"
                   inputRef = { register({ required : true }) }
-                  id="password"
-                  //*autoComplete="current-password" 
+                  id="confirmPassword"
                 />
               </Grid>
               
@@ -156,7 +109,6 @@ export const Register : React.FC = () => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    href="registercont"
                   >
                     ดำเนินการต่อ
                   </Button>

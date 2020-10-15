@@ -5,5 +5,5 @@ export declare class OrganizersController {
     private readonly organizerService;
     constructor(organizerService: OrganizersService);
     register(organizerDto: OrganizerDto): Promise<Organizer>;
-    upload(file: any, param: any): Promise<Organizer>;
+    upload(file: any, param: any): Promise<any>;
 }

@@ -9,6 +9,7 @@ export class OrganizersService {
   constructor(@InjectModel(Organizer.name) private organizerModel : Model<OrganizerDocument> ){}
 
   async create( organizerDto : OrganizerDto ) : Promise<Organizer> {
+    organizerDto.user = new Types.ObjectId(organizerDto.user);
     const organizer = new this.organizerModel(organizerDto);
     return organizer.save()
   }
@@ -18,6 +19,6 @@ export class OrganizersService {
   }
 
   async uploadFile( _id : string, filePath : string ) : Promise<any> {
-    return await this.organizerModel.updateOne({ _id : new Types.ObjectId(_id) }, { $set : { document_path : filePath } });
+    return await this.organizerModel.updateOne({ user : new Types.ObjectId(_id) }, { $set : { document_path : filePath } });
   }
 }

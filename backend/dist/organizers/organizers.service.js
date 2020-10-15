@@ -22,6 +22,7 @@ let OrganizersService = class OrganizersService {
         this.organizerModel = organizerModel;
     }
     async create(organizerDto) {
+        organizerDto.user = new mongoose_1.Types.ObjectId(organizerDto.user);
         const organizer = new this.organizerModel(organizerDto);
         return organizer.save();
     }
@@ -29,7 +30,7 @@ let OrganizersService = class OrganizersService {
         return await this.organizerModel.updateOne({ _id: _id }, { $set: { approve_date: new Date() } });
     }
     async uploadFile(_id, filePath) {
-        return await this.organizerModel.updateOne({ _id: new mongoose_1.Types.ObjectId(_id) }, { $set: { document_path: filePath } });
+        return await this.organizerModel.updateOne({ user: new mongoose_1.Types.ObjectId(_id) }, { $set: { document_path: filePath } });
     }
 };
 OrganizersService = __decorate([
