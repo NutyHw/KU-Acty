@@ -15,6 +15,7 @@ import { NisitEventDetail } from './pages/eventdetail/eventdetail.nisit'
 import { ChangePassword } from './pages/password/changepassword';
 import { ForgotPassword } from './pages/password/forgotpassword';
 import { ResetPassword } from './pages/password/resetpassword';
+import { searchEvent } from './pages/searchevent/searchevent';
 const App = () => {
   return(
       <div>
@@ -30,6 +31,7 @@ const App = () => {
       <Route path="/org/changepassword" component={ChangePassword}/> 
       <Route path="/forgotpassword" component={ForgotPassword}/>
       <Route path="/resetpassword" component={ResetPassword}/>
+      <Route path="/search" component={searchEvent}/>
       </div>
   );
 };
