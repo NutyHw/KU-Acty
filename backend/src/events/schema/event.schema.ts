@@ -1,6 +1,5 @@
 import { Prop, Schema, SchemaFactory,  } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { ObjectID } from 'typeorm';
+import { Document, Types } from 'mongoose';
 
 export type EventDocument = Event & Document;
 
@@ -13,7 +12,7 @@ export class Event {
   event_name : string
 
   @Prop({ required : true })
-  organizer_id : [{ type : ObjectID, ref : 'organizers' }]
+  organizer_id : Types.ObjectId
 
   @Prop({ required : true })
   benefit_hour : number
@@ -34,7 +33,7 @@ export class Event {
   description : string
 
   @Prop({ required : true })
-  attachment_path : [{ type : ObjectID, ref : 'upload' }]
+  attachment_path : [{ type : Types.ObjectId, ref : 'upload' }]
 
   @Prop({ default : 0 })
   view_counts : number
@@ -46,7 +45,7 @@ export class Event {
   status : string
 
   @Prop({ required : true })
-  event_type : string
+  event_type : [ string ]
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

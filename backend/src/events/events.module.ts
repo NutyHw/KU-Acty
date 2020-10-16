@@ -15,4 +15,5 @@ import { FollowerSchema, Follower } from './schema/follower.schema';
   providers: [EventsService],
   controllers: [EventsController]
 })
+
 export class EventsModule {}

@@ -17,12 +17,14 @@ const common_1 = require("@nestjs/common");
 const events_service_1 = require("./events.service");
 const create_event_dto_1 = require("./dto/create-event.dto");
 const follow_dto_1 = require("./dto/follow.dto");
+const jwt_auth_guard_1 = require("../auth/jwt-auth.guard");
 let EventsController = class EventsController {
     constructor(eventService) {
         this.eventService = eventService;
     }
-    async createEvent(createEventDto) {
-        console.log(createEventDto);
+    async createEvent(createEventDto, req) {
+        console.log(req.user);
+        createEventDto.organizer_id = req.user.userId;
         return await this.eventService.createEvent(createEventDto);
     }
     async updateEvent(createEventDto, param) {
@@ -40,13 +42,15 @@ let EventsController = class EventsController {
 };
 __decorate([
     common_1.Post(),
-    __param(0, common_1.Body()),
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
+    __param(0, common_1.Body()), __param(1, common_1.Request()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_event_dto_1.CreateEventDto]),
+    __metadata("design:paramtypes", [create_event_dto_1.CreateEventDto, Object]),
     __metadata("design:returntype", Promise)
 ], EventsController.prototype, "createEvent", null);
 __decorate([
     common_1.Put(':id'),
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, common_1.Body()), __param(1, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [create_event_dto_1.CreateEventDto, Object]),
@@ -54,6 +58,7 @@ __decorate([
 ], EventsController.prototype, "updateEvent", null);
 __decorate([
     common_1.Get(':id/detail'),
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, common_1.Param()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
@@ -61,6 +66,7 @@ __decorate([
 ], EventsController.prototype, "getDetailedEvent", null);
 __decorate([
     common_1.Post('follow'),
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [follow_dto_1.FollowDto]),
@@ -68,6 +74,7 @@ __decorate([
 ], EventsController.prototype, "followEvent", null);
 __decorate([
     common_1.Post('unfollow'),
+    common_1.UseGuards(jwt_auth_guard_1.JwtAuthGuard),
     __param(0, common_1.Body()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [follow_dto_1.FollowDto]),

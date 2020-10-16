@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.EventSchema = exports.Event = void 0;
 const mongoose_1 = require("@nestjs/mongoose");
+const mongoose_2 = require("mongoose");
 let Event = class Event {
 };
 __decorate([
@@ -19,7 +20,7 @@ __decorate([
 ], Event.prototype, "event_name", void 0);
 __decorate([
     mongoose_1.Prop({ required: true }),
-    __metadata("design:type", Array)
+    __metadata("design:type", mongoose_2.Types.ObjectId)
 ], Event.prototype, "organizer_id", void 0);
 __decorate([
     mongoose_1.Prop({ required: true }),
@@ -63,7 +64,7 @@ __decorate([
 ], Event.prototype, "status", void 0);
 __decorate([
     mongoose_1.Prop({ required: true }),
-    __metadata("design:type", String)
+    __metadata("design:type", Array)
 ], Event.prototype, "event_type", void 0);
 Event = __decorate([
     mongoose_1.Schema({

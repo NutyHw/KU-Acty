@@ -1,7 +1,8 @@
 import { Types } from 'mongoose';
+import {  } from 'class-validator';
 
 export class OrganizerDto {
-  organizerName : string
+  organizer_name : string
   user : Types.ObjectId
   email : string
   contact : string

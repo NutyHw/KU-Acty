@@ -19,11 +19,11 @@ let JwtStrategy = class JwtStrategy extends passport_1.PassportStrategy(passport
         super({
             jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
-            secretOrKey: constant_1.jwtConstants.secret,
+            secretOrKey: constant_1.JwtConstant.secret,
         });
     }
     async validate(payload) {
-        return { userId: payload.sub, username: payload.username };
+        return { username: payload.username, userId: payload.userId, role: payload.role };
     }
 };
 JwtStrategy = __decorate([

@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 export declare class OrganizerDto {
-    organizerName: string;
+    organizer_name: string;
     user: Types.ObjectId;
     email: string;
     contact: string;

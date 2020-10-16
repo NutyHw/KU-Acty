@@ -12,11 +12,11 @@ const auth_service_1 = require("./auth.service");
 const users_module_1 = require("../users/users.module");
 const auth_controller_1 = require("./auth.controller");
 const passport_1 = require("@nestjs/passport");
-const constant_1 = require("./config/constant");
 const jwt_1 = require("@nestjs/jwt");
-const jwt_strategy_1 = require("./jwt.strategy");
 const organizers_module_1 = require("../organizers/organizers.module");
 const platform_express_1 = require("@nestjs/platform-express");
+const jwt_strategy_1 = require("./jwt.strategy");
+const constant_1 = require("./config/constant");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
@@ -26,15 +26,15 @@ AuthModule = __decorate([
             passport_1.PassportModule,
             organizers_module_1.OrganizersModule,
             jwt_1.JwtModule.register({
-                secret: constant_1.jwtConstants.secret,
-                signOptions: { expiresIn: '1hr' }
+                secret: constant_1.JwtConstant.secret
             }),
             platform_express_1.MulterModule.register({
-                dest: '/Users/nuttupoomsaitoh/Desktop/files/'
+                dest: '/data/'
             })
         ],
         providers: [auth_service_1.AuthService, jwt_strategy_1.JwtStrategy],
         controllers: [auth_controller_1.AuthController],
+        exports: [auth_service_1.AuthService]
     })
 ], AuthModule);
 exports.AuthModule = AuthModule;

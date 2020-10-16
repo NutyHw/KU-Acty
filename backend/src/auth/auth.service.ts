@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { UsersService } from '../users/users.service';
-import { UserDto } from '../users/dto/user.dto';
+import { RegisterDto, LoginDto } from '../users/dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../users/schemas/users.schema';
 import * as bcrypt from 'bcrypt';
@@ -18,18 +18,19 @@ export class AuthService {
     return await bcrypt.hash(password, this.saltRound);
   }
 
-  async register( userDto : UserDto ) : Promise<User> {
+  async register( userDto : RegisterDto ) : Promise<User> {
     userDto.password = await this.hashPassword(userDto.password);
-    console.log(userDto);
+    userDto.role = 'organizer';
     const user = await this.userService.findOne(userDto.username);
 
     if ( user ){
       throw new HttpException('username already in userd', HttpStatus.BAD_REQUEST) 
     }
+
     return await this.userService.create(userDto)
   }
 
-  async login(userDto : UserDto) : Promise<any> {
+  async login(userDto : LoginDto ) : Promise<any> {
     const user = await this.userService.findOne(userDto.username);
 
     if ( !user ){
@@ -41,12 +42,12 @@ export class AuthService {
       throw new HttpException('username or password not match', HttpStatus.BAD_REQUEST)
     }
 
-    const payload = await this.createPayload(user.username, user._id);
+    const payload = await this.createPayload(user.username, user._id, user.role );
     return payload;
   }
 
-  async createPayload(username : string , userId : string) : Promise<any>{
-    const payload = { username : username, userId : userId }
+  async createPayload(username : string , userId : string, role : string) : Promise<any>{
+    const payload = { username : username, userId : userId , role : role }
     return {
       access_token : this.jwtService.sign(payload)
     }

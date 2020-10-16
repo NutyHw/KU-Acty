@@ -3,11 +3,11 @@ import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
 import { AuthController } from './auth.controller';
 import { PassportModule } from '@nestjs/passport';
-import { jwtConstants } from './config/constant';
 import { JwtModule } from '@nestjs/jwt';
-import { JwtStrategy } from './jwt.strategy';
 import { OrganizersModule } from '../organizers/organizers.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { JwtStrategy } from './jwt.strategy';
+import { JwtConstant } from './config/constant';
 
 @Module({
   imports : [ 
@@ -15,14 +15,16 @@ import { MulterModule } from '@nestjs/platform-express';
     PassportModule,
     OrganizersModule,
     JwtModule.register({
-      secret : jwtConstants.secret,
-      signOptions : { expiresIn : '1hr' }
+      secret : JwtConstant.secret
     }),
+
     MulterModule.register({
-      dest : '/Users/nuttupoomsaitoh/Desktop/files/'
+      dest : '/data/'
     })
   ],
-  providers: [ AuthService , JwtStrategy ],
+  providers: [ AuthService, JwtStrategy ],
   controllers: [AuthController],
+  exports : [ AuthService ]
 })
+
 export class AuthModule {}

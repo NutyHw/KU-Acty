@@ -16,7 +16,6 @@ export class OrganizersController {
   @Post('/upload/:id')
   @UseInterceptors(FileInterceptor('file'))
   async upload(@UploadedFile() file , @Param() param ) : Promise<any>{
-    console.log(file);
     return await this.organizerService.uploadFile( param.id, file.path );
   }
 }

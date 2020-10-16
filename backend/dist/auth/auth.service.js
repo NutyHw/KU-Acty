@@ -26,7 +26,7 @@ let AuthService = class AuthService {
     }
     async register(userDto) {
         userDto.password = await this.hashPassword(userDto.password);
-        console.log(userDto);
+        userDto.role = 'organizer';
         const user = await this.userService.findOne(userDto.username);
         if (user) {
             throw new common_1.HttpException('username already in userd', common_1.HttpStatus.BAD_REQUEST);
@@ -42,11 +42,11 @@ let AuthService = class AuthService {
         if (!match) {
             throw new common_1.HttpException('username or password not match', common_1.HttpStatus.BAD_REQUEST);
         }
-        const payload = await this.createPayload(user.username, user._id);
+        const payload = await this.createPayload(user.username, user._id, user.role);
         return payload;
     }
-    async createPayload(username, userId) {
-        const payload = { username: username, userId: userId };
+    async createPayload(username, userId, role) {
+        const payload = { username: username, userId: userId, role: role };
         return {
             access_token: this.jwtService.sign(payload)
         };

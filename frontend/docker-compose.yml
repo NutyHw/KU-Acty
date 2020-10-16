@@ -6,7 +6,7 @@ services:
       context: .
     volumes:
       - .:/usr/src/app
-      - /usr/sr/app/node_modules
+      - /usr/src/app/node_modules
     ports:
       - 8080:8080
     command: npm start

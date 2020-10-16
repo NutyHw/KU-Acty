@@ -25,7 +25,6 @@ let OrganizersController = class OrganizersController {
         return await this.organizerService.create(organizerDto);
     }
     async upload(file, param) {
-        console.log(file);
         return await this.organizerService.uploadFile(param.id, file.path);
     }
 };

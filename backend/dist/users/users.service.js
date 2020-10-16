@@ -20,8 +20,8 @@ let UsersService = class UsersService {
     constructor(userModel) {
         this.userModel = userModel;
     }
-    async create(userDto) {
-        const user = new this.userModel(userDto);
+    async create(registerDto) {
+        const user = new this.userModel(registerDto);
         return user.save();
     }
     async findAll() {

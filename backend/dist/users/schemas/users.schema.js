@@ -21,6 +21,10 @@ __decorate([
     mongoose_1.Prop({ required: true }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
+__decorate([
+    mongoose_1.Prop({ required: true }),
+    __metadata("design:type", String)
+], User.prototype, "role", void 0);
 User = __decorate([
     mongoose_1.Schema()
 ], User);

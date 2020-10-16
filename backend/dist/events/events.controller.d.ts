@@ -4,7 +4,7 @@ import { FollowDto } from './dto/follow.dto';
 export declare class EventsController {
     private readonly eventService;
     constructor(eventService: EventsService);
-    createEvent(createEventDto: CreateEventDto): Promise<import("./schema/event.schema").Event>;
+    createEvent(createEventDto: CreateEventDto, req: any): Promise<import("./schema/event.schema").Event>;
     updateEvent(createEventDto: CreateEventDto, param: any): Promise<any>;
     getDetailedEvent(param: any): Promise<import("./schema/event.schema").Event>;
     followEvent(followDto: FollowDto): Promise<import("./schema/follower.schema").Follower>;
