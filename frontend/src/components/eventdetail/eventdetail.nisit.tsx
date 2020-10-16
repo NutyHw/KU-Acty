@@ -9,6 +9,8 @@ import Container from '@material-ui/core/Container';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { NisitHeader  } from '../header/nisit.header';
 
+import { NisitHead } from './../header/nisit.header';
+
 const theme = createMuiTheme({
     palette: {
       primary: {
@@ -79,6 +81,12 @@ export const NisitEventDetail : React.FC = () => {
   const classes = useStyles();
 
   return (
+<<<<<<< HEAD:frontend/src/components/eventdetail/eventdetail.nisit.tsx
+=======
+    <ThemeProvider theme={theme}>
+    <NisitHead />
+    
+>>>>>>> transcript:frontend/src/pages/eventdetail/eventdetail.nisit.tsx
       <Container component="main" maxWidth="md">
         <NisitHeader/>
         <ThemeProvider theme={theme}>
