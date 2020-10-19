@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/core/styles';
-import { NisitHead } from './../header/nisit.header';
+import { NisitHeader } from './../header/nisit.header';
 import { getParseTreeNode } from 'typescript';
 
 const theme = createMuiTheme({
@@ -118,7 +118,7 @@ export const NisitTranscript : React.FC = () => {
 
   return (
     <div className={classes.root}>
-        <NisitHead />
+        <NisitHeader />
         <ThemeProvider theme={theme}>
             <Typography align="center" className={classes.textHead}>จำนวนชั่วโมงกิจกรรมทั้งหมด {total.event} กิจกรรม {total.time} ชั่วโมง</Typography> 
         <Container maxWidth="md">

@@ -27,7 +27,7 @@ import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 
-import { OrgHead } from './../header/org.header';
+import { OrgHeader } from './../header/org.header';
 
 const theme = createMuiTheme({
     palette: {
@@ -107,7 +107,7 @@ export const OrgEventDetail : React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <OrgHead />
+      <OrgHeader />
 
       <Container component="main" maxWidth="md">
         <ThemeProvider theme={theme}>

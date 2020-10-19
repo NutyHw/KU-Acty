@@ -14,7 +14,7 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
-import { NisitHead } from './../header/nisit.header';
+import { NisitHeader } from './../header/nisit.header';
 
 const theme = createMuiTheme({
     palette: {
@@ -70,7 +70,7 @@ export const NisitFeed : React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <NisitHead />
+      <NisitHeader />
     </ThemeProvider>  
   );
 }

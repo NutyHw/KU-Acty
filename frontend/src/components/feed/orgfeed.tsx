@@ -15,7 +15,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
 
-import { OrgHead } from './../header/org.header';
+import { OrgHeader } from './../header/org.header';
 
 const theme = createMuiTheme({
     palette: {
@@ -71,7 +71,7 @@ export const OrgFeed : React.FC = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <OrgHead />
+      <OrgHeader />
     </ThemeProvider>
   );
 }
