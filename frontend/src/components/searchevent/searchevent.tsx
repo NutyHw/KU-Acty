@@ -1,36 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import { NisitHeader } from '../header/nisit.header';
+// material ui import
 import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { createMuiTheme } from '@material-ui/core/styles';
+import { theme, GreenDesc, useStyles, MenuProps } from './style';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import { NisitFeed } from '../feed/nisitfeed';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import CircularProgress from '@material-ui/core/CircularProgress';
-
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#197C4F',
-    },
-    secondary: {
-      main: '#E2FCDB',
-    },
-  },
-  typography: {
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Mitr"',
-      '"Segoe UI"',
-      'Roboto',
-    ].join(','),
-  },
-});
-
-//-------------------------------------- Styles Part ----------------------------
 
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
@@ -41,18 +23,18 @@ const typenames = [
   'กิจกรรมเพื่อสังคม',
 ];
 
-type User = {
-  username : string
-  password : string
-}
-
-export const searchEvent : React.FC = () => {
+export const SearchEvent : React.FC = () => {
+  const classes = useStyles();
 
   return (
-    <div>
-      <NisitFeed />
-      <ThemeProvider theme={theme}> 
-      <Container maxWidth="md">
+    <ThemeProvider theme={theme}>
+      <NisitHeader/>
+      <Container component="main" maxWidth="md">
+        <ThemeProvider theme={theme}>
+          <CssBaseline /><div className={classes.midpage}>    
+          <Typography variant="h6" align="center" color="textPrimary">
+            ค้นหากิจกรรม
+          </Typography>  
           <Grid container spacing={1}>
           <Grid item xs={4}>
           <TextField
@@ -119,16 +101,14 @@ export const searchEvent : React.FC = () => {
             <Button color="primary"><SearchOutlinedIcon/>ค้นหา</Button>
             </Grid>
             <Grid item xs={1}>
-            <CircularProgress />
             </Grid>
             </Grid>
-            
-            
+          </div>
 
-          
-        </Container>
-        </ThemeProvider>
-        
-    </div>
+            
+            </ThemeProvider>   
+      </Container>
+      <Box mt={10}></Box>
+    </ThemeProvider>   
   );
 }
