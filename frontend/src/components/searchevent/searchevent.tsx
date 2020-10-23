@@ -23,7 +23,7 @@ const typenames = [
   'กิจกรรมเพื่อสังคม',
 ];
 
-export const SearchEvent : React.FC = () => {
+export const searchEvent : React.FC = () => {
   const classes = useStyles();
 
   return (
