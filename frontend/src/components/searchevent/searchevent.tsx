@@ -14,6 +14,17 @@ import { theme, GreenDesc, useStyles, MenuProps } from './style';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
+import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import TurnedInIcon from '@material-ui/icons/TurnedIn';
+
+
+
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
   'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาคุณธรรม จริยธรรม',
@@ -23,15 +34,58 @@ const typenames = [
   'กิจกรรมเพื่อสังคม',
 ];
 
-export const searchEvent : React.FC = () => {
+export function MyResult() {
   const classes = useStyles();
+  return (
+    <div>
+        <Box className={classes.actybox}
+              boxShadow={5}
+              display="flex" 
+              p={3} 
+              m={3}
+              bgcolor="#b9f6ca" >
+          <List className={classes.actybox}>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={"ชื่อกิจกรรม"}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="textPrimary"
+                  >
+                  วันที่จัด<br/>
+                  สถานที่<br/>
+                  ประเภท<br/>
+                  <VisibilityIcon/> 0 view<br/>
+                  <TurnedInIcon/> กูไม่กดหรอก <br/>
+                  </Typography>
+                  <br/>
+                  {" — Wish I could come, but I'm out of town this…"}
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          </List>
+        </Box>
+    </div> 
+  );
+}
 
+export const SearchEvent : React.FC = () => {
+  const classes = useStyles();
+  
   return (
     <ThemeProvider theme={theme}>
       <NisitHeader/>
+      <div className={classes.midpage}> 
       <Container component="main" maxWidth="md">
         <ThemeProvider theme={theme}>
-          <CssBaseline /><div className={classes.midpage}>    
+          <CssBaseline />   
           <Typography variant="h6" align="center" color="textPrimary">
             ค้นหากิจกรรม
           </Typography>  
@@ -94,21 +148,108 @@ export const searchEvent : React.FC = () => {
               />
             </Grid>
             </Grid>
-            
-            
             <Grid container spacing={1}>
             <Grid item xs={1}>
-            <Button color="primary"><SearchOutlinedIcon/>ค้นหา</Button>
+            <Button 
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}><SearchOutlinedIcon/> ค้นหา </Button>
             </Grid>
             <Grid item xs={1}>
             </Grid>
             </Grid>
-          </div>
-
-            
-            </ThemeProvider>   
+            </ThemeProvider>
+            <Typography variant="h6" align="center" color="textPrimary">
+            ผลการค้นหา
+          </Typography>    
+      </Container></div>
+      <br/>
+      <br/>
+      <Container fixed>
+        <Typography  component="main" style={{ backgroundColor: '#eeeeee', height: '100vh' }}>
+        <Grid container direction="column" alignItems="center">
+        <Box className={classes.actybox}
+              boxShadow={5}
+              display="flex" 
+              p={3} 
+              m={3}
+              bgcolor="#b9f6ca" >
+          <List className={classes.actybox}>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={"ชื่อกิจกรรม"}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="textPrimary"
+                  >
+                  วันที่จัด<br/>
+                  สถานที่<br/>
+                  ประเภท
+                  <Typography align="right">
+                  <Button>ดูรายละเอียดเพิ่มเติม</Button><br />
+                  <VisibilityIcon/> 0 view <TurnedInIcon/> ยังไม่ได้ติดตาม
+                  </Typography>
+                  
+                  </Typography>
+                  <br/>
+                
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          </List>
+        </Box>
+        <Box className={classes.actybox}
+              boxShadow={5}
+              display="flex" 
+              p={3} 
+              m={3}
+              bgcolor="#b9f6ca" >
+          <List className={classes.actybox}>
+          <ListItem alignItems="flex-start">
+            <ListItemAvatar>
+              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
+            </ListItemAvatar>
+            <ListItemText
+              primary={"ชื่อกิจกรรม"}
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="textPrimary"
+                  >
+                  วันที่จัด<br/>
+                  สถานที่<br/>
+                  ประเภท
+                  <Typography align="right">
+                  <Button>ดูรายละเอียดเพิ่มเติม</Button><br />
+                  <VisibilityIcon/> 999M view <TurnedInIcon/> กำลังติดตาม
+                  </Typography>
+                  
+                  </Typography>
+                  <br/>
+                  
+                </React.Fragment>
+              }
+            />
+          </ListItem>
+          </List>
+        </Box>  
+        <MyResult /> 
+      </Grid>
+      
+      </Typography>
       </Container>
       <Box mt={10}></Box>
     </ThemeProvider>   
   );
 }
+
