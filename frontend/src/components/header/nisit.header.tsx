@@ -116,7 +116,7 @@ export const NisitHeader : React.FC = () => {
             <ButtonGroup variant="text" color="default" aria-label="text primary button group">
                 <Button href="/nisit/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
                 <Button href="/nisit/transcript"><PostAddOutlinedIcon/><Box m={0.25} />ตรวจสอบชั่วโมงกิจกรรม</Button>
-                <Button href="/search"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
+                <Button href="/nisit/search"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
                 </ButtonGroup>
         </Toolbar>
       </AppBar>

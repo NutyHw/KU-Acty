@@ -12,7 +12,8 @@ import { ChangePassword } from './components/password/changepassword'
 import { ForgotPassword } from './components/password/forgotpassword';
 import { NisitTranscript } from './components/activitytrans/transcript';
 import { ResetPassword } from './components/password/resetpassword';
-import { searchEvent } from './components/searchevent/searchevent';
+import { SearchEvent } from './components/searchevent/search.nisit';
+import { SearchEventOrg } from './components/searchevent/search.org';
 
 const App = () => {
   return(
@@ -29,7 +30,8 @@ const App = () => {
       <Route path="/org/changepassword" component={ChangePassword}/> 
       <Route path="/forgotpassword" component={ForgotPassword}/>
       <Route path="/resetpassword" component={ResetPassword}/>
-      <Route path="/search" component={searchEvent}/>
+      <Route path="/nisit/search" component={SearchEvent}/>
+      <Route path="/org/search" component={SearchEventOrg}/>
       <Redirect to="/login" />
     </Switch>
   );

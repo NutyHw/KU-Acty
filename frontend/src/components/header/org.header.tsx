@@ -120,7 +120,7 @@ export const OrgHeader : React.FC = () => {
             <ButtonGroup variant="text" color="default" aria-label="text primary button group">
                 <Button href="/org/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
                 <Button href="/org/createevent"><PostAddOutlinedIcon/><Box m={0.25} />ประกาศกิจกรรม</Button>
-                <Button href="/search"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
+                <Button href="/nisit/search"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
                 </ButtonGroup>
         </Toolbar>
       </AppBar>

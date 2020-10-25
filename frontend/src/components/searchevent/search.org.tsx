@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { NisitHeader } from '../header/nisit.header';
+import { OrgHeader } from '../header/org.header';
 // material ui import
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -22,8 +22,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
-
-
 
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
@@ -76,12 +74,12 @@ export function MyResult() {
   );
 }
 
-export const SearchEvent : React.FC = () => {
+export const SearchEventOrg : React.FC = () => {
   const classes = useStyles();
   
   return (
     <ThemeProvider theme={theme}>
-      <NisitHeader/>
+      <OrgHeader/>
       <div className={classes.midpage}> 
       <Container component="main" maxWidth="md">
         <ThemeProvider theme={theme}>
@@ -252,4 +250,3 @@ export const SearchEvent : React.FC = () => {
     </ThemeProvider>   
   );
 }
-
