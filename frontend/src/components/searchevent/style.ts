@@ -65,12 +65,18 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    width: '100%'
+    width: '40%'
   },
   formControl: {
     margin: theme.spacing(0),
     minWidth: 250,
     maxWidth: 540,
+  },
+  actybox: {
+    width: '100%',
+    maxWidth: '100ch',
+    padding: '0 30px',
+    borderRadius: 3,
   },
 }));
 
