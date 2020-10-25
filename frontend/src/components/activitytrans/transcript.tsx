@@ -9,7 +9,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { ThemeProvider } from '@material-ui/core/styles';
 import { NisitHeader } from './../header/nisit.header';
 
-import { theme, useStyles } from './style';
+import { theme } from './../theme/theme';
+import { useStyles } from './style';
 
 export const NisitTranscript : React.FC = () => {
   const classes = useStyles();

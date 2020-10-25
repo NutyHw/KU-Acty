@@ -1,27 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
-
-export const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#E2FCDB',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
 
 export const GreenDesc = withStyles({
   root: {

@@ -10,7 +10,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 
 import { OrgHeader } from './../header/org.header';
-import { theme } from './style';
+import { theme } from './../theme/theme';
 
 //-------------------------------------- Styles Part ----------------------------
 const GreenDesc = withStyles({

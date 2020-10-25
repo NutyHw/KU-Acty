@@ -17,7 +17,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import { theme, GreenDesc, useStyles, MenuProps } from './style';
+import { GreenDesc, useStyles, MenuProps } from './style';
+import { theme } from './../theme/theme';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { OrgHeader } from '../header/org.header';
 

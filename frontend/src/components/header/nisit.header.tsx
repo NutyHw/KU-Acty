@@ -5,7 +5,6 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,25 +13,7 @@ import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
 
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#E2FCDB',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
+import { theme } from './../theme/theme';
 
 //-------------------------------------- Styles Part ----------------------------
 

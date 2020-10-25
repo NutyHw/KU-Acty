@@ -3,12 +3,12 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { theme } from './style';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 
-import { NisitHeader } from './../header/nisit.header';
+import { theme } from './../theme/theme';
+import { NisitHeader } from '../header/nisit.header';
 import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count} from './evdata.nisit';
 
 //-------------------------------------- Styles Part ----------------------------

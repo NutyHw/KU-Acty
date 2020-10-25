@@ -15,25 +15,7 @@ import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
 import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
 
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#E2FCDB',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
+import { theme } from './../theme/theme';
 
 //-------------------------------------- Styles Part ----------------------------
 

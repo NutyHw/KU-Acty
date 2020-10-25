@@ -3,13 +3,13 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
-import { theme } from './style';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 
-import { OrgHeader } from './../header/org.header';
+import { theme } from './../theme/theme';
+import { OrgHeader } from '../header/org.header';
 import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count, highestView, lowestView, highestIntr, lowestIntr} from './evdata.org';
 import { highestViewEv, lowestViewEv, highestIntrEv, lowestIntrEv } from './evdata.org';
 

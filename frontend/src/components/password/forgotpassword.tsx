@@ -2,8 +2,6 @@ import React from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
@@ -13,35 +11,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { createMuiTheme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import { relative } from 'path';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import FormatListBulletedOutlinedIcon from '@material-ui/icons/FormatListBulletedOutlined';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#E2FCDB',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
+import { theme } from './../theme/theme';
 
 //-------------------------------------- Styles Part ----------------------------
 const GreenDesc = withStyles({

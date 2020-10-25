@@ -1,27 +1,4 @@
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles'
-
-export const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#E2FCDB',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
-
-//-------------------------------------- Styles Part ----------------------------
 
 export const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,5 +26,3 @@ export const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
-
-//-------------------------------------- End Styles Part ------------------------
