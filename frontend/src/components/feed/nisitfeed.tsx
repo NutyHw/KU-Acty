@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 
 import { NisitHeader } from './../header/nisit.header';
-import { evname, evdate, evlocation, evstatus, evtime, evtype, lastedit, evview, evinterest} from './evdata.nisit';
+import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count} from './evdata.nisit';
 
 const theme = createMuiTheme({
     palette: {
@@ -66,36 +66,36 @@ export const NisitFeed : React.FC = () => {
   const classes = useStyles();
 
   //Input array after query from backend;
-  //contain event detail one eek ahead
+  //contain event detail one week ahead
   var events = [];
 
   //Change i to maximum array length
-  for (let i = 0; i < evname.length; i++) {
+  for (let i = 0; i < event_name.length; i++) {
     events.push(
       <Grid container className={classes.eventbox}>
 
         <Grid item xs={9}>
         <div>
           <Box display="flex" flexDirection="row">
-            <Typography>{evname[i]}</Typography>
+            <Typography>{event_name[i]}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานะ {evstatus[i]}</Typography>
+            <Typography>สถานะ: {status[i]}</Typography>
           </Box>
           <br></br>
           <Grid container>
             <Grid item xs={3}>
-              <Typography>วันที่จัด {evdate[i]}</Typography>
+              <Typography>วันที่จัด: {event_start_date[i]}</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา {evtime[i]}</Typography>
+              <Typography>เวลา: {event_start_time[i]}</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานที่ {evlocation[i]}</Typography>
+            <Typography>สถานที่: {place[i]}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>ประเภท {evtype[i]}</Typography>
+            <Typography>ประเภท: {event_type[i]}</Typography>
           </Box>
         </div>
         </Grid>
@@ -103,12 +103,12 @@ export const NisitFeed : React.FC = () => {
         <Grid item xs={3}>
           <Link href="/nisit/eventdetail" target="_blank" style={{ textDecoration: 'none' }}>
             <Typography>รายละเอียดกิจกรรม</Typography>
-            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {lastedit[i]}</Typography>
+            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {updated_at[i]}</Typography>
           </Link>
           <br/><br/>
           <div>
-            <Typography>View {evview[i]}</Typography>
-            <Typography>Interest {evinterest[i]}</Typography>
+            <Typography>View {view_counts[i]}</Typography>
+            <Typography>Interest {interest_count[i]}</Typography>
           </div>
         </Grid>
 

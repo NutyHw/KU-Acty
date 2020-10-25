@@ -10,7 +10,7 @@ import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 
 import { OrgHeader } from './../header/org.header';
-import { evname, evdate, evlocation, evstatus, evtime, evtype, lastedit, evview, highestView, lowestView, highestIntr, lowestIntr} from './evdata.org';
+import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count, highestView, lowestView, highestIntr, lowestIntr} from './evdata.org';
 import { highestViewEv, lowestViewEv, highestIntrEv, lowestIntrEv } from './evdata.org';
 const theme = createMuiTheme({
     palette: {
@@ -69,9 +69,9 @@ const useStyles = makeStyles((theme) => ({
 export const OrgFeed : React.FC = () => {
   const classes = useStyles();
 
-  for (let i=0; i<evname.length; i++) {
-    if (evview[i] == highestView) {
-      const highestViewEv = evname[i];
+  for (let i=0; i<event_name.length; i++) {
+    if (view_counts[i] == highestView) {
+      const highestViewEv = event_name[i];
       break;
     }
   }
@@ -81,40 +81,40 @@ export const OrgFeed : React.FC = () => {
   var events = [];
 
   //Change i to maximum array length
-  for (let i = 0; i < evname.length; i++) {
+  for (let i = 0; i < event_name.length; i++) {
     events.push(
       <Grid container className={classes.eventbox}>
 
         <Grid item xs={6}>
         <div>
           <Box display="flex" flexDirection="row">
-            <Typography>{evname[i]}</Typography>
+            <Typography>{event_name[i]}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานะ {evstatus[i]}</Typography>
+            <Typography>สถานะ {status[i]}</Typography>
           </Box>
           <br></br>
           <Grid container>
             <Grid item xs={6}>
-              <Typography>วันที่จัด {evdate[i]}</Typography>
+              <Typography>วันที่จัด {event_start_date[i]}</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา {evtime[i]}</Typography>
+              <Typography>เวลา {event_start_time[i]}</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานที่ {evlocation[i]}</Typography>
+            <Typography>สถานที่ {place[i]}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>ประเภท {evtype[i]}</Typography>
+            <Typography>ประเภท {event_type[i]}</Typography>
           </Box>
         </div>
         </Grid>
 
         <Grid item xs={3}>
-          <Link href="https://github.com/NutyHw/KU-Acty/" target="_blank" style={{ textDecoration: 'none' }}>
+          <Link href="/org/eventdetail" target="_blank" style={{ textDecoration: 'none' }}>
             <Typography>รายละเอียดกิจกรรม</Typography>
-            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {lastedit[i]}</Typography>
+            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {updated_at[i]}</Typography>
           </Link>
           <br/><br/>
           <div>
@@ -155,7 +155,7 @@ export const OrgFeed : React.FC = () => {
         <Container className={classes.head} maxWidth="xs">
           <Typography variant="h5" className={classes.headerText}>สถิติ</Typography>
           
-          <Typography>กิจกรรมทั้งหมด {evname.length}</Typography>
+          <Typography>กิจกรรมทั้งหมด {event_name.length}</Typography>
           <br/>
           <Typography>จำนวนผู้เข้าชมหน้ารายละเอียดกิจกรรม</Typography>
           <Grid container>
