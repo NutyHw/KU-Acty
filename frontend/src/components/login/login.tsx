@@ -14,15 +14,27 @@ import { GreenTypography, GreenDesc, useStyles } from './style';
 import  { User } from './type'
 import { api } from '../../api/jsonPlaceholder.instance';
 import { theme } from './../theme/theme';
+import { useHistory } from 'react-router-dom';
 
 export const Login : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory()
+
   const { register, handleSubmit } = useForm<User>();
 
   const onSubmit = async ( user : User ) => {
     try{
       const response = await api.post('/auth/login', user );
       localStorage.setItem('token',response.data.access_token);
+      if ( response.data.role === 'organizer' ){
+        history.push({
+          pathname : '/org/home'
+        })
+      } else if ( response.data.role === 'nisit' ){
+        history.push({
+          pathname : '/nisit/home'
+        })
+      }
     } catch( err ) {
       throw new Error(err)
       return;
