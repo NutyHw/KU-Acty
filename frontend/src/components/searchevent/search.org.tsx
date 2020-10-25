@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
 import { OrgHeader } from '../header/org.header';
 // material ui import
 import Button from '@material-ui/core/Button';
@@ -13,7 +12,6 @@ import Container from '@material-ui/core/Container';
 import { theme, GreenDesc, useStyles, MenuProps } from './style';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -22,6 +20,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
@@ -34,6 +33,7 @@ const typenames = [
 
 export function MyResult() {
   const classes = useStyles();
+
   return (
     <div>
         <Box className={classes.actybox}
@@ -76,7 +76,40 @@ export function MyResult() {
 
 export const SearchEventOrg : React.FC = () => {
   const classes = useStyles();
+  const [ eventName, setEventName ] = useState('')
+  const [ eventType, setEventType ] = useState<string[]>([]);
+  const [ startDate, setStartDate ] = useState(null);
+  const [ endDate, setEndDate ] = useState(null)
   
+  const searchOnChange = ( e: any ) => {
+    setEventName(e.target.value);
+  }
+
+  const startDateOnChange = ( e : any ) => {
+    setStartDate(e.target.value);
+  }
+
+  const endDateOnChange = ( e : any ) => {
+    setEndDate(e.target.value);
+  }
+
+  const eventTypeChange = ( e : any, values : any ) => {
+    setEventType(values)
+  }
+
+  const search = async () => {
+    const payload = {
+      event_name : eventName,
+      event_type : eventType,
+      event_start_time : startDate,
+      event_end_time : endDate
+    }
+    const token = localStorage.getItem('token');
+    setAuthToken(token)
+    const res = await api.post('events/search/', payload)
+    console.log(res)
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <OrgHeader/>
@@ -98,6 +131,7 @@ export const SearchEventOrg : React.FC = () => {
                   label="ค้นหาด้วยชื่อกิจกรรม"
                   type="key"
                   id="key"
+                  onChange = { searchOnChange }
                 />
           </Grid>
 
@@ -110,10 +144,10 @@ export const SearchEventOrg : React.FC = () => {
                     id="startdate"
                     label="วันที่เริ่มกิจกรรม"
                     type="date"
-                    defaultValue="2020-10-10"
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    onChange = { startDateOnChange }
                     >
                   </TextField>
             </Grid>
@@ -127,10 +161,10 @@ export const SearchEventOrg : React.FC = () => {
                     id="enddate"
                     label="วันที่กิจกรรมสิ้นสุด"
                     type="date"
-                    defaultValue="2020-10-10"
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    onChange = { endDateOnChange }
                     >
               </TextField>
             </Grid>
@@ -140,9 +174,9 @@ export const SearchEventOrg : React.FC = () => {
               multiple
               id="type"
               options={typenames}
-              defaultValue={[typenames[6]]}
               filterSelectedOptions
               renderInput={(params) => (<TextField {...params} label="เลือกประเภทของกิจกรรม" placeholder="ประเภทของกิจกรรม" />)}
+              onChange = { eventTypeChange }
               />
             </Grid>
             </Grid>
@@ -152,6 +186,7 @@ export const SearchEventOrg : React.FC = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    onClick={ search }
                     className={classes.submit}><SearchOutlinedIcon/> ค้นหา </Button>
             </Grid>
             <Grid item xs={1}>

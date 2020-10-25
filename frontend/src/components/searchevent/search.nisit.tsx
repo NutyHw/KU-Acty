@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import React, { useState } from 'react';
 import { NisitHeader } from '../header/nisit.header';
 // material ui import
 import Button from '@material-ui/core/Button';
@@ -10,11 +9,10 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { theme, GreenDesc, useStyles, MenuProps } from './style';
+import { theme, useStyles } from './style';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -78,6 +76,39 @@ export function MyResult() {
 
 export const SearchEvent : React.FC = () => {
   const classes = useStyles();
+  const [ eventName, setEventName ] = useState('')
+  const [ eventType, setEventType ] = useState<string[]>([]);
+  const [ startDate, setStartDate ] = useState(null);
+  const [ endDate, setEndDate ] = useState(null)
+  
+  const searchOnChange = ( e: any ) => {
+    setEventName(e.target.value);
+  }
+
+  const startDateOnChange = ( e : any ) => {
+    setStartDate(e.target.value);
+  }
+
+  const endDateOnChange = ( e : any ) => {
+    setEndDate(e.target.value);
+  }
+
+  const eventTypeChange = ( e : any, values : any ) => {
+    setEventType(values)
+  }
+
+  const search = async () => {
+    const payload = {
+      event_name : eventName,
+      event_type : eventType,
+      event_start_time : startDate,
+      event_end_time : endDate
+    }
+    const token = localStorage.getItem('token');
+    setAuthToken(token)
+    const res = await api.post('events/search/', payload)
+    console.log(res)
+  }
   
   return (
     <ThemeProvider theme={theme}>
@@ -100,6 +131,7 @@ export const SearchEvent : React.FC = () => {
                   label="ค้นหาด้วยชื่อกิจกรรม"
                   type="key"
                   id="key"
+                  onChange = { searchOnChange }
                 />
           </Grid>
 
@@ -112,10 +144,10 @@ export const SearchEvent : React.FC = () => {
                     id="startdate"
                     label="วันที่เริ่มกิจกรรม"
                     type="date"
-                    defaultValue="2020-10-10"
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    onChange = { startDateOnChange }
                     >
                   </TextField>
             </Grid>
@@ -129,10 +161,10 @@ export const SearchEvent : React.FC = () => {
                     id="enddate"
                     label="วันที่กิจกรรมสิ้นสุด"
                     type="date"
-                    defaultValue="2020-10-10"
                     InputLabelProps={{
                       shrink: true,
                     }}
+                    onChange = { endDateOnChange }
                     >
               </TextField>
             </Grid>
@@ -142,9 +174,9 @@ export const SearchEvent : React.FC = () => {
               multiple
               id="type"
               options={typenames}
-              defaultValue={[typenames[6]]}
               filterSelectedOptions
               renderInput={(params) => (<TextField {...params} label="เลือกประเภทของกิจกรรม" placeholder="ประเภทของกิจกรรม" />)}
+              onChange = { eventTypeChange }
               />
             </Grid>
             </Grid>
