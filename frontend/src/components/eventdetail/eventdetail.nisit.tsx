@@ -61,7 +61,7 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative'
   },
   midpage: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(16),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'left',
