@@ -10,9 +10,10 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import GitHubIcon from '@material-ui/icons/GitHub';
 import Typography from '@material-ui/core/Typography';
-import { GreenTypography, theme, GreenDesc, useStyles } from './style';
+import { GreenTypography, GreenDesc, useStyles } from './style';
 import  { User } from './type'
 import { api } from '../../api/jsonPlaceholder.instance';
+import { theme } from './../theme/theme';
 
 export const Login : React.FC = () => {
   const classes = useStyles();

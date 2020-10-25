@@ -1,67 +1,16 @@
 import React from 'react';
 import axios from 'axios';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Container from '@material-ui/core/Container'
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/core/styles';
 import { NisitHeader } from './../header/nisit.header';
-import { getParseTreeNode } from 'typescript';
 
-const theme = createMuiTheme({
-    palette: {
-      primary: {
-        main: '#197C4F',
-      },
-      secondary: {
-        main: '#E2FCDB',
-      },
-    },
-    typography: {
-      fontFamily: [
-        '-apple-system',
-        'BlinkMacSystemFont',
-        '"Mitr"',
-        '"Segoe UI"',
-        'Roboto',
-      ].join(','),
-    },
-});
-
-//-------------------------------------- Styles Part ----------------------------
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: '100%',
-      marginTop: theme.spacing(16),
-    },
-    heading: {
-      fontSize: theme.typography.pxToRem(15),
-      flexBasis: '33.33%',
-      flexShrink: 0,
-    },
-    secondaryHeading: {
-      fontSize: theme.typography.pxToRem(15),
-      color: theme.palette.text.secondary,
-      flexBasis: '33.33%',
-    },
-    textHead: {
-        fontSize: 28,
-        margin: theme.spacing(3, 0, 3),
-    },
-    activityList: {
-        fontSize: theme.typography.pxToRem(15),
-        marginLeft: theme.spacing(3),
-    }
-  }),
-);
-
-//-------------------------------------- End Styles Part ------------------------
+import { theme } from './../theme/theme';
+import { useStyles } from './style';
 
 export const NisitTranscript : React.FC = () => {
   const classes = useStyles();
@@ -178,4 +127,3 @@ export const NisitTranscript : React.FC = () => {
     </div>
   );
 }
-

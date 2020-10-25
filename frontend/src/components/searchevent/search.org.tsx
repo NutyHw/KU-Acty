@@ -9,10 +9,11 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { theme, GreenDesc, useStyles, MenuProps } from './style';
+import { GreenDesc, useStyles, MenuProps } from './style';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
+
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -21,6 +22,8 @@ import Avatar from '@material-ui/core/Avatar';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+
+import { theme } from './../theme/theme';
 
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
@@ -31,6 +34,29 @@ const typenames = [
   'กิจกรรมเพื่อสังคม',
 ];
 
+export const subResult : React.FC = ( props : any ) => {
+  return (
+    <ListItemText
+      primary={"ชื่อกิจกรรม"}
+      secondary={
+        <React.Fragment>
+          <Typography
+            component="span"
+            variant="body2"
+            color="textPrimary"
+          >
+          xx<br/>
+          สถานที่<br/>
+          ประเภท<br/>
+          <VisibilityIcon/> 0 view<br/>
+          <TurnedInIcon/> กูไม่กดหรอก <br/>
+          </Typography>
+          <br/>
+        </React.Fragment>
+      }
+    />
+  )
+}
 export function MyResult() {
   const classes = useStyles();
 
@@ -47,26 +73,6 @@ export function MyResult() {
             <ListItemAvatar>
               <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
-            <ListItemText
-              primary={"ชื่อกิจกรรม"}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textPrimary"
-                  >
-                  วันที่จัด<br/>
-                  สถานที่<br/>
-                  ประเภท<br/>
-                  <VisibilityIcon/> 0 view<br/>
-                  <TurnedInIcon/> กูไม่กดหรอก <br/>
-                  </Typography>
-                  <br/>
-                  {" — Wish I could come, but I'm out of town this…"}
-                </React.Fragment>
-              }
-            />
           </ListItem>
           </List>
         </Box>

@@ -7,12 +7,13 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Container from '@material-ui/core/Container';
 import { useParams } from 'react-router-dom';
-import { GreenTypography, GreenDesc, useStyles , theme } from './style';
+import { GreenTypography, GreenDesc, useStyles } from './style';
 import { Organizer } from './type';
 import { OrganizerSchema } from './validator';
 import { ThemeProvider } from '@material-ui/core/styles/';
 import { useHistory } from 'react-router-dom';
 import { api, setFileUploadHeader } from '../../api/jsonPlaceholder.instance';
+import { theme } from './../theme/theme';
 
 export const UploadButtons : React.FC<any> = ( prop ) => {
     const classes = useStyles();

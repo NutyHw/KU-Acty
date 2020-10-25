@@ -9,7 +9,8 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { theme, useStyles } from './style';
+import { useStyles } from './style';
+import { theme } from './../theme/theme';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 
@@ -21,7 +22,7 @@ import Avatar from '@material-ui/core/Avatar';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
 
-
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
