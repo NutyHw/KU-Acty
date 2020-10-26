@@ -11,7 +11,7 @@ import { QueryDto } from './dto/query.dto';
 export class EventsService {
   constructor(
     @InjectModel(Event.name) private eventModel : Model<EventDocument>,
-    @InjectModel(Follower.name) private followerModel : Model<FollowerDocument>
+    @InjectModel(Follower.name) private followerModel : Model<FollowerDocument>,
   ){}
 
   async createEvent(createEventDto : CreateEventDto) : Promise<Event>{
@@ -50,16 +50,38 @@ export class EventsService {
   }
 
   async searchEvent( queryDto : QueryDto ) : Promise<Event[]> {
-    const res =  await this.eventModel.aggregate<any>([
-      { $match : { event_name : queryDto.event_name } },
-      { $match : 
-        { 
-          $gte : { event_start_time : queryDto.evet_start_time }, 
-          $lt : { event_end_time : queryDto.event_end_time }
-        }
-      },
-      { $match : { event_type : queryDto.event_type } }
-    ])
+    const pipeline = new Array();
+    if ( queryDto.event_name != '' ){
+      pipeline.push({ $match : { event_name : queryDto.event_name } })
+    }
+
+    if ( queryDto.event_start_time){
+      pipeline.push({ $match : { event_start_time : { $gte : new Date(queryDto.event_start_time) } }})
+    }
+
+    if ( queryDto.event_end_time){
+      pipeline.push({ $match : { event_end_time : { $lte :  new Date(queryDto.event_start_time) } }})
+    }
+
+    if ( queryDto.event_type.length != 0 ){
+      pipeline.push({ $match : { event_type : { $in : queryDto.event_type } } })
+    }
+
+    const res =  await this.eventModel.aggregate<any>(pipeline);
+    return res;
+  }
+
+  async getFollowEvent( _id : string ) : Promise<Follower[]>{
+    const res = await this.followerModel.find(
+      { student_id : _id }
+    )
+    return res;
+  }
+
+  async getCreateEvent( _id : string ) : Promise<Event[]> {
+    const res = await this.eventModel.find(
+      { organizer_id : new Types.ObjectId(_id) }
+    )
     return res;
   }
 }

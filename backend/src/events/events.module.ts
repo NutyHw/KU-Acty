@@ -10,10 +10,11 @@ import { FollowerSchema, Follower } from './schema/follower.schema';
     MongooseModule.forFeature([
       { name : Event.name, schema : EventSchema },
       { name : Follower.name, schema : FollowerSchema }
-    ])
+    ]),
   ],
   providers: [EventsService],
-  controllers: [EventsController]
+  controllers: [EventsController],
+  exports : [ EventsService ]
 })
 
 export class EventsModule {}

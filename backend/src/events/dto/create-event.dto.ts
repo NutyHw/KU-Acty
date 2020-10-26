@@ -1,4 +1,5 @@
 import { IsString, IsDateString, IsNumberString, IsMongoId, IsEnum, IsNotEmpty } from 'class-validator';
+import { Types } from 'mongoose';
 
 export class CreateEventDto {
 
@@ -8,7 +9,7 @@ export class CreateEventDto {
 
   @IsMongoId()
   @IsNotEmpty()
-  organizer_id : string
+  organizer_id : Types.ObjectId
 
   @IsNumberString()
   @IsNotEmpty()

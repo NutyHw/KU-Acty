@@ -4,6 +4,8 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { FollowDto } from './dto/follow.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { JwtStrategy } from '../auth/jwt.strategy';
+import { QueryDto } from './dto/query.dto';
+import { Types } from 'mongoose';
 
 @Controller('events')
 export class EventsController {
@@ -14,8 +16,7 @@ export class EventsController {
   @Post()
   @UseGuards(JwtAuthGuard)
   async createEvent(@Body() createEventDto : CreateEventDto , @Request() req : any){
-    console.log(req.user)
-    createEventDto.organizer_id = req.user.userId;
+    createEventDto.organizer_id = Types.ObjectId(req.user.userId);
     return await this.eventService.createEvent(createEventDto);
   }
 
@@ -41,5 +42,11 @@ export class EventsController {
   @UseGuards(JwtAuthGuard)
   async unFollowEvent(@Body() followDto : FollowDto){
     return await this.eventService.unFollow(followDto);
+  }
+
+  @Post('/search')
+  @UseGuards(JwtAuthGuard)
+  async search(@Body() queryDto : QueryDto){
+    return await this.eventService.searchEvent(queryDto)
   }
 }

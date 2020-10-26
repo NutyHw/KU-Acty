@@ -43,7 +43,10 @@ export class AuthService {
     }
 
     const payload = await this.createPayload(user.username, user._id, user.role );
-    return payload;
+    return { 
+      access_token : payload.access_token,
+      role : user.role
+    };
   }
 
   async createPayload(username : string , userId : string, role : string) : Promise<any>{
