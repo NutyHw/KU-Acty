@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -10,8 +10,8 @@ import Button from '@material-ui/core/Button';
 
 import { theme } from './../theme/theme';
 import { OrgHeader } from '../header/org.header';
-import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count, highestView, lowestView, highestIntr, lowestIntr} from './evdata.org';
-import { highestViewEv, lowestViewEv, highestIntrEv, lowestIntrEv } from './evdata.org';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { useHistory  } from 'react-router-dom';
 
 //-------------------------------------- Styles Part ----------------------------
 
@@ -49,58 +49,73 @@ const useStyles = makeStyles((theme) => ({
 
 export const OrgFeed : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [ feeds, setFeeds ] = useState<any[]>([]);
 
-  for (let i=0; i<event_name.length; i++) {
-    if (view_counts[i] == highestView) {
-      const highestViewEv = event_name[i];
-      break;
-    }
+  useEffect( () => {
+    const token = localStorage.getItem('token')
+    setAuthToken(token)
+    api.get('/organizers/feed')
+    .then( res => {
+      setFeeds(res.data)
+    })
+  }, [])
+
+  const onClick = ( eventId : string ) => {
+    history.push({
+      pathname: '/org/eventdetail/' + eventId
+    })
   }
 
-  //Input array after query from backend;
-  //contain event detail one week ahead
-  var events = [];
+  const renderFeed = () => {
+    return feeds.map( el => {
+      let startTime = new Date(el.event_start_time)
+      var dd = String(startTime.getDate()).padStart(2, '0');
+      var mm = String(startTime.getMonth() + 1).padStart(2, '0');
+      var yyyy = startTime.getFullYear().toString();
+      const formatDate = dd + '/' + mm + '/' + yyyy
+      const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
 
-  //Change i to maximum array length
-  for (let i = 0; i < event_name.length; i++) {
-    events.push(
-      <Grid container className={classes.eventbox}>
-
+      return  <Grid container className={classes.eventbox}>
         <Grid item xs={6}>
         <div>
           <Box display="flex" flexDirection="row">
-            <Typography>{event_name[i]}</Typography>
+            <Typography>{el.event_name}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานะ {status[i]}</Typography>
+            <Typography>{el.status}</Typography>
           </Box>
           <br></br>
           <Grid container>
             <Grid item xs={6}>
-              <Typography>วันที่จัด {event_start_date[i]}</Typography>
+              <Typography>{ formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา {event_start_time[i]}</Typography>
+              <Typography>{ formatTime }</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานที่ {place[i]}</Typography>
+            <Typography>{el.place}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>ประเภท {event_type[i]}</Typography>
+            <Typography> {el.event_type.join(',')}</Typography>
           </Box>
         </div>
         </Grid>
 
         <Grid item xs={3}>
-          <Link href="/org/eventdetail" target="_blank" style={{ textDecoration: 'none' }}>
-            <Typography>รายละเอียดกิจกรรม</Typography>
-            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {updated_at[i]}</Typography>
+          <Link  
+            onClick = { () => onClick(el._id) }
+            target="_blank" 
+            style={{ textDecoration: 'none' }}
+          >
+            <Typography>{ el.description }</Typography>
+            <Typography className={classes.secondaryHeading}>{ el.updated_at }</Typography>
           </Link>
           <br/><br/>
           <div>
-            <Typography>View</Typography>
-            <Typography>Interest</Typography>
+            <Typography>{ el.view_counts }</Typography>
+            <Typography>{ el.interest_count }</Typography>
           </div>
         </Grid>
 
@@ -115,9 +130,8 @@ export const OrgFeed : React.FC = () => {
             <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>ลบกิจกรรม</Button>
           </Link>
         </Grid>
-
-      </Grid>
-    )
+    </Grid>
+    } )
   }
 
   return (
@@ -129,38 +143,38 @@ export const OrgFeed : React.FC = () => {
             กิจกรรมของคุณ
           </Typography>
           <Container className={classes.root} maxWidth="md">
-            {events}
+            { renderFeed() }
           </Container>
         </Container>
 
         <Container className={classes.head} maxWidth="xs">
           <Typography variant="h5" className={classes.headerText}>สถิติ</Typography>
           
-          <Typography>กิจกรรมทั้งหมด {event_name.length}</Typography>
+          <Typography>กิจกรรมทั้งหมด {feeds.length}</Typography>
           <br/>
           <Typography>จำนวนผู้เข้าชมหน้ารายละเอียดกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>{highestViewEv}</Typography></Grid>
-            <Grid item xs><Typography>{highestView}</Typography></Grid>
+            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <Grid container>
-            <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>{lowestViewEv}</Typography></Grid>
-            <Grid item xs><Typography>{lowestView}</Typography></Grid>
+            <Grid item xs={3}><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <br/>
 
           <Typography>จำนวนผู้กดสนใจกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>{highestIntrEv}</Typography></Grid>
-            <Grid item xs><Typography>{highestIntr}</Typography></Grid>
+            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <Grid container>
             <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>{lowestIntrEv}</Typography></Grid>
-            <Grid item xs><Typography>{lowestIntr}</Typography></Grid>
+            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
         </Container>
       </Grid>

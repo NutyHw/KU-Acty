@@ -34,35 +34,13 @@ const typenames = [
   'กิจกรรมเพื่อสังคม',
 ];
 
-export const subResult : React.FC = ( props : any ) => {
-  return (
-    <ListItemText
-      primary={"ชื่อกิจกรรม"}
-      secondary={
-        <React.Fragment>
-          <Typography
-            component="span"
-            variant="body2"
-            color="textPrimary"
-          >
-          xx<br/>
-          สถานที่<br/>
-          ประเภท<br/>
-          <VisibilityIcon/> 0 view<br/>
-          <TurnedInIcon/> กูไม่กดหรอก <br/>
-          </Typography>
-          <br/>
-        </React.Fragment>
-      }
-    />
-  )
-}
-export function MyResult() {
+export function SearchReslt( props : any ) {
   const classes = useStyles();
 
-  return (
-    <div>
-        <Box className={classes.actybox}
+  const renderResult = () => {
+    return props.searchResult.map( ( el : any ) => {
+      return <Box 
+              className={classes.actybox}
               boxShadow={5}
               display="flex" 
               p={3} 
@@ -73,9 +51,32 @@ export function MyResult() {
             <ListItemAvatar>
               <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
             </ListItemAvatar>
+            <ListItemText
+              primary={ el.event_name }
+              secondary={
+                <React.Fragment>
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    color="textPrimary"
+                  >
+                    { el.start_date }<br/>
+                    { el.place }<br/>
+                    { el.event_type.join(',') }<br/>
+                  <VisibilityIcon/> { el.view_counts }<br/>
+                  <TurnedInIcon/> { el.interest_count } <br/>
+                  </Typography>
+                  <br/>
+                </React.Fragment>
+              }
+            />
           </ListItem>
           </List>
         </Box>
+    } )
+  }
+    return (<div>
+      { renderResult() }
     </div> 
   );
 }
@@ -85,7 +86,8 @@ export const SearchEventOrg : React.FC = () => {
   const [ eventName, setEventName ] = useState('')
   const [ eventType, setEventType ] = useState<string[]>([]);
   const [ startDate, setStartDate ] = useState(null);
-  const [ endDate, setEndDate ] = useState(null)
+  const [ endDate, setEndDate ] = useState(null);
+  const [ searchResult, setSearchResult ] = useState<any[]>([]);
   
   const searchOnChange = ( e: any ) => {
     setEventName(e.target.value);
@@ -103,6 +105,10 @@ export const SearchEventOrg : React.FC = () => {
     setEventType(values)
   }
 
+  useEffect( () => {
+    console.log(searchResult);
+    
+  }, [ searchResult ])
   const search = async () => {
     const payload = {
       event_name : eventName,
@@ -112,8 +118,8 @@ export const SearchEventOrg : React.FC = () => {
     }
     const token = localStorage.getItem('token');
     setAuthToken(token)
-    const res = await api.post('events/search/', payload)
-    console.log(res)
+    const res = await api.post('/events/search/', payload)
+    setSearchResult(res.data)
   }
 
   return (
@@ -208,82 +214,8 @@ export const SearchEventOrg : React.FC = () => {
       <Container fixed>
         <Typography  component="main" style={{ backgroundColor: '#eeeeee', height: '100vh' }}>
         <Grid container direction="column" alignItems="center">
-        <Box className={classes.actybox}
-              boxShadow={5}
-              display="flex" 
-              p={3} 
-              m={3}
-              bgcolor="#b9f6ca" >
-          <List className={classes.actybox}>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary={"ชื่อกิจกรรม"}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textPrimary"
-                  >
-                  วันที่จัด<br/>
-                  สถานที่<br/>
-                  ประเภท
-                  <Typography align="right">
-                  <Button>ดูรายละเอียดเพิ่มเติม</Button><br />
-                  <VisibilityIcon/> 0 view <TurnedInIcon/> ยังไม่ได้ติดตาม
-                  </Typography>
-                  
-                  </Typography>
-                  <br/>
-                
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          </List>
-        </Box>
-        <Box className={classes.actybox}
-              boxShadow={5}
-              display="flex" 
-              p={3} 
-              m={3}
-              bgcolor="#b9f6ca" >
-          <List className={classes.actybox}>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary={"ชื่อกิจกรรม"}
-              secondary={
-                <React.Fragment>
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textPrimary"
-                  >
-                  วันที่จัด<br/>
-                  สถานที่<br/>
-                  ประเภท
-                  <Typography align="right">
-                  <Button>ดูรายละเอียดเพิ่มเติม</Button><br />
-                  <VisibilityIcon/> 999M view <TurnedInIcon/> กำลังติดตาม
-                  </Typography>
-                  
-                  </Typography>
-                  <br/>
-                  
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          </List>
-        </Box>  
-        <MyResult /> 
-      </Grid>
+          <SearchReslt searchResult={ searchResult }/>
+        </Grid>
       
       </Typography>
       </Container>

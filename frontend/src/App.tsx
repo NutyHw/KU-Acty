@@ -25,7 +25,7 @@ const App = () => {
       <Route path="/nisit/transcript" component={NisitTranscript}/>
       <Route path="/org/home" component={OrgFeed} />
       <Route path="/org/createevent" component={CreateEvent}/>
-      <Route path="/org/eventdetail" component={OrgEventDetail}/>
+      <Route path="/org/eventdetail/:id" component={OrgEventDetail}/>
       <Route path="/nisit/eventdetail" component={NisitEventDetail}/>
       <Route path="/org/changepassword" component={ChangePassword}/> 
       <Route path="/forgotpassword" component={ForgotPassword}/>

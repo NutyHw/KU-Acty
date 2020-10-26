@@ -1,5 +1,4 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -81,7 +80,7 @@ export const OrgEventDetail : React.FC = () => {
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Typography variant="h5">
-                    ชื่อกิจกรรม : 
+                    ชื่อกิจกรรม :
                   </Typography>
                 </Grid>
               
