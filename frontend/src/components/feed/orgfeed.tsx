@@ -83,22 +83,22 @@ export const OrgFeed : React.FC = () => {
             <Typography>{el.event_name}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานะ {el.status}</Typography>
+            <Typography>สถานะ: {el.status}</Typography>
           </Box>
           <br></br>
           <Grid container>
             <Grid item xs={6}>
-              <Typography>วันที่จัด { formatDate }</Typography>
+              <Typography>วันที่จัด: { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา { formatTime }</Typography>
+              <Typography>เวลา: { formatTime }</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานที่ {el.place}</Typography>
+            <Typography>สถานที่: {el.place}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>ประเภท {el.event_type.join(',')}</Typography>
+            <Typography>ประเภท: {el.event_type.join(',')}</Typography>
           </Box>
         </div>
         </Grid>
