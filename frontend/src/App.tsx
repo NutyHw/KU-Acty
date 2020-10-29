@@ -14,6 +14,9 @@ import { NisitTranscript } from './components/activitytrans/transcript';
 import { ResetPassword } from './components/password/resetpassword';
 import { SearchEvent } from './components/searchevent/search.nisit';
 import { SearchEventOrg } from './components/searchevent/search.org';
+import { SelfProfile } from './components/orgprofile/profile.self';
+import { Profile_OrgView } from './components/orgprofile/profile.orgview';
+import { Profile_NisitView } from './components/orgprofile/profile.nisitview';
 
 const App = () => {
   return(
@@ -32,6 +35,9 @@ const App = () => {
       <Route path="/resetpassword" component={ResetPassword}/>
       <Route path="/nisit/search" component={SearchEvent}/>
       <Route path="/org/search" component={SearchEventOrg}/>
+      <Route path="/org/selfprofile" component={SelfProfile}/>
+      <Route path="/org/orgprofile" component={Profile_OrgView}/>
+      <Route path="/nisit/orgprofile" component={Profile_NisitView}/>
       <Redirect to="/login" />
     </Switch>
   );

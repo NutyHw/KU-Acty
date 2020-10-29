@@ -87,7 +87,7 @@ export const OrgHeader : React.FC = () => {
           <Typography align="left" variant="body1" className={classes.title}>
             ระบบตรวจสอบและค้นหากิจกรรม มหาวิทยาลัยเกษตรศาสตร์
           </Typography>
-          <IconButton color="inherit" href="/#">
+          <IconButton color="inherit" href="/org/selfprofile">
               <PersonOutlineOutlinedIcon fontSize="large"/>
           </IconButton>
           
