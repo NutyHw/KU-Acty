@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -8,10 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 
-import { theme } from '../theme/theme';
+import { theme } from './../theme/theme';
 import { OrgHeader } from '../header/org.header';
-import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count, highestView, lowestView, highestIntr, lowestIntr} from './evdata.org';
-import { highestViewEv, lowestViewEv, highestIntrEv, lowestIntrEv } from './evdata.org';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { useHistory  } from 'react-router-dom';
 
 //-------------------------------------- Styles Part ----------------------------
 
@@ -49,57 +49,77 @@ const useStyles = makeStyles((theme) => ({
 
 export const Profile_OrgView : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [ feeds, setFeeds ] = useState<any[]>([]);
 
-  //Input array after query from backend;
-  //contain event detail one week ahead
-  var events = [];
+  useEffect( () => {
+    const token = localStorage.getItem('token')
+    setAuthToken(token)
+    api.get('/organizers/feed')
+    .then( res => {
+      setFeeds(res.data)
+    })
+  }, [])
 
-  //Change i to maximum array length
-  for (let i = 0; i < event_name.length; i++) {
-    events.push(
-      <Grid container className={classes.eventbox}>
+  const onClick = ( eventId : string ) => {
+    history.push({
+      pathname: '/org/eventdetail/' + eventId
+    })
+  }
 
+  const renderFeed = () => {
+    return feeds.map( el => {
+      let startTime = new Date(el.event_start_time)
+      var dd = String(startTime.getDate()).padStart(2, '0');
+      var mm = String(startTime.getMonth() + 1).padStart(2, '0');
+      var yyyy = startTime.getFullYear().toString();
+      const formatDate = dd + '/' + mm + '/' + yyyy
+      const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
+
+      return  <Grid container className={classes.eventbox}>
         <Grid item xs={6}>
         <div>
           <Box display="flex" flexDirection="row">
-            <Typography>{event_name[i]}</Typography>
+            <Typography>{el.event_name}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานะ: {status[i]}</Typography>
+            <Typography>สถานะ: {el.status}</Typography>
           </Box>
           <br></br>
           <Grid container>
             <Grid item xs={6}>
-              <Typography>วันที่จัด: {event_start_date[i]}</Typography>
+              <Typography>วันที่จัด: { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา: {event_start_time[i]}</Typography>
+              <Typography>เวลา: { formatTime }</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานที่: {place[i]}</Typography>
+            <Typography>สถานที่: {el.place}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>ประเภท: {event_type[i]}</Typography>
+            <Typography>ประเภท: {el.event_type.join(',')}</Typography>
           </Box>
         </div>
         </Grid>
 
         <Grid item xs={3}>
-          <Link href="/org/eventdetail" target="_blank">
+          <Link  
+            onClick = { () => onClick(el._id) }
+            target="_blank"
+          >
             <Typography>รายละเอียดกิจกรรม</Typography>
-            </Link>
-            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {updated_at[i]}</Typography>
-          
+          </Link>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
           <br/><br/>
           <div>
-            <Typography>View</Typography>
-            <Typography>Interest</Typography>
+            <Typography>View { el.view_counts }</Typography>
+            <Typography>Interest { el.interest_count }</Typography>
           </div>
         </Grid>
 
-      </Grid>
-    )
+    </Grid>
+    } )
   }
 
   return (
@@ -124,7 +144,7 @@ export const Profile_OrgView : React.FC = () => {
             กิจกรรมขององค์กรนี้
           </Typography>
           <Container className={classes.root} maxWidth="md">
-            {events}
+            { renderFeed() }
           </Container>
         </Container>
       </Grid>
