@@ -83,22 +83,22 @@ export const OrgFeed : React.FC = () => {
             <Typography>{el.event_name}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>{el.status}</Typography>
+            <Typography>สถานะ {el.status}</Typography>
           </Box>
           <br></br>
           <Grid container>
             <Grid item xs={6}>
-              <Typography>{ formatDate }</Typography>
+              <Typography>วันที่จัด { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>{ formatTime }</Typography>
+              <Typography>เวลา { formatTime }</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>{el.place}</Typography>
+            <Typography>สถานที่ {el.place}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography> {el.event_type.join(',')}</Typography>
+            <Typography>ประเภท {el.event_type.join(',')}</Typography>
           </Box>
         </div>
         </Grid>
@@ -106,16 +106,15 @@ export const OrgFeed : React.FC = () => {
         <Grid item xs={3}>
           <Link  
             onClick = { () => onClick(el._id) }
-            target="_blank" 
-            style={{ textDecoration: 'none' }}
+            target="_blank"
           >
-            <Typography>{ el.description }</Typography>
-            <Typography className={classes.secondaryHeading}>{ el.updated_at }</Typography>
+            <Typography>รายละเอียดกิจกรรม</Typography>
           </Link>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
           <br/><br/>
           <div>
-            <Typography>{ el.view_counts }</Typography>
-            <Typography>{ el.interest_count }</Typography>
+            <Typography>View { el.view_counts }</Typography>
+            <Typography>Interest { el.interest_count }</Typography>
           </div>
         </Grid>
 
@@ -159,7 +158,7 @@ export const OrgFeed : React.FC = () => {
             <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <Grid container>
-            <Grid item xs={3}><Typography>0</Typography></Grid>
+            <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
             <Grid item xs={6}><Typography>0</Typography></Grid>
             <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
