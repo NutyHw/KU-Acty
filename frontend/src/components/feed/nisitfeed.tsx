@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,13 +9,14 @@ import Link from '@material-ui/core/Link';
 
 import { theme } from './../theme/theme';
 import { NisitHeader } from '../header/nisit.header';
-import { event_name, event_start_date, place, status, event_start_time, event_type, updated_at, view_counts, interest_count} from './evdata.nisit';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { useHistory  } from 'react-router-dom';
 
 //-------------------------------------- Styles Part ----------------------------
 
 const useStyles = makeStyles((theme) => ({
   head: {
-    marginTop: theme.spacing(16),
+    marginTop: theme.spacing(8),
     marginBottom: 16,
   },
   root: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'row',
   },
   headerText: {
-    marginTop: theme.spacing(16),
+    marginTop: theme.spacing(8),
     marginBottom: 16,
   },
   secondaryHeading: {
@@ -38,63 +39,86 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     flexBasis: '33.33%',
   },
+  button: {
+    marginTop: 8,
+  }
 }));
 
 //-------------------------------------- End Styles Part --------------------------
 
 export const NisitFeed : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
+  const [ feeds, setFeeds ] = useState<any[]>([]);
 
-  //Input array after query from backend;
-  //contain event detail one week ahead
-  var events = [];
+  useEffect( () => {
+    const token = localStorage.getItem('token')
+    setAuthToken(token)
+    api.get('/organizers/feed')
+    .then( res => {
+      setFeeds(res.data)
+    })
+  }, [])
 
-  //Change i to maximum array length
-  for (let i = 0; i < event_name.length; i++) {
-    events.push(
-      <Grid container className={classes.eventbox}>
+  const onClick = ( eventId : string ) => {
+    history.push({
+      pathname: '/org/eventdetail/' + eventId
+    })
+  }
 
-        <Grid item xs={9}>
+  const renderFeed = () => {
+    return feeds.map( el => {
+      let startTime = new Date(el.event_start_time)
+      var dd = String(startTime.getDate()).padStart(2, '0');
+      var mm = String(startTime.getMonth() + 1).padStart(2, '0');
+      var yyyy = startTime.getFullYear().toString();
+      const formatDate = dd + '/' + mm + '/' + yyyy
+      const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
+
+      return  <Grid container className={classes.eventbox}>
+        <Grid item xs={6}>
         <div>
           <Box display="flex" flexDirection="row">
-            <Typography>{event_name[i]}</Typography>
+            <Typography>{el.event_name}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานะ: {status[i]}</Typography>
+            <Typography>สถานะ: {el.status}</Typography>
           </Box>
           <br></br>
           <Grid container>
-            <Grid item xs={3}>
-              <Typography>วันที่จัด: {event_start_date[i]}</Typography>
+            <Grid item xs={6}>
+              <Typography>วันที่จัด: { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา: {event_start_time[i]}</Typography>
+              <Typography>เวลา: { formatTime }</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
-            <Typography>สถานที่: {place[i]}</Typography>
+            <Typography>สถานที่: {el.place}</Typography>
           </Box>
           <Box display="flex" flexDirection="row">
-            <Typography>ประเภท: {event_type[i]}</Typography>
+            <Typography>ประเภท: {el.event_type.join(',')}</Typography>
           </Box>
         </div>
         </Grid>
 
         <Grid item xs={3}>
-          <Link href="/nisit/eventdetail" target="_blank" style={{ textDecoration: 'none' }}>
+          <Link  
+            onClick = { () => onClick(el._id) }
+            target="_blank"
+          >
             <Typography>รายละเอียดกิจกรรม</Typography>
-            <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด {updated_at[i]}</Typography>
           </Link>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
           <br/><br/>
           <div>
-            <Typography>View {view_counts[i]}</Typography>
-            <Typography>Interest {interest_count[i]}</Typography>
+            <Typography>View { el.view_counts }</Typography>
+            <Typography>Interest { el.interest_count }</Typography>
           </div>
         </Grid>
 
-      </Grid>
-    )
-    
+    </Grid>
+    } )
   }
 
   return (
@@ -105,7 +129,7 @@ export const NisitFeed : React.FC = () => {
             กิจกรรมที่กำลังจะมาถึง
           </Typography>
           <Container className={classes.root} maxWidth="md">
-            {events}
+            { renderFeed() }
           </Container>
         </Container>
 

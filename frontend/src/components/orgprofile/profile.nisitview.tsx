@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 //-------------------------------------- End Styles Part --------------------------
 
-export const Profile_OrgView : React.FC = () => {
+export const Profile_NisitView : React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const [ feeds, setFeeds ] = useState<any[]>([]);
