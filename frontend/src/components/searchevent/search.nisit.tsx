@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { NisitHeader } from '../header/nisit.header';
 // material ui import
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,22 +9,16 @@ import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { GreenDesc, useStyles, MenuProps } from './style';
+import {useStyles} from './style';
 import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
-
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
-
+import Chip from '@material-ui/core/Chip';
 import { theme } from './../theme/theme';
-import { NisitHeader } from '../header/nisit.header';
+import StarIcon from '@material-ui/icons/Star';
+
 
 const typenames = [
   'กิจกรรมมหาวิทยาลัย',
@@ -39,39 +34,34 @@ export function SearchReslt( props : any ) {
 
   const renderResult = () => {
     return props.searchResult.map( ( el : any ) => {
-      return <Box 
+      return <React.Fragment>
+              <Box 
               className={classes.actybox}
               boxShadow={5}
+              alignItems="center"
               display="flex" 
               p={3} 
               m={3}
-              bgcolor="#b9f6ca" >
-          <List className={classes.actybox}>
-          <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-              <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-              primary={ el.event_name }
-              secondary={
-                <React.Fragment>
+              bgcolor="#fafafa">
+                  
                   <Typography
                     component="span"
                     variant="body2"
                     color="textPrimary"
+      
                   >
-                    { el.start_date }<br/>
-                    { el.place }<br/>
-                    { el.event_type.join(',') }<br/>
-                  <VisibilityIcon/> { el.view_counts }<br/>
+                  
+                  <Grid container spacing={1}>
+                  <Grid item xs={12}><Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography></Grid>
+                  <Grid item xs={10}>สถานที่จัด : { el.place }</Grid>
+                  <Grid item xs={2}><Button type="submit" variant="contained" color="primary" className={classes.submit}><KeyboardArrowRightIcon/>รายละเอียด</Button></Grid>
+                  <Grid item xs={10}>เริ่มจัดกิจกรรม :{ el.start_date }</Grid>
+                  <Grid item xs={2}><VisibilityIcon/> { el.view_counts } <StarIcon className={classes.yell}/> { el.interest_count } </Grid>
+                  ประเภท  <Chip size="small" label={ el.event_type.join(' ')}/><br/>
+                  </Grid>
                   </Typography>
-                  <br/>
-                </React.Fragment>
-              }
-            />
-          </ListItem>
-          </List>
         </Box>
+        </React.Fragment>
     } )
   }
     return (<div>
@@ -222,3 +212,4 @@ export const SearchEvent : React.FC = () => {
     </ThemeProvider>   
   );
 }
+
