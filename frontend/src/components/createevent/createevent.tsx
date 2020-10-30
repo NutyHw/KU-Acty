@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-
+import { useHistory } from 'react-router-dom';
 // material ui import
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -33,7 +33,7 @@ const typenames = [
 
 export function UploadButtons() {
   const classes = useStyles();
-
+  
   return (
     <div className={classes.root}>
       <input
@@ -58,7 +58,7 @@ export function UploadButtons() {
 
 export const CreateEvent : React.FC = () => {
   const classes = useStyles();
-
+  const history = useHistory()
   const [ eventType , setEventType] = useState<string[]>([]);
   const { register, handleSubmit, control } = useForm();
 
@@ -76,6 +76,9 @@ export const CreateEvent : React.FC = () => {
       const token = localStorage.getItem('token');
       setAuthToken(token);
       await api.post('/events/',creatEvent)
+      history.push({
+        pathname : '/org/home'
+      })
     } catch (err) {
       throw new Error(err);
       return ;
@@ -298,6 +301,7 @@ export const CreateEvent : React.FC = () => {
                     type="submit"
                     variant="contained"
                     color="primary"
+                    
                     className={classes.submit}
                   >
                     ประกาศกิจกรรม

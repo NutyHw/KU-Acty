@@ -122,7 +122,7 @@ export const OrgFeed : React.FC = () => {
           <Link href="/org/createevent" style={{ textDecoration: 'none' }}>
             <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>แก้ไขรายละเอียด</Button><br/>
           </Link>
-          <Link href="/org/eventstatistic" style={{ textDecoration: 'none' }}>
+          <Link href="/org/statevent" style={{ textDecoration: 'none' }}>
             <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>สถิติกิจกรรม</Button><br/>
           </Link>
           <Link href="/org/eventstatistic" style={{ textDecoration: 'none' }}>

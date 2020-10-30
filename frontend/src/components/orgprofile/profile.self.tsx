@@ -138,7 +138,7 @@ export const SelfProfile : React.FC = () => {
           </div>
           <br/>
           <Box>
-            <Link href="/org/profile/self" style={{ textDecoration: 'none' }}>
+            <Link href="/org/profile/edit" style={{ textDecoration: 'none' }}>
                 <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>แก้ไขรายละเอียด</Button><br/>
             </Link>
             <Link href="/org/changepassword" style={{ textDecoration: 'none' }}>
