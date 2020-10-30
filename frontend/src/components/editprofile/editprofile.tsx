@@ -50,7 +50,7 @@ export const EditProfile : React.FC = () => {
       <OrgHeader />
       <div className={classes.midpage}>    
           <Typography variant="h6" align="center" color="textPrimary">
-            แก้ไขข้อมูล
+            แก้ไขรายละเอียดองค์กร
           </Typography>  
       <form className={classes.login} noValidate //onSubmit={handleSubmit(onSubmit)} 
       >
@@ -136,7 +136,7 @@ export const EditProfile : React.FC = () => {
               <Grid item xs={6}></Grid>
               <Grid item xs={3}>
               <Button
-                  href = "/org/home"
+                  href = "/org/selfprofile"
                   fullWidth
                   variant="contained" 
                 >

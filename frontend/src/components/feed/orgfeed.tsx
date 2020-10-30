@@ -91,7 +91,7 @@ export const OrgFeed : React.FC = () => {
               <Typography>วันที่จัด: { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา: { formatTime }</Typography>
+              <Typography>เวลา: { formatTime } น.</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">

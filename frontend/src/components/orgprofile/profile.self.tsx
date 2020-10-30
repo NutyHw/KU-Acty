@@ -91,7 +91,7 @@ export const SelfProfile : React.FC = () => {
               <Typography>วันที่จัด: { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา: { formatTime }</Typography>
+              <Typography>เวลา: { formatTime } น.</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
@@ -128,13 +128,12 @@ export const SelfProfile : React.FC = () => {
       <Grid container>
         <Container className={classes.head} maxWidth="xs">
           <Typography variant="h5" className={classes.headerText}>Insert Org Name here</Typography>
-          <Typography variant="h5">(Profile Image?)</Typography>
           <br/>
-          <Typography>สถานที่:</Typography>
-          <Typography>ช่องทางติดต่อ:</Typography>
+          <Typography>ที่ตั้ง: </Typography>
+          <Typography>ช่องทางติดต่อ: </Typography>
           <br/>
           <div>
-              <Typography>รายละเอียด</Typography>
+              <Typography>รายละเอียด: </Typography>
           </div>
           <br/>
           <Box>
