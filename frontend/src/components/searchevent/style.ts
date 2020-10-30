@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
-import { createMuiTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 export const GreenDesc = withStyles({
@@ -45,18 +44,23 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
   submit: {
-    width: '40%'
+    width: '100%'
   },
   formControl: {
     margin: theme.spacing(0),
     minWidth: 250,
     maxWidth: 540,
   },
+  yell: {
+    color: '#ffc107',
+  },
   actybox: {
     width: '100%',
-    maxWidth: '100ch',
-    padding: '0 30px',
-    borderRadius: 3,
+    borderRadius: 5,
+    alignItems: 'center',
+    maxWidth: 900,
+    margin: `${theme.spacing(1)}px auto`,
+    padding: theme.spacing(2),
   },
 }));
 
@@ -71,3 +75,4 @@ export const MenuProps = {
     },
   },
 };
+
