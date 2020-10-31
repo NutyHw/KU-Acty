@@ -7,6 +7,7 @@ services:
       - 27018:27017
     volumes:
       - ../database/:/data/db/
+      - ../dump/:/dump/
     networks: 
       - webnet
   backend:
