@@ -1,50 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './style';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
+import Button from '@material-ui/core/Button';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import StarIcon from '@material-ui/icons/Star';
 
 import { theme } from './../theme/theme';
 import { NisitHeader } from '../header/nisit.header';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { useHistory  } from 'react-router-dom';
-
-//-------------------------------------- Styles Part ----------------------------
-
-const useStyles = makeStyles((theme) => ({
-  head: {
-    marginTop: theme.spacing(8),
-    marginBottom: 16,
-  },
-  root: {
-    background: "#eeeeee"
-  },
-  eventbox: {
-    margin: theme.spacing(0, 0, 3),
-    background: "#b9f6ca",
-  },
-  paper: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  headerText: {
-    marginTop: theme.spacing(8),
-    marginBottom: 16,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-    flexBasis: '33.33%',
-  },
-  button: {
-    marginTop: 8,
-  }
-}));
-
-//-------------------------------------- End Styles Part --------------------------
 
 export const NisitFeed : React.FC = () => {
   const classes = useStyles();
@@ -62,7 +32,7 @@ export const NisitFeed : React.FC = () => {
 
   const onClick = ( eventId : string ) => {
     history.push({
-      pathname: '/org/eventdetail/' + eventId
+      pathname: '/nisit/eventdetail/' + eventId
     })
   }
 
@@ -74,9 +44,9 @@ export const NisitFeed : React.FC = () => {
       var yyyy = startTime.getFullYear().toString();
       const formatDate = dd + '/' + mm + '/' + yyyy
       const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
-
-      return  <Grid container className={classes.eventbox}>
-        <Grid item xs={6}>
+      
+      return  <Box boxShadow={5}><Grid container className={classes.eventbox} justify="space-between">
+        <Grid item xs={6} className={classes.paper}>
         <div>
           <Box display="flex" flexDirection="row">
             <Typography>{el.event_name}</Typography>
@@ -84,13 +54,13 @@ export const NisitFeed : React.FC = () => {
           <Box display="flex" flexDirection="row">
             <Typography>สถานะ: {el.status}</Typography>
           </Box>
-          <br></br>
+          <br/>
           <Grid container>
             <Grid item xs={6}>
               <Typography>วันที่จัด: { formatDate }</Typography>
             </Grid>
             <Grid item xs={3}>
-              <Typography>เวลา: { formatTime }</Typography>
+              <Typography>เวลา: { formatTime } น.</Typography>
             </Grid>
           </Grid>
           <Box display="flex" flexDirection="row">
@@ -102,22 +72,27 @@ export const NisitFeed : React.FC = () => {
         </div>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={3} className={classes.paper}>
           <Link  
             onClick = { () => onClick(el._id) }
             target="_blank"
           >
-            <Typography>รายละเอียดกิจกรรม</Typography>
+            <Button type="submit" variant="contained" color="primary" className={classes.button}>
+              <KeyboardArrowRightIcon/>รายละเอียด
+            </Button>
           </Link>
-          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
           <br/><br/>
-          <div>
-            <Typography>View { el.view_counts }</Typography>
-            <Typography>Interest { el.interest_count }</Typography>
-          </div>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
+          <br/>
+          <Grid item>
+            <Typography>
+              <VisibilityIcon/> { el.view_counts }
+              <StarIcon className={classes.yell}/> { el.interest_count }
+            </Typography>
+          </Grid>
         </Grid>
 
-    </Grid>
+    </Grid></Box>
     } )
   }
 
@@ -125,14 +100,14 @@ export const NisitFeed : React.FC = () => {
     <ThemeProvider theme={theme}>
       <NisitHeader />
         <Container className={classes.head} maxWidth="md">
-          <Typography variant="h5" className={classes.headerText}>
+          <Typography variant="h5" className={classes.headerTextN}>
             กิจกรรมที่กำลังจะมาถึง
           </Typography>
           <Container className={classes.root} maxWidth="md">
-            { renderFeed() }
+          <br/>{ renderFeed() }<br/>
           </Container>
         </Container>
 
-    </ThemeProvider>  
+    </ThemeProvider>
   );
 }

@@ -18,6 +18,7 @@ import { SelfProfile } from './components/orgprofile/profile.self';
 import { Profile_OrgView } from './components/orgprofile/profile.orgview';
 import { Profile_NisitView } from './components/orgprofile/profile.nisitview';
 import { StatEvent } from './components/stat/stat';
+import { EditProfile } from './components/editprofile/editprofile';
 
 const App = () => {
   return(
@@ -40,6 +41,7 @@ const App = () => {
       <Route path="/org/orgprofile" component={Profile_OrgView}/>
       <Route path="/nisit/orgprofile" component={Profile_NisitView}/>
       <Route path="/org/statevent" component={StatEvent}/>
+      <Route path="/org/profile/edit" component={EditProfile}/>
       <Redirect to="/login" />
     </Switch>
   );
