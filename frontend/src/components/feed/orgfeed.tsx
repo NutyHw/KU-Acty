@@ -1,51 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from './style';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
+import KeyboardArrowRightIcon from '@material-ui/icons/KeyboardArrowRight';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import StarIcon from '@material-ui/icons/Star';
 
 import { theme } from './../theme/theme';
 import { OrgHeader } from '../header/org.header';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { useHistory  } from 'react-router-dom';
-
-//-------------------------------------- Styles Part ----------------------------
-
-const useStyles = makeStyles((theme) => ({
-  head: {
-    marginTop: theme.spacing(8),
-    marginBottom: 16,
-  },
-  root: {
-    background: "#eeeeee"
-  },
-  eventbox: {
-    margin: theme.spacing(0, 0, 3),
-    background: "#b9f6ca",
-  },
-  paper: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  headerText: {
-    marginTop: theme.spacing(8),
-    marginBottom: 16,
-  },
-  secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
-    color: theme.palette.text.secondary,
-    flexBasis: '33.33%',
-  },
-  button: {
-    marginTop: 8,
-  }
-}));
-
-//-------------------------------------- End Styles Part --------------------------
 
 export const OrgFeed : React.FC = () => {
   const classes = useStyles();
@@ -76,8 +45,8 @@ export const OrgFeed : React.FC = () => {
       const formatDate = dd + '/' + mm + '/' + yyyy
       const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
 
-      return  <Grid container className={classes.eventbox}>
-        <Grid item xs={6}>
+      return  <Box boxShadow={5}><Grid container className={classes.eventbox}>
+        <Grid item xs={6} className={classes.paper}>
         <div>
           <Box display="flex" flexDirection="row">
             <Typography>{el.event_name}</Typography>
@@ -103,24 +72,29 @@ export const OrgFeed : React.FC = () => {
         </div>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={3} className={classes.paper}>
           <Link  
             onClick = { () => onClick(el._id) }
             target="_blank"
           >
-            <Typography>รายละเอียดกิจกรรม</Typography>
+            <Button className={classes.button} type="submit" variant="outlined" color="primary">
+              <KeyboardArrowRightIcon/>รายละเอียด
+            </Button>
           </Link>
-          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
           <br/><br/>
-          <div>
-            <Typography>View { el.view_counts }</Typography>
-            <Typography>Interest { el.interest_count }</Typography>
-          </div>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
+          <br/>
+          <Grid item>
+            <Typography>
+              <VisibilityIcon/> { el.view_counts }
+              <StarIcon className={classes.yell}/> { el.interest_count }
+            </Typography>
+          </Grid>
         </Grid>
 
-        <Grid item xs={3}>
+        <Grid item xs={2} className={classes.paper}>
           <Link href="/org/createevent" style={{ textDecoration: 'none' }}>
-            <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>แก้ไขรายละเอียด</Button><br/>
+            <Button className={classes.button} variant="contained" color="primary" style={{minWidth: 128}}>แก้ไขรายละเอียด</Button><br/>
           </Link>
           <Link href="/org/statevent" style={{ textDecoration: 'none' }}>
             <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>สถิติกิจกรรม</Button><br/>
@@ -129,7 +103,7 @@ export const OrgFeed : React.FC = () => {
             <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>ลบกิจกรรม</Button>
           </Link>
         </Grid>
-    </Grid>
+    </Grid></Box>
     } )
   }
 
@@ -142,7 +116,8 @@ export const OrgFeed : React.FC = () => {
             กิจกรรมของคุณ
           </Typography>
           <Container className={classes.root} maxWidth="md">
-            { renderFeed() }
+            <br/>
+            { renderFeed() }<br/>
           </Container>
         </Container>
 
@@ -154,12 +129,12 @@ export const OrgFeed : React.FC = () => {
           <Typography>จำนวนผู้เข้าชมหน้ารายละเอียดกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>event_name</Typography></Grid>
             <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <Grid container>
             <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>event_name</Typography></Grid>
             <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <br/>
@@ -167,17 +142,17 @@ export const OrgFeed : React.FC = () => {
           <Typography>จำนวนผู้กดสนใจกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>event_name</Typography></Grid>
             <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
           <Grid container>
             <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>event_name</Typography></Grid>
             <Grid item xs><Typography>0</Typography></Grid>
           </Grid>
         </Container>
       </Grid>
 
-    </ThemeProvider>  
+    </ThemeProvider>
   );
 }
