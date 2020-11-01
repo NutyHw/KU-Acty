@@ -40,7 +40,7 @@ export const Register : React.FC = () => {
       history.go(0);
 
     } catch( err ) {
-      throw new Error(err)
+        alert("ERROR!");
       return;
     }
   }

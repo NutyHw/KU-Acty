@@ -67,7 +67,7 @@ export const RegisterCont : React.FC = () => {
               }
           })
       } catch ( err ){
-          throw new Error(err)
+          alert("ERROR!");
           return;
       }
   }
@@ -81,7 +81,7 @@ export const RegisterCont : React.FC = () => {
         history.push('/login');
         history.go(0);
       } catch( err ) {
-        throw new Error(err)
+          alert("ERROR!");
         return;
       }
   }

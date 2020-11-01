@@ -80,7 +80,7 @@ export const CreateEvent : React.FC = () => {
         pathname : '/org/home'
       })
     } catch (err) {
-      throw new Error(err);
+      alert("ERROR!")
       return ;
     }
   }

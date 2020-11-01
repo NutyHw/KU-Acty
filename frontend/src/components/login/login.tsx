@@ -36,7 +36,7 @@ export const Login : React.FC = () => {
         })
       }
     } catch( err ) {
-      throw new Error(err)
+        alert("ชื่อบัญชีผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
       return;
     }
   }
