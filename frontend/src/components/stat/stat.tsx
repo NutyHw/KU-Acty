@@ -14,6 +14,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import  { Event } from './type'
+import { Mydata } from './chart';
 
 export const StatEvent : React.FC = () => {
   const classes = useStyles();
@@ -60,7 +61,7 @@ export const StatEvent : React.FC = () => {
             </AccordionSummary>
             <AccordionDetails>
                 <Box>
-                Pls wait graph component. It'll coming so...on.
+                <Mydata/>
                 </Box>
             </AccordionDetails>
         </Accordion>
