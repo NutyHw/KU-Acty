@@ -1,5 +1,5 @@
 import { Model, Types } from 'mongoose';
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Event, EventDocument } from './schema/event.schema';
 import { Follower, FollowerDocument } from './schema/follower.schema';
@@ -24,27 +24,37 @@ export class EventsService {
   async updateEvent(_id : string, createEventDto : CreateEventDto) : Promise<any> {
     const temp = JSON.stringify(createEventDto);
     const updated = JSON.parse(temp);
-    return await this.eventModel.updateOne(
+    const res = await this.eventModel.updateOne(
         { _id : new Types.ObjectId(_id) },
         { '$set' : updated }
       )
+    return res;
   }
 
-  async followEvent( followDto : FollowDto ) : Promise<Follower> {
+  async followEvent( followDto : FollowDto ) : Promise<boolean> {
     const record = {
       event_id : new Types.ObjectId(followDto.event_id),
       student_id : new Types.ObjectId(followDto.student_id)
     }
     const follower = new this.followerModel(record);
-    return await follower.save();
+    if ( follower ){
+      return true;
+    } else {
+      throw new HttpException('internal error',HttpStatus.INTERNAL_SERVER_ERROR)
+    }
   }
 
-  async unFollow( followDto : FollowDto ) : Promise<any> {
+  async unFollow( followDto : FollowDto ) : Promise<true> {
     const record = {
       event_id : new Types.ObjectId(followDto.event_id),
       student_id : new Types.ObjectId(followDto.student_id)
     }
-    return await this.followerModel.deleteOne(record).exec();
+    const res = await this.followerModel.deleteOne(record).exec();
+    if ( res.deletedCount === 0 ){
+      throw new HttpException('event_id not match',HttpStatus.BAD_REQUEST)
+    } else {
+      return true;
+    }
   }
 
   async getDetailedEvent( _id : string ) : Promise<any> {
@@ -54,9 +64,12 @@ export class EventsService {
   }
 
   async searchEvent( queryDto : QueryDto ) : Promise<Event[]> {
-    const pipeline = new Array();
+    const pipeline = new Array<any>();
+
+    pipeline.push({ $match : { 'event_status' : 'active' } })
+
     if ( queryDto.event_name != '' ){
-      pipeline.push({ $match : { event_name : queryDto.event_name } })
+      pipeline.push({ $regexMatch : { input : '$event_name', regex : '/' + queryDto.event_name + '/' } })
     }
 
     if ( queryDto.event_start_time){
@@ -64,22 +77,31 @@ export class EventsService {
     }
 
     if ( queryDto.event_end_time){
-      pipeline.push({ $match : { event_end_time : { $lte :  new Date(queryDto.event_start_time) } }})
+      pipeline.push({ $match : { event_start_time : { $lte :  new Date(queryDto.event_end_time) } }})
     }
 
     if ( queryDto.event_type.length != 0 ){
-      pipeline.push({ $match : { event_type : { $in : queryDto.event_type } } })
+      pipeline.push({ $match : { event_type : { $elemMatch : { $in : queryDto.event_type } } } } )
     }
 
-    const res =  await this.eventModel.aggregate<any>(pipeline);
-    return res;
+    if ( pipeline.length == 0 ){
+      return await this.eventModel.find({}).sort({ event_start_time : 1 });
+    } else {
+      return await this.eventModel.aggregate<any>(pipeline).sort({ event_start_time : 1 });
+    }
   }
 
-  async getFollowEvent( _id : string ) : Promise<Follower[]>{
+  async getFollowEvent( _id : string ) : Promise<Event[]>{
     const res = await this.followerModel.find(
-      { student_id : _id }
+      { student_id : _id  }
     )
-    return res;
+    const allEventsId = res.map( (elm) => elm._id )
+    const res2 = await this.eventModel.aggregate([
+      { $match : { event_start_time : { $gt : new Date() } } },
+      { $match : { _id : { $in : allEventsId } } },
+    ]).sort({ event_start_time : 1 })
+
+    return res2;
   }
 
   async getCreateEvent( _id : string ) : Promise<Event[]> {

@@ -1,4 +1,6 @@
+import { Types } from 'mongoose';
+
 export class FollowDto {
-  student_id : string
+  student_id : Types.ObjectId
   event_id : string
 }

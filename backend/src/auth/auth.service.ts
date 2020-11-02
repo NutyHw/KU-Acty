@@ -3,11 +3,12 @@ import { RegisterDto, LoginDto, ChangePasswordDto } from './dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
 import { User, UserDocument } from '../users/schemas/users.schema';
 import * as bcrypt from 'bcrypt';
-//import * as nodemailer from 'nodemailer';
+import * as nodemailer from 'nodemailer';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { OrganizersService } from '../organizers/organizers.service'; 
 import { email } from './config/constant';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 
 @Injectable()
 export class AuthService {
@@ -75,29 +76,39 @@ export class AuthService {
     return true;
   }
 
-  //async sendMail ( toMail : string, url : string ) : Promise<boolean> {
-    //try{
-      //const transporter = nodemailer.createTransport(
-        //''.concat('smtps//',email.user,'%40gmail.com:',email.password,'@smtp.gmail.com')
-      //)
-      //const mailOption = {
-        //from : email.user,
-        //to : toMail,
-        //subject : 'reset password',
-        //html : 'reset password url <a>' + url + '</a'
-      //}
-      //const res = await transporter.sendMail(mailOption)
-      //return true;
-    //} catch ( err ) {
-      //return false;
-    //}
-  //}
+  async sendMail ( toMail : string, url : string ) : Promise<boolean> {
+    try{
+      const transporter = nodemailer.createTransport({
+        host : 'smtp.gmail.com',
+        port : 465,
+        secure : true,
+        auth : {
+          user : email.user,
+          pass : email.password
+        }
+      } as SMTPTransport.Options )
 
-  async resetPassword( email : string ) : Promise<any> {
+      const mailOption = {
+        from : email.user,
+        to : toMail,
+        subject : 'reset password',
+        html : 'reset password url <a>' + url + '</a>'
+      }
+      await transporter.sendMail(mailOption)
+      return true;
+    } catch ( err ) {
+      console.log(err);
+      return false;
+    }
+  }
+
+  async resetPassword( email : string ) : Promise<boolean> {
     const record = await this.organizersService.findEmail(email)
     if ( !record ) {
       throw new HttpException('email not found in database', HttpStatus.BAD_REQUEST);
     }
-    //const sendMailRes = await this.sendMail( 'nattaphum.sa@ku.th', 'https://www.google.com/' )
+    const token = this.jwtService.sign({ username : record.user })
+    const sendMailRes = await this.sendMail( email, 'http://localhost:8080/reset-password/' + token );
+    return sendMailRes
   }
 }
