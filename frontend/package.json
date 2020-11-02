@@ -21,6 +21,7 @@
     "react-hook-form": "^6.9.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "reaviz": "^9.3.9",
     "recoil": "0.0.13",
     "typescript": "^3.7.5",
     "yup": "^0.29.3"

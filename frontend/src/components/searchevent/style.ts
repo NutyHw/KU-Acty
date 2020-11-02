@@ -56,7 +56,7 @@ export const useStyles = makeStyles((theme) => ({
   },
   actybox: {
     width: '100%',
-    borderRadius: 5,
+    borderRadius: 10,
     alignItems: 'center',
     maxWidth: 900,
     margin: `${theme.spacing(1)}px auto`,

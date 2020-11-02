@@ -24,7 +24,7 @@ export const NisitFeed : React.FC = () => {
   useEffect( () => {
     const token = localStorage.getItem('token')
     setAuthToken(token)
-    api.get('/organizers/feed')
+    api.get('/studennts/feed')
     .then( res => {
       setFeeds(res.data)
     })

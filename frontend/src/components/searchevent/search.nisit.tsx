@@ -35,33 +35,35 @@ export function SearchReslt( props : any ) {
   const renderResult = () => {
     return props.searchResult.map( ( el : any ) => {
       return <React.Fragment>
-              <Box 
-              className={classes.actybox}
-              boxShadow={5}
-              alignItems="center"
-              display="flex" 
-              p={3} 
-              m={3}
-              bgcolor="#fafafa">
-                  
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    color="textPrimary"
-      
-                  >
-                  
-                  <Grid container spacing={1}>
-                  <Grid item xs={12}><Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography></Grid>
-                  <Grid item xs={10}>สถานที่จัด : { el.place }</Grid>
-                  <Grid item xs={2}><Button type="submit" variant="contained" color="primary" className={classes.submit}><KeyboardArrowRightIcon/>รายละเอียด</Button></Grid>
-                  <Grid item xs={10}>เริ่มจัดกิจกรรม :{ el.start_date }</Grid>
-                  <Grid item xs={2}><VisibilityIcon/> { el.view_counts } <StarIcon className={classes.yell}/> { el.interest_count } </Grid>
-                  ประเภท  <Chip size="small" label={ el.event_type.join(' ')}/><br/>
-                  </Grid>
-                  </Typography>
-        </Box>
-        </React.Fragment>
+      <Box 
+      className={classes.actybox}
+      boxShadow={10}
+      alignItems="center"
+      display="flex" 
+      p={3} 
+      m={3}
+      bgcolor="#fafafa">
+          <Grid container spacing={1}>
+          <Grid item xs={10}>
+            <Box>
+              <Typography component="span" variant="body2" color="textPrimary">
+                <Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography>
+                สถานที่จัด : { el.place }<br/>
+                เริ่มจัดกิจกรรม : { el.start_date }
+              </Typography>
+            </Box>
+          </Grid>
+          <Grid item xs={2}>
+            <Box>
+            <Button type="submit" variant="contained" color="primary" className={classes.submit}><KeyboardArrowRightIcon/>รายละเอียด</Button><br/><br/>
+            <VisibilityIcon/> { el.view_counts } <StarIcon className={classes.yell}/> { el.interest_count }
+            </Box>
+          </Grid>
+          <Typography component="span" variant="body2" color="textPrimary">
+          {" ประเภท "}<Chip size="small" label={ el.event_type.join(' / ')}/> </Typography><br/>
+          </Grid>
+      </Box>
+    </React.Fragment>
     } )
   }
     return (<div>
