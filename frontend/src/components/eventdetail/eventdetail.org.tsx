@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
-import { OrgHeader } from './../header/org.header';
+import {  OrgHeader } from '../header/org.header';
+import { useParams } from 'react-router-dom';
 import { theme } from './../theme/theme';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 
 //-------------------------------------- Styles Part ----------------------------
 const GreenDesc = withStyles({
@@ -31,13 +31,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
   },
-  midpage: {
-    marginTop: theme.spacing(16),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'left',
-    
-  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -49,107 +42,129 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 0,
     position: 'relative'
   },
+  midpage: {
+    marginTop: theme.spacing(16),
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'left',
+    
+  },
   login: {
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
-
 }));
-
 
 //-------------------------------------- End Styles Part ------------------------
 
-type User = {
-  username : string
-  password : string
-}
-
 export const OrgEventDetail : React.FC = () => {
   const classes = useStyles();
+  const { id } = useParams();
 
+  const [ event, setEvent ] = useState();
+
+  useEffect( () => {
+    if ( event ){
+      const startTime = new Date(event.eventDetail.event_start_time)
+      const endTime = new Date(event.eventDetail.event_end_time)
+
+      event.eventDetail.event_start_date = startTime.getDay() + '/' + startTime.getMonth() + '/' + ( startTime.getFullYear() + 543 )
+      event.eventDetail.event_start_clock = startTime.getHours() + ':' + startTime.getMinutes()
+
+      event.eventDetail.event_end_date = endTime.getDay() + '/' + endTime.getMonth() + '/' + ( endTime.getFullYear() + 543 )
+      event.eventDetail.event_end_clock = endTime.getHours() + ':' + endTime.getMinutes()
+      setEvent(event)
+      console.log(event)
+    }
+  }, [ event ])
+
+  useEffect( () => {
+    const token = localStorage.getItem('token')
+    setAuthToken(token);
+    api.get('/events/' + id + '/detail')
+    .then( res => {
+      setEvent(res.data);
+    } )
+  }, [])
   return (
-    <ThemeProvider theme={theme}>
-      <OrgHeader />
-
       <Container component="main" maxWidth="md">
+        <OrgHeader/>
         <ThemeProvider theme={theme}>
-          <CssBaseline /><div className={classes.midpage}>    
+          <CssBaseline />
+          <div className={classes.midpage}>    
           
-          </div>
             <form className={classes.login} noValidate></form>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Typography variant="h5">
-                    ชื่อกิจกรรม :
+                    ชื่อกิจกรรม : { event ? event.eventDetail.event_name : null }
                   </Typography>
                 </Grid>
               
                 <Grid item xs={12}>
                 <Typography variant="h6">
-                    ผู้จัดกิจกรรม :
+                  ผู้จัดกิจกรรม : { event ? event.organizerDetail.organizer_name : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
                 <Typography> 
-                    ประเภทกิจกรรม : 
+                  ประเภทกิจกรรม : { event ? event.eventDetail.event_type : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
                   <Typography>
-                    จำนวนชั่วโมง :
+                    จำนวนชั่วโมง :  { event ? event.eventDetail.benefit_hour : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                 <Typography>
-                    สถานที่ :
+                  สถานที่ : { event ? event.eventDetail.place : null }
                   </Typography>
                 </Grid>
 
 
                 <Grid item xs={6}>
                 <Typography>
-                    วันที่เริ่มกิจกรรม :
+                  วันที่เริ่มกิจกรรม : { event ? event.eventDetail.event_start_date : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
                 <Typography>
-                    เวลาเริ่มกิจกรรม :
+                  เวลาเริ่มกิจกรรม : { event ? event.eventDetail.event_start_clock : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
                 <Typography>
-                    วันที่สิ้นสุดกิจกรรม :
+                  วันที่สิ้นสุดกิจกรรม : { event ? event.eventDetail.event_end_date : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={6}>
                 <Typography>
-                    เวลาสิ้นสุดกิจกรรม :
+                  เวลาสิ้นสุดกิจกรรม : { event ? event.eventDetail.event_end_clock : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                 <Typography>
-                    ช่องทางการติดต่อ :
+                  ช่องทางการติดต่อ : { event ? event.eventDetail.contact : null }
                   </Typography>
                 </Grid>
 
                 <Grid item xs={12}>
                 <Typography>
-                    รายละเอียดกิจกรรม :
+                  รายละเอียดกิจกรรม : { event ? event.eventDetail.description : null }
                   </Typography>
                 </Grid>
                 </Grid>
             
-            </ThemeProvider>   
-      </Container>
-      <Box mt={10}></Box>
-    </ThemeProvider>  
-    
+          </div>
+        </ThemeProvider>   
+    </Container>
   );
 }

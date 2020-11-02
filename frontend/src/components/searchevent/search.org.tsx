@@ -55,7 +55,14 @@ export function SearchReslt( props : any ) {
           </Grid>
           <Grid item xs={2}>
             <Box>
-            <Button type="submit" variant="contained" color="primary" className={classes.submit}><KeyboardArrowRightIcon/>รายละเอียด</Button><br/><br/>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary" className={
+              classes.submit} 
+              href={ '/org/eventdetail/' + el._id } 
+            >
+              <KeyboardArrowRightIcon/>รายละเอียด</Button><br/><br/>
             <VisibilityIcon/> { el.view_counts } <StarIcon className={classes.yell}/> { el.interest_count }
             </Box>
           </Grid>

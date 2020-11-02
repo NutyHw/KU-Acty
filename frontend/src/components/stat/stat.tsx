@@ -8,6 +8,7 @@ import Container from '@material-ui/core/Container';
 import { theme, GreenDesc, useStyles, MenuProps } from './style';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import TurnedInIcon from '@material-ui/icons/TurnedIn';
+import StarIcon from '@material-ui/icons/Star';
 import { OrgHeader } from '../header/org.header';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -47,7 +48,7 @@ export const StatEvent : React.FC = () => {
             ประเภทกิจกรรม : 
           </Typography>
           <Typography align="right" color="textPrimary">
-            <VisibilityIcon/> 0 view <TurnedInIcon/> 0 คน
+            <VisibilityIcon/> 0 view <StarIcon/> 0 คน
             <br />
           </Typography>
 
@@ -76,7 +77,7 @@ export const StatEvent : React.FC = () => {
             </AccordionSummary>
             <AccordionDetails>
                 <Box>
-                  mr.prayuth huakuy
+                  temp
                 </Box>
             </AccordionDetails>
         </Accordion>

@@ -31,7 +31,7 @@ const App = () => {
       <Route path="/org/home" component={OrgFeed} />
       <Route path="/org/createevent" component={CreateEvent}/>
       <Route path="/org/eventdetail/:id" component={OrgEventDetail}/>
-      <Route path="/nisit/eventdetail" component={NisitEventDetail}/>
+      <Route path="/nisit/eventdetail/:id" component={NisitEventDetail}/>
       <Route path="/org/changepassword" component={ChangePassword}/> 
       <Route path="/forgotpassword" component={ForgotPassword}/>
       <Route path="/resetpassword" component={ResetPassword}/>
