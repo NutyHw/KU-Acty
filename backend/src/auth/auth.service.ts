@@ -1,15 +1,20 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { RegisterDto, LoginDto } from '../users/dto/user.dto';
+import { RegisterDto, LoginDto, ChangePasswordDto } from './dto/user.dto';
 import { JwtService } from '@nestjs/jwt';
-import { User } from '../users/schemas/users.schema';
+import { User, UserDocument } from '../users/schemas/users.schema';
 import * as bcrypt from 'bcrypt';
+//import * as nodemailer from 'nodemailer';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { OrganizersService } from '../organizers/organizers.service'; 
+import { email } from './config/constant';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly userService : UsersService,
-    private readonly jwtService : JwtService
+    private readonly jwtService : JwtService,
+    @InjectModel(User.name) private userModel : Model<UserDocument> ,
+    private readonly organizersService : OrganizersService
   ) {};
 
   saltRound = 10;
@@ -21,23 +26,23 @@ export class AuthService {
   async register( userDto : RegisterDto ) : Promise<User> {
     userDto.password = await this.hashPassword(userDto.password);
     userDto.role = 'organizer';
-    const user = await this.userService.findOne(userDto.username);
+    const user = await this.userModel.findOne({ username : userDto.username });
 
     if ( user ){
       throw new HttpException('username already in userd', HttpStatus.BAD_REQUEST) 
     }
 
-    return await this.userService.create(userDto)
+    return new this.userModel(userDto).save();
   }
 
-  async login(userDto : LoginDto ) : Promise<any> {
-    const user = await this.userService.findOne(userDto.username);
+  async login( loginDto : LoginDto ) : Promise<{ access_token : string, role : string }> {
+    const user = await this.userModel.findOne({ username : loginDto.username });
 
     if ( !user ){
       throw new HttpException('username or password not match', HttpStatus.BAD_REQUEST)
     }
 
-    const match = await bcrypt.compare(userDto.password, user.password);
+    const match = await bcrypt.compare(loginDto.password, user.password);
     if ( !match ){
       throw new HttpException('username or password not match', HttpStatus.BAD_REQUEST)
     }
@@ -49,10 +54,50 @@ export class AuthService {
     };
   }
 
-  async createPayload(username : string , userId : string, role : string) : Promise<any>{
+  async createPayload(username : string , userId : string, role : string) : Promise<{ access_token : string }>{
     const payload = { username : username, userId : userId , role : role }
     return {
       access_token : this.jwtService.sign(payload)
     }
+  }
+
+  async changePassword( changePasswordDto : ChangePasswordDto ) : Promise<boolean> {
+    const res = await this.userModel.updateOne
+    (
+      { username : changePasswordDto.username }, 
+      { password : changePasswordDto.password }
+    ).exec()
+
+    if ( res.nModified === 0 ){
+      throw new HttpException('username not found in database',HttpStatus.BAD_REQUEST);
+    }
+
+    return true;
+  }
+
+  //async sendMail ( toMail : string, url : string ) : Promise<boolean> {
+    //try{
+      //const transporter = nodemailer.createTransport(
+        //''.concat('smtps//',email.user,'%40gmail.com:',email.password,'@smtp.gmail.com')
+      //)
+      //const mailOption = {
+        //from : email.user,
+        //to : toMail,
+        //subject : 'reset password',
+        //html : 'reset password url <a>' + url + '</a'
+      //}
+      //const res = await transporter.sendMail(mailOption)
+      //return true;
+    //} catch ( err ) {
+      //return false;
+    //}
+  //}
+
+  async resetPassword( email : string ) : Promise<any> {
+    const record = await this.organizersService.findEmail(email)
+    if ( !record ) {
+      throw new HttpException('email not found in database', HttpStatus.BAD_REQUEST);
+    }
+    //const sendMailRes = await this.sendMail( 'nattaphum.sa@ku.th', 'https://www.google.com/' )
   }
 }

@@ -18,16 +18,29 @@ export class OrganizersService {
     return organizer.save()
   }
 
-  async approve( _id : Types.ObjectId ) : Promise<Organizer> {
-    return await this.organizerModel.updateOne({ _id : _id }, { $set : { approve_date : new Date() } });
+  async approve( _id : Types.ObjectId ) : Promise<boolean> {
+    try{
+      await this.organizerModel.updateOne({ _id : _id }, { $set : { approve_date : new Date() } });
+      return true;
+    } catch ( err ) {
+      return false;
+    }
   }
 
-  async uploadFile( _id : string, filePath : string ) : Promise<any> {
-    return await this.organizerModel.updateOne({ user : new Types.ObjectId(_id) }, { $set : { document_path : filePath } });
+  async uploadFile( _id : string, filePath : string ) : Promise<boolean> {
+    try{
+      await this.organizerModel.updateOne({ user : new Types.ObjectId(_id) }, { $set : { document_path : filePath } });
+      return true;
+    } catch ( err ) {
+      return false;
+    }
   }
 
   async feed( _id : string ) : Promise<any> {
-    console.log(_id)
     return await this.eventsService.getCreateEvent(_id);
+  }
+
+  async findEmail( email : string ) : Promise<Organizer> {
+    return await this.organizerModel.findOne({ email : email }).exec()
   }
 }

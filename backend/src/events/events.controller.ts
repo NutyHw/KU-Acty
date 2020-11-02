@@ -3,49 +3,51 @@ import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
 import { FollowDto } from './dto/follow.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { JwtStrategy } from '../auth/jwt.strategy';
 import { QueryDto } from './dto/query.dto';
 import { Types } from 'mongoose';
+import { Role } from '../auth/role.decorator';
+import { RolesGuard } from '../auth/role.guard';
 
 @Controller('events')
+@UseGuards(JwtAuthGuard, RolesGuard)
 export class EventsController {
   constructor(
     private readonly eventService : EventsService,
   ){}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
+  @Role('organizer')
   async createEvent(@Body() createEventDto : CreateEventDto , @Request() req : any){
     createEventDto.organizer_id = Types.ObjectId(req.user.userId);
     return await this.eventService.createEvent(createEventDto);
   }
 
   @Put(':id')
-  @UseGuards(JwtAuthGuard)
+  @Role('organizer')
   async updateEvent(@Body() createEventDto : CreateEventDto,@Param() param){
     return await this.eventService.updateEvent(param.id, createEventDto)
   }
 
   @Get(':id/detail')
-  @UseGuards(JwtAuthGuard)
+  @Role('organizer')
   async getDetailedEvent(@Param() param){
     return await this.eventService.getDetailedEvent(param.id)
   }
 
   @Post('follow')
-  @UseGuards(JwtAuthGuard)
+  @Role('nisit')
   async followEvent(@Body() followDto : FollowDto ){
     return await this.eventService.followEvent(followDto)
   }
 
   @Post('unfollow')
-  @UseGuards(JwtAuthGuard)
+  @Role('nisit')
   async unFollowEvent(@Body() followDto : FollowDto){
     return await this.eventService.unFollow(followDto);
   }
 
   @Post('/search')
-  @UseGuards(JwtAuthGuard)
+  @Role('nisit','organizer')
   async search(@Body() queryDto : QueryDto){
     return await this.eventService.searchEvent(queryDto)
   }

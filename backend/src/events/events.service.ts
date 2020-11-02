@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Event, EventDocument } from './schema/event.schema';
 import { Follower, FollowerDocument } from './schema/follower.schema';
+import { Organizer, OrganizerDocument } from '../organizers/schema/organizer.schema';
 import { CreateEventDto } from './dto/create-event.dto';
 import { FollowDto } from './dto/follow.dto';
 import { QueryDto } from './dto/query.dto';
@@ -12,6 +13,7 @@ export class EventsService {
   constructor(
     @InjectModel(Event.name) private eventModel : Model<EventDocument>,
     @InjectModel(Follower.name) private followerModel : Model<FollowerDocument>,
+    @InjectModel(Organizer.name) private organizerModel : Model<OrganizerDocument>
   ){}
 
   async createEvent(createEventDto : CreateEventDto) : Promise<Event>{
@@ -45,8 +47,10 @@ export class EventsService {
     return await this.followerModel.deleteOne(record).exec();
   }
 
-  async getDetailedEvent( _id : string ) : Promise<Event> {
-    return await this.eventModel.findById(new Types.ObjectId(_id)).exec();
+  async getDetailedEvent( _id : string ) : Promise<any> {
+    const eventDetail =  await this.eventModel.findById(new Types.ObjectId(_id)).exec();
+    const organizerDetail = await this.organizerModel.findOne({ user : new Types.ObjectId(eventDetail.organizer_id) }).exec()
+    return { eventDetail, organizerDetail }
   }
 
   async searchEvent( queryDto : QueryDto ) : Promise<Event[]> {

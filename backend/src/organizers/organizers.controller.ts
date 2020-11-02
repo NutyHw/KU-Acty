@@ -4,6 +4,8 @@ import { OrganizersService } from './organizers.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Organizer } from './schema/organizer.schema';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { RolesGuard } from '../auth/role.guard';
+import { Role } from '../auth/role.decorator';
 
 @Controller('organizers')
 export class OrganizersController {
@@ -21,7 +23,8 @@ export class OrganizersController {
   }
 
   @Get('/feed')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role('organizer')
   async feed( @Req() req ) : Promise<any> {
     return await this.organizerService.feed(req.user.userId);
   }
