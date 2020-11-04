@@ -6,6 +6,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import StarIcon from '@material-ui/icons/Star';
 import { NisitHeader  } from '../header/nisit.header';
 import { useParams } from 'react-router-dom';
 import { theme } from './../theme/theme';
@@ -86,6 +89,12 @@ export const NisitEventDetail : React.FC = () => {
       setEvent(res.data);
     } )
   }, [])
+
+  //แก้เป็น interest_count++
+  function handleClick() {
+    alert("ต่อให้คุณกดสนใจกิจกรรมไปมากแค่ไหน\nเขาก็ไม่หันมาสนใจคุณหรอก");
+  }
+
   return (
       <Container component="main" maxWidth="md">
         <NisitHeader/>
@@ -94,6 +103,9 @@ export const NisitEventDetail : React.FC = () => {
           <div className={classes.midpage}>    
           
             <form className={classes.login} noValidate></form>
+            <Grid container>
+
+            <Grid item xs={9}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Typography variant="h5">
@@ -161,8 +173,25 @@ export const NisitEventDetail : React.FC = () => {
                   รายละเอียดกิจกรรม : { event ? event.eventDetail.description : null }
                   </Typography>
                 </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={2}>
+              <Grid container>
+                <Grid item xs>
+                  <Button variant="contained" color="primary" onClick={handleClick}>สนใจกิจกรรมนี้</Button><br/><br/>
+                  <Typography style={{display: 'flex', alignItems: 'center'}}>
+                    <VisibilityIcon />view_count
+                  </Typography><br/>
+                  <Typography style={{display: 'flex', alignItems: 'center'}}>
+                    <StarIcon/>int_count
+                  </Typography>
                 </Grid>
-            
+              </Grid>
+
+            </Grid>
+
+            </Grid>
           </div>
         </ThemeProvider>   
     </Container>

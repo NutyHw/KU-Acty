@@ -6,6 +6,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import StarIcon from '@material-ui/icons/Star';
 import {  OrgHeader } from '../header/org.header';
 import { useParams } from 'react-router-dom';
 import { theme } from './../theme/theme';
@@ -94,6 +96,9 @@ export const OrgEventDetail : React.FC = () => {
           <div className={classes.midpage}>    
           
             <form className={classes.login} noValidate></form>
+            <Grid container>
+
+            <Grid item xs={9}>
               <Grid container spacing={3}>
                 <Grid item xs={12}>
                   <Typography variant="h5">
@@ -161,8 +166,24 @@ export const OrgEventDetail : React.FC = () => {
                   รายละเอียดกิจกรรม : { event ? event.eventDetail.description : null }
                   </Typography>
                 </Grid>
+              </Grid>
+            </Grid>
+
+            <Grid item xs={2}>
+              <Grid container>
+                <Grid item xs>
+                  <Typography style={{display: 'flex', alignItems: 'center'}}>
+                    <VisibilityIcon />view_count
+                  </Typography><br/>
+                  <Typography style={{display: 'flex', alignItems: 'center'}}>
+                    <StarIcon/>int_count
+                  </Typography>
                 </Grid>
-            
+              </Grid>
+
+            </Grid>
+
+            </Grid>
           </div>
         </ThemeProvider>   
     </Container>
