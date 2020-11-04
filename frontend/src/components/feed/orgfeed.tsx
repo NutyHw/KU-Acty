@@ -30,9 +30,15 @@ export const OrgFeed : React.FC = () => {
     })
   }, [])
 
-  const onClick = ( eventId : string ) => {
+  const onClickDetail = ( eventId : string ) => {
     history.push({
       pathname: '/org/eventdetail/' + eventId
+    })
+  }
+
+  const onClickEdit = ( eventId : string ) => {
+    history.push({
+      pathname: '/org/editevent/' + eventId
     })
   }
 
@@ -74,7 +80,7 @@ export const OrgFeed : React.FC = () => {
 
         <Grid item xs={3} className={classes.paper}>
           <Link  
-            onClick = { () => onClick(el._id) }
+            onClick = { () => onClickDetail(el._id) }
             target="_blank"
           >
             <Button className={classes.button} type="submit" variant="outlined" color="primary">
@@ -93,7 +99,7 @@ export const OrgFeed : React.FC = () => {
         </Grid>
 
         <Grid item xs={2} className={classes.paper}>
-          <Link href="/org/createevent" style={{ textDecoration: 'none' }}>
+          <Link onClick = { () => onClickEdit(el._id) } style={{ textDecoration: 'none' }}>
             <Button className={classes.button} variant="contained" color="primary" style={{minWidth: 128}}>แก้ไขรายละเอียด</Button><br/>
           </Link>
           <Link href="/org/statevent" style={{ textDecoration: 'none' }}>
