@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useForm } from 'react-hook-form';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
-import Link from '@material-ui/core/Link';
 import TextField from '@material-ui/core/TextField';
 import { theme } from '../theme/theme';
 import { OrgHeader } from '../header/org.header';
@@ -16,13 +13,11 @@ import { useHistory  } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { Organizer } from './type';
 import { OrganizerSchema } from './validator';
-import { GreenDesc, useStyles, MenuProps } from './style';
-
-
+import {  useStyles } from './style';
 
 export const EditProfile : React.FC = () => {
   const classes = useStyles();
-  /*const history = useHistory();
+  const history = useHistory();
   const { register, handleSubmit } = useForm<Organizer>();
   const { id } = useParams();
 
@@ -30,19 +25,17 @@ export const EditProfile : React.FC = () => {
     try {
       org.user = id;
       OrganizerSchema.validate(org)
+      const token = localStorage.getItem('token');
+      setAuthToken(token);
       await api.put('/organizers/profile', org );
       history.push({
         pathname : '/org/home'
       })
-      
-      
     } catch( err ) {
       throw new Error(err)
       return;
     }
-}*/
-  
-  
+  }
   
   return (
     <Container component="main" maxWidth="xs">
@@ -65,8 +58,8 @@ export const EditProfile : React.FC = () => {
                   label="ชื่อชมรมหรือหน่วยงาน"
                   name="organizer_name"
                   type = "string"
-                  //inputRef = {register({ required : true })}
-                  //autoComplete="username"
+                  inputRef = {register({ required : true })}
+                  autoComplete="username"
                   autoFocus
                 />
               </Grid>
@@ -81,7 +74,7 @@ export const EditProfile : React.FC = () => {
                   label="E-Mail"
                   name="email"
                   type = "string"
-                  //inputRef = {register({ required : true })}
+                  inputRef = {register({ required : true })}
                   autoFocus
                 />
               </Grid>
@@ -96,7 +89,7 @@ export const EditProfile : React.FC = () => {
                   label="ที่ตั้งในมหาวิทยาลัย"
                   name="location"
                   type = "string"
-                  //inputRef = {register({ required : true })}
+                  inputRef = {register({ required : true })}
                   autoFocus
                 />
               </Grid>
@@ -111,7 +104,7 @@ export const EditProfile : React.FC = () => {
                   label="ช่องทางการติดต่อ"
                   name="contact"
                   type = "string"
-                  //inputRef = {register({ required : true })}
+                  inputRef = {register({ required : true })}
                   autoFocus
                 />
               </Grid>
@@ -126,7 +119,7 @@ export const EditProfile : React.FC = () => {
                   label="คำอธิบายชมรมหรือหน่วยงานโดยย่อ"
                   name="description"
                   type = "string"
-                  //inputRef = {register({ required : true })}
+                  inputRef = {register({ required : true })}
                   autoFocus
                   multiline
                   rows = {3}

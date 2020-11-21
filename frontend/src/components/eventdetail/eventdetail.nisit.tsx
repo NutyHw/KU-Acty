@@ -67,32 +67,26 @@ export const NisitEventDetail : React.FC = () => {
   const [ event, setEvent ] = useState();
 
   useEffect( () => {
-    if ( event ){
-      const startTime = new Date(event.eventDetail.event_start_time)
-      const endTime = new Date(event.eventDetail.event_end_time)
-
-      event.eventDetail.event_start_date = startTime.getDay() + '/' + startTime.getMonth() + '/' + ( startTime.getFullYear() + 543 )
-      event.eventDetail.event_start_clock = startTime.getHours() + ':' + startTime.getMinutes()
-
-      event.eventDetail.event_end_date = endTime.getDay() + '/' + endTime.getMonth() + '/' + ( endTime.getFullYear() + 543 )
-      event.eventDetail.event_end_clock = endTime.getHours() + ':' + endTime.getMinutes()
-      setEvent(event)
-      console.log(event)
-    }
-  }, [ event ])
-
-  useEffect( () => {
     const token = localStorage.getItem('token')
     setAuthToken(token);
     api.get('/events/' + id + '/detail')
     .then( res => {
-      setEvent(res.data);
+      const eventData = res.data
+      const startTime = new Date(eventData.eventDetail.event_start_time)
+      const endTime = new Date(eventData.eventDetail.event_end_time)
+
+      eventData.eventDetail.event_start_date = startTime.getDay() + '/' + startTime.getMonth() + '/' + ( startTime.getFullYear() + 543 )
+      eventData.eventDetail.event_start_clock = startTime.getHours() + ':' + startTime.getMinutes()
+
+      eventData.eventDetail.event_end_date = endTime.getDay() + '/' + endTime.getMonth() + '/' + ( endTime.getFullYear() + 543 )
+      eventData.eventDetail.event_end_clock = endTime.getHours() + ':' + endTime.getMinutes()
+      setEvent(eventData);
     } )
   }, [])
 
   //แก้เป็น interest_count++
   function handleClick() {
-    alert("ต่อให้คุณกดสนใจกิจกรรมไปมากแค่ไหน\nเขาก็ไม่หันมาสนใจคุณหรอก");
+    alert('interest count ++');
   }
 
   return (
