@@ -15,8 +15,7 @@ services:
     build: 
       context : .
     volumes:
-      - .:/usr/src/app/
-      - /usr/src/app/node_modules
+      - ./src:/usr/app/src/
       - ../files:/data/
     ports :
       - 3000:3000

@@ -1,4 +1,3 @@
-rm -rf ../database/
-docker-compose up -d
+docker-compose up -d --build
 docker-compose exec -T database mongorestore ../dump/
 

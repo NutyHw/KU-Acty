@@ -12,7 +12,7 @@ import { Nisits, NisitsSchema } from './schema/nisits.schema';
     MongooseModule.forFeature([
       { name : Transcript.name , schema : TranscriptSchema },
       { name : Nisits.name, schema : NisitsSchema },
-      { name : TranscriptRule.name, schema : TranscriptRuleSchema }
+      { name : TranscriptRule.name, schema : TranscriptRuleSchema },
     ]),
     EventsModule
   ],

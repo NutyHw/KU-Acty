@@ -4,17 +4,24 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Event, EventDocument } from './schema/event.schema';
 import { Follower, FollowerDocument } from './schema/follower.schema';
 import { Organizer, OrganizerDocument } from '../organizers/schema/organizer.schema';
+import { EventType, EventTypeDocument } from './schema/eventType.schema';
 import { CreateEventDto } from './dto/create-event.dto';
 import { FollowDto } from './dto/follow.dto';
 import { QueryDto } from './dto/query.dto';
+import { CreateEventTypeDto } from './dto/create-event-type.dto';
 
 @Injectable()
 export class EventsService {
   constructor(
     @InjectModel(Event.name) private eventModel : Model<EventDocument>,
     @InjectModel(Follower.name) private followerModel : Model<FollowerDocument>,
-    @InjectModel(Organizer.name) private organizerModel : Model<OrganizerDocument>
+    @InjectModel(Organizer.name) private organizerModel : Model<OrganizerDocument>,
+    @InjectModel(EventType.name) private eventTypeModel : Model<EventTypeDocument>
   ){}
+
+  async findById( _id : Types.ObjectId ) : Promise<Event> {
+    return await this.eventModel.findOne({ _id : _id })
+  }
 
   async createEvent(createEventDto : CreateEventDto) : Promise<Event>{
     const createEvent = new this.eventModel(createEventDto);
@@ -66,10 +73,10 @@ export class EventsService {
   async searchEvent( queryDto : QueryDto ) : Promise<Event[]> {
     const pipeline = new Array<any>();
 
-    pipeline.push({ $match : { 'event_status' : 'active' } })
+    pipeline.push({ $match : { 'status' : 'active' } })
 
     if ( queryDto.event_name != '' ){
-      pipeline.push({ $regexMatch : { input : '$event_name', regex : '/' + queryDto.event_name + '/' } })
+      pipeline.push({ $match : { event_name : { '$regex' : new RegExp(queryDto.event_name) } }})
     }
 
     if ( queryDto.event_start_time){
@@ -84,11 +91,9 @@ export class EventsService {
       pipeline.push({ $match : { event_type : { $elemMatch : { $in : queryDto.event_type } } } } )
     }
 
-    if ( pipeline.length == 0 ){
-      return await this.eventModel.find({}).sort({ event_start_time : 1 });
-    } else {
-      return await this.eventModel.aggregate<any>(pipeline).sort({ event_start_time : 1 });
-    }
+
+    const res = await this.eventModel.aggregate<any>(pipeline);
+    return res;
   }
 
   async getFollowEvent( _id : string ) : Promise<Event[]>{
@@ -109,5 +114,18 @@ export class EventsService {
       { organizer_id : new Types.ObjectId(_id) }
     )
     return res;
+  }
+
+  async getEventById( _ids : [ Types.ObjectId ] ) : Promise<Event[]> {
+    return await this.eventModel.find({ _id : { $in : _ids } }).exec()
+  }
+
+  async createEventType( createEventTypeDto : CreateEventTypeDto ) : Promise<any> {
+    const createEventType = new this.eventTypeModel(createEventTypeDto);
+    return await createEventType.save();
+  }
+
+  async findEventTypeById( _id : Types.ObjectId ) : Promise<any> {
+    return await this.eventTypeModel.findOne({ _id : _id })
   }
 }

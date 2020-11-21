@@ -8,15 +8,20 @@ export type TranscriptRuleDocument = TranscriptRule & Document;
 })
 
 export class TranscriptRule {
-  @Prop({ 
+  @Prop({
     required : true
   })
-  type : Types.ObjectId
+  start_year : number
+
+  @Prop({
+    required : true
+  })
+  end_year : number
 
   @Prop({ 
     required : true 
   })
-  eventType : unknown
+  event_types : [ { event_type_id : { ref : 'eventtypes', type : Types.ObjectId }, participate_number : number , index : number } ]
 }
 
 export const TranscriptRuleSchema = SchemaFactory.createForClass(TranscriptRule);

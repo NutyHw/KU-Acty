@@ -97,7 +97,6 @@ export class AuthService {
       await transporter.sendMail(mailOption)
       return true;
     } catch ( err ) {
-      console.log(err);
       return false;
     }
   }

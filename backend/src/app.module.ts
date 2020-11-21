@@ -4,6 +4,7 @@ import { UsersModule } from './users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizersModule } from './organizers/organizers.module';
 import { EventsModule } from './events/events.module';
+import { NisitsModule } from './nisits/nisits.module';
 
 @Module({
   imports: [ 
@@ -11,7 +12,8 @@ import { EventsModule } from './events/events.module';
     AuthModule , 
     UsersModule, 
     OrganizersModule, 
-    EventsModule
+    EventsModule,
+    NisitsModule
   ],
 })
 

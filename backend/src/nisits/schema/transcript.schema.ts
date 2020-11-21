@@ -11,18 +11,18 @@ export class Transcript {
   @Prop({ 
     required : true
   })
-  type : { type : Types.ObjectId, ref : 'transcript_id' }
+  type : { type : Types.ObjectId, ref : 'transcriptrules' }
 
   @Prop({ 
     required : true 
   })
-  nisitId : Types.ObjectId
+  nisit_id : { type : Types.ObjectId, ref : 'users' }
 
   @Prop({ 
     required : true,
     default : [ ],
   })
-  event_id : [{ type : Types.ObjectId, ref : 'events' }]
+  event_id : [ { type : Types.ObjectId, ref : 'events' } ]
 }
 
 export const TranscriptSchema = SchemaFactory.createForClass(Transcript);

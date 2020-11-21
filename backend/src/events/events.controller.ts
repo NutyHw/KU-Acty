@@ -7,6 +7,7 @@ import { QueryDto } from './dto/query.dto';
 import { Types } from 'mongoose';
 import { Role } from '../auth/role.decorator';
 import { RolesGuard } from '../auth/role.guard';
+import { CreateEventTypeDto } from './dto/create-event-type.dto';
 
 @Controller('events')
 @UseGuards(JwtAuthGuard, RolesGuard)
@@ -52,5 +53,11 @@ export class EventsController {
   @Role('nisit','organizer')
   async search(@Body() queryDto : QueryDto){
     return await this.eventService.searchEvent(queryDto)
+  }
+
+  @Post('event-type')
+  @Role('organizer')
+  async createEventType(@Body() createEventTypeDto : CreateEventTypeDto){
+    return await this.eventService.createEventType(createEventTypeDto);
   }
 }
