@@ -52,6 +52,7 @@ export const EditEvent : React.FC = () => {
   const classes = useStyles();
   const history = useHistory()
   const [ eventTypeName, setEventTypeName ] = useState<string[]>([]);
+  const [ status, setStatus ] = useState<string[]>([]);
   const [ allType, setAllType ] = useState<any[]>([]);
   const [ mapper, setMapper ] = useState<any>([]);
   const { register, handleSubmit, control } = useForm();
@@ -74,9 +75,12 @@ export const EditEvent : React.FC = () => {
     setEventTypeName(event.target.value as string[]);
   };
 
+  const handleChangeStatus = (event : any) => {
+    setStatus(event.target.value as string[]);
+  };
   const onSubmit = async ( data : any ) => {
     try{
-      const { event_start_date, event_end_date, event_start_time, event_end_time, event_type,  ...creatEvent } = data;
+      const { event_start_date, event_end_date, event_start_time, event_end_time, event_type, status,  ...creatEvent } = data;
       console.log(creatEvent)
       creatEvent.event_start_time = new Date(event_start_date + ' ' + event_start_time).toISOString()
       creatEvent.event_end_time = new Date(event_end_date + ' ' + event_end_time).toISOString()
@@ -101,7 +105,7 @@ export const EditEvent : React.FC = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline /><div className={classes.midpage}>    
           <Typography variant="h6" align="center" color="textPrimary">
-            ประกาศกิจกรรม
+            แก้ไขกิจกรรม
           </Typography>  
           </div>
             <form className={classes.login} onSubmit={ handleSubmit(onSubmit) }>
@@ -122,6 +126,26 @@ export const EditEvent : React.FC = () => {
                   />
                 </Grid>
                 
+                <Grid item xs={12}>
+                <FormControl variant="outlined" margin="dense" className={classes.formControl}>
+                  <InputLabel>สถานะกิจกรรม</InputLabel>
+                  <Select
+                    native
+                    onChange={ handleChangeStatus }
+                    label="สถานะกิจกรรม"
+                    id="status"
+                    color="primary"
+                    name="status"
+                  >
+                    <option aria-label="None" value="" />
+                    <option value={'prepare'}>เตรียมจัดกิจกรรม</option>
+                    <option value={'open'}>เปิดรับสมัคร</option>
+                    <option value={'close'}>ปิดรับสมัคร</option>
+                    <option value={'cancel'}>ยกเลิกกิจกรรม</option>
+                  </Select>
+                </FormControl>
+                </Grid>
+
                 <Grid item xs={12}>
                 <FormControl variant="outlined" className={classes.formControl} >
                   <InputLabel id="eventtype">ประเภทกิจกรรม</InputLabel>
@@ -313,7 +337,7 @@ export const EditEvent : React.FC = () => {
                     
                     className={classes.submit}
                   >
-                    ประกาศกิจกรรม
+                    แก้ไขกิจกรรม
                   </Button>
                   </Grid>
                   </Grid>

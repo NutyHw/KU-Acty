@@ -114,7 +114,7 @@ export const NisitFeed : React.FC = () => {
       <NisitHeader />
         <Container className={classes.head} maxWidth="md">
           <Typography variant="h5" className={classes.headerTextN}>
-            กิจกรรมที่กำลังจะมาถึง
+            กิจกรรมที่สนใจ
           </Typography>
           <Container className={classes.root} maxWidth="md">
           <br/>{ renderFeed() }<br/>
