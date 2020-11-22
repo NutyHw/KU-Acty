@@ -51,8 +51,9 @@ export function SearchReslt( props : any ) {
             <Box>
               <Typography component="span" variant="body2" color="textPrimary">
                 <Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography>
-                สถานที่จัด : { el.place }<br/>
-                เริ่มจัดกิจกรรม : { startTime }
+                สถานที่จัด : {el.place}<br/>
+                เริ่มจัดกิจกรรม : <Chip size="small" label={startTime}/><br/>
+                {'______________________________________________________________________________________'}
               </Typography>
             </Box>
           </Grid>
@@ -75,7 +76,7 @@ export function SearchReslt( props : any ) {
             </Box>
           </Grid>
           <Typography component="span" variant="body2" color="textPrimary">
-          {" ประเภท "}<Chip size="small" label={ el.event_type.join(' / ')}/> </Typography><br/>
+          {" ประเภท "}{ el.event_type.join(' , ')}</Typography><br/>
           </Grid>
       </Box>
     </React.Fragment>
