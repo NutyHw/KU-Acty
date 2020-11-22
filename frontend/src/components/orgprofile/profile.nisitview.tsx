@@ -20,15 +20,25 @@ export const Profile_NisitView : React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const [ feeds, setFeeds ] = useState<any[]>([]);
+  const [ org, setOrg ] = useState<any>(null);
 
   useEffect( () => {
     const token = localStorage.getItem('token')
+    const orgId = localStorage.getItem('orgId')
     setAuthToken(token)
-    api.get('/organizers/feed')
+    api.get('/organizers/' + orgId + '/feed')
     .then( res => {
-      setFeeds(res.data)
+      setFeeds(res.data);
     })
+
+    api.get('/organizers/' + orgId + '/profile')
+    .then( res => {
+      setOrg(res.data);
+    } )
   }, [])
+
+  useEffect( () => {
+  }, [ org ])
 
   const onClick = ( eventId : string ) => {
     history.push({
@@ -101,13 +111,13 @@ export const Profile_NisitView : React.FC = () => {
       <NisitHeader />
       <Grid container>
         <Container className={classes.head} maxWidth="xs">
-          <Typography variant="h5" className={classes.headerText}>Insert Org Name here</Typography>
+          <Typography variant="h5" className={classes.headerText}>{ org ? org.organizer_name : null }</Typography>
           <br/>
-          <Typography>ที่ตั้ง: </Typography>
-          <Typography>ช่องทางติดต่อ: </Typography>
+          <Typography>ที่ตั้ง: { org ? org.location  : null }</Typography>
+          <Typography>ช่องทางติดต่อ: { org ? org.contact : null}</Typography>
           <br/>
           <div>
-              <Typography>รายละเอียด: </Typography>
+            <Typography>รายละเอียด: { org ? org.description : null }</Typography>
           </div>
             
         </Container>
@@ -125,3 +135,4 @@ export const Profile_NisitView : React.FC = () => {
     </ThemeProvider>
   );
 }
+

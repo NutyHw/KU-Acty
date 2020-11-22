@@ -100,4 +100,11 @@ export class NisitsService {
       { $push : { transcript : participateEventDto.event_id } }
     )
   }
+
+  async getTranscriptRule() : Promise<TranscriptRule> {
+    const now = new Date().getFullYear()
+    const rule = await this.transcriptRuleModel.findOne({ start_year : { $lte : now  }, end_year : { $gte : now }  })
+    const eventTypeId = rule.event_types.map( elm => elm.event_type_id )
+    return await this.eventService.getEventTypeForRule(eventTypeId);
+  }    
 }

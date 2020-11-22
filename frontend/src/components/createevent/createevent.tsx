@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -21,15 +22,6 @@ import { GreenDesc, useStyles, MenuProps } from './style';
 import { theme } from './../theme/theme';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { OrgHeader } from '../header/org.header';
-
-const typenames = [
-  'กิจกรรมมหาวิทยาลัย',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาคุณธรรม จริยธรรม',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะการคิดและการเรียนรู้',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคลและการสื่อสาร',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาสุขภาพ',
-  'กิจกรรมเพื่อสังคม',
-];
 
 export function UploadButtons() {
   const classes = useStyles();
@@ -59,19 +51,36 @@ export function UploadButtons() {
 export const CreateEvent : React.FC = () => {
   const classes = useStyles();
   const history = useHistory()
-  const [ eventType , setEventType] = useState<string[]>([]);
+  const [ eventTypeName, setEventTypeName ] = useState<string[]>([]);
+  const [ allType, setAllType ] = useState<any[]>([]);
+  const [ mapper, setMapper ] = useState<any>([]);
   const { register, handleSubmit, control } = useForm();
 
+  useEffect( () => {
+    const token = localStorage.getItem('token');
+    setAuthToken(token);
+    api.get('/nisits/transcriptRule')
+    .then( res => {
+      setAllType(res.data)
+      const res2 = {}
+      for ( const type of res.data ){
+        res2[type.event_type_name] = type._id
+      }
+      setMapper(res2)
+    } )
+  }, [] )
+
   const handleChangeMultiple = (event : any) => {
-    setEventType(event.target.value as string[]);
+    setEventTypeName(event.target.value as string[]);
   };
 
   const onSubmit = async ( data : any ) => {
     try{
       const { event_start_date, event_end_date, event_start_time, event_end_time, event_type,  ...creatEvent } = data;
-      creatEvent.event_type = eventType;
+      console.log(creatEvent)
       creatEvent.event_start_time = new Date(event_start_date + ' ' + event_start_time).toISOString()
       creatEvent.event_end_time = new Date(event_end_date + ' ' + event_end_time).toISOString()
+      creatEvent.event_type = eventTypeName.map( name => mapper[name] )
 
       const token = localStorage.getItem('token');
       setAuthToken(token);
@@ -80,7 +89,7 @@ export const CreateEvent : React.FC = () => {
         pathname : '/org/home'
       })
     } catch (err) {
-      alert("ERROR!")
+      alert(err)
       return ;
     }
   }
@@ -122,15 +131,15 @@ export const CreateEvent : React.FC = () => {
                         labelId="eventtype"
                         id="eventtype"
                         multiple
-                        value={ eventType }
+                        value={ eventTypeName }
                         onChange={ handleChangeMultiple }
-                        renderValue={(selected) => (selected as string[]).join(', ')}
+                        renderValue={(selected) => ( selected as string[] ).join(', ')}
                         MenuProps={MenuProps}
                       >
-                        {typenames.map((name) => (
-                          <MenuItem key={name} value={name}>
-                            <Checkbox color="primary" checked={eventType.indexOf(name) > -1}/>
-                            <ListItemText primary={name} />
+                        {allType.map((elm) => (
+                          <MenuItem key={elm._id} value={elm.event_type_name}>
+                            <Checkbox color="primary" checked={eventTypeName.indexOf(elm.event_type_name) > -1}/>
+                            <ListItemText primary={elm.event_type_name} />
                           </MenuItem>
                         ))}
                       </Select>

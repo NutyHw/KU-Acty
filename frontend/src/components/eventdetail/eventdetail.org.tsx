@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
+import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
@@ -12,6 +13,7 @@ import {  OrgHeader } from '../header/org.header';
 import { useParams } from 'react-router-dom';
 import { theme } from './../theme/theme';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { useHistory } from 'react-router-dom';
 
 //-------------------------------------- Styles Part ----------------------------
 const GreenDesc = withStyles({
@@ -61,9 +63,14 @@ const useStyles = makeStyles((theme) => ({
 
 export const OrgEventDetail : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory()
   const { id } = useParams();
 
   const [ event, setEvent ] = useState();
+
+  function padDigits (number : number, digits : number) {
+    return Array(Math.max(digits - String(number).length + 1, 0)).join('0') + number;
+  }
 
   useEffect( () => {
     const token = localStorage.getItem('token')
@@ -74,14 +81,18 @@ export const OrgEventDetail : React.FC = () => {
       const startTime = new Date(eventData.eventDetail.event_start_time)
       const endTime = new Date(eventData.eventDetail.event_end_time)
 
-      eventData.eventDetail.event_start_date = startTime.getDay() + '/' + startTime.getMonth() + '/' + ( startTime.getFullYear() + 543 )
-      eventData.eventDetail.event_start_clock = startTime.getHours() + ':' + startTime.getMinutes()
+      eventData.eventDetail.event_start_date = padDigits(startTime.getDate(),2) + '/' + padDigits(startTime.getMonth(),2) + '/' + ( startTime.getFullYear() + 543 )
+      eventData.eventDetail.event_start_clock = padDigits(startTime.getHours(),2) + ':' + padDigits(startTime.getMinutes(),2)
 
-      eventData.eventDetail.event_end_date = endTime.getDay() + '/' + endTime.getMonth() + '/' + ( endTime.getFullYear() + 543 )
-      eventData.eventDetail.event_end_clock = endTime.getHours() + ':' + endTime.getMinutes()
+      eventData.eventDetail.event_end_date = padDigits(endTime.getDate(),2) + '/' + padDigits(endTime.getMonth(),2) + '/' + ( endTime.getFullYear() + 543 )
+      eventData.eventDetail.event_end_clock = padDigits(endTime.getHours(),2) + ':' + padDigits(endTime.getMinutes(),2)
       setEvent(eventData);
     } )
   }, [])
+  
+  useEffect( () => {
+    console.log(event)
+  }, [ event ])
   return (
       <Container component="main" maxWidth="md">
         <OrgHeader/>
@@ -101,9 +112,15 @@ export const OrgEventDetail : React.FC = () => {
                 </Grid>
               
                 <Grid item xs={12}>
+                <Button 
+                    onClick={ () => {
+                      localStorage.setItem('orgId',event.organizerDetail.user)
+                      history.push('/org/orgprofile')
+                } }>
                 <Typography variant="h6">
-                  ผู้จัดกิจกรรม : { event ? event.organizerDetail.organizer_name : null }
+                  ผู้จัดกิจกรรม : { event && event.organizerDetail ? event.organizerDetail.organizer_name : null }
                   </Typography>
+                </Button>
                 </Grid>
 
                 <Grid item xs={6}>
@@ -167,10 +184,10 @@ export const OrgEventDetail : React.FC = () => {
               <Grid container>
                 <Grid item xs>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <VisibilityIcon />view_count
+                    <VisibilityIcon /> { event ? event.eventDetail.view_counts : null }
                   </Typography><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <StarIcon/>int_count
+                    <StarIcon/>{ event ? event.eventDetail.interest_count : null }
                   </Typography>
                 </Grid>
               </Grid>
