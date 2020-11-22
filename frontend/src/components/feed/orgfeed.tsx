@@ -55,14 +55,23 @@ export const OrgFeed : React.FC = () => {
     })
   }
 
+  function formatDateToString( date : Date ) { 
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    return dd + '/' + mm + '/' + yyyy;
+  }
+
   const renderFeed = () => {
     return feeds.map( el => {
       let startTime = new Date(el.event_start_time)
+      const updateDate = new Date(el.updated_at);
       var dd = String(startTime.getDate()).padStart(2, '0');
       var mm = String(startTime.getMonth() + 1).padStart(2, '0');
       var yyyy = startTime.getFullYear().toString();
       const formatDate = dd + '/' + mm + '/' + yyyy
       const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
+      const formatUpdate = formatDateToString(updateDate);
 
       return  <Box boxShadow={5}><Grid container className={classes.eventbox}>
         <Grid item xs={6} className={classes.paper}>
@@ -101,7 +110,7 @@ export const OrgFeed : React.FC = () => {
             </Button>
           </Link>
           <br/><br/>
-          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { formatUpdate }</Typography>
           <br/>
           <Grid item>
             <Typography style={{display: 'flex', alignItems: 'center'}}>
