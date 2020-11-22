@@ -23,6 +23,7 @@ export const useStyles = makeStyles((theme: Theme) =>
     activityList: {
         fontSize: theme.typography.pxToRem(15),
         marginLeft: theme.spacing(3),
+        marginBottom: 2,
     }
   }),
 );
