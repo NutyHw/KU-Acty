@@ -57,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+
+  yell: {
+    color: '#ffc107',
+  },
 }));
 
 //-------------------------------------- End Styles Part ------------------------
@@ -199,13 +203,13 @@ export const NisitEventDetail : React.FC = () => {
             <Grid item xs={2}>
               <Grid container>
                 <Grid item xs>
-                  <Button variant="contained" color="primary" onClick={handleClick}>สนใจกิจกรรมนี้</Button><br/><br/>
+                  <Button variant="contained" color={ isFollow ? "primary" : "default"} onClick={handleClick}>{ isFollow ? "คุณสนใจกิจกรรมนี้" : "เพิ่มกิจกรรมที่สนใจ"}</Button><br/><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <VisibilityIcon /> { event ? event.eventDetail.view_counts : null }
+                    <VisibilityIcon />  { event ? event.eventDetail.view_counts : null }
                   </Typography><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <StarIcon color={ isFollow ? "error" : "primary" }/> 
-                    { event ? event.eventDetail.interest_count : null }
+                    <StarIcon className={ isFollow ? classes.yell : classes.menu} color={ isFollow ? "primary" : "disabled"}/>  
+                      { event ? event.eventDetail.interest_count : null }
                   </Typography>
                 </Grid>
               </Grid>
