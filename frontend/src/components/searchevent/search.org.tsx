@@ -35,6 +35,7 @@ export function SearchReslt( props : any ) {
   const renderResult = () => {
     return props.searchResult.map( ( el : any ) => {
       return <React.Fragment>
+      
       <Box 
       className={classes.actybox}
       boxShadow={10}
@@ -48,8 +49,9 @@ export function SearchReslt( props : any ) {
             <Box>
               <Typography component="span" variant="body2" color="textPrimary">
                 <Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography>
-                สถานที่จัด : { el.place }<br/>
-                เริ่มจัดกิจกรรม : { el.start_date }
+                สถานที่จัด : {el.place} <br/>
+                เริ่มจัดกิจกรรม : <Chip size="small" label={el.start_date}/><br/>
+                {'_________________________________________________________________________________________'}
               </Typography>
             </Box>
           </Grid>
@@ -67,7 +69,7 @@ export function SearchReslt( props : any ) {
             </Box>
           </Grid>
           <Typography component="span" variant="body2" color="textPrimary">
-          {" ประเภท "}<Chip size="small" label={ el.event_type.join(' / ')}/> </Typography><br/>
+          {" ประเภท "}{ el.event_type.join(' , ')}</Typography><br/>
           </Grid>
       </Box>
     </React.Fragment>
