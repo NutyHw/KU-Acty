@@ -10,11 +10,12 @@ export class LoginDto {
 }
 
 export class ChangePasswordDto {
-  username : string
-  password : string
+  oldPassword : string
+  newPassword : string
+  confirmNewPassword : string
 }
 
 export class ResetPasswordDto {
-  email : string
+  username : string
 }
 

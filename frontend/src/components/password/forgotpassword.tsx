@@ -15,6 +15,7 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
 import { theme } from './../theme/theme';
+import { api } from '../../api/jsonPlaceholder.instance';
 
 //-------------------------------------- Styles Part ----------------------------
 const GreenDesc = withStyles({
@@ -60,7 +61,6 @@ const useStyles = makeStyles((theme) => ({
 
 type User = {
   username : string
-  password : string
 }
 
 export const ForgotPassword : React.FC = () => {
@@ -68,7 +68,11 @@ export const ForgotPassword : React.FC = () => {
     const { register, handleSubmit, setValue, errors } = useForm<User>();
   
     const onSubmit = async ( user : User ) => {
-      const response = await axios.post('http://localhost:3000/auth/login', user )
+      console.log(user)
+      api.post('/auth/reset-password', user )
+      .catch( err => {
+        alert(err);
+      } )
     }
 
   return (
@@ -87,7 +91,7 @@ export const ForgotPassword : React.FC = () => {
     <Container component="main" maxWidth="xs">
     
 
-    <form className={classes.login} noValidate>
+    <form className={classes.login} noValidate onSubmit={ handleSubmit(onSubmit) }>
         <Typography variant="h6" align="center">
             ลืมรหัสผ่าน
             
@@ -106,7 +110,6 @@ export const ForgotPassword : React.FC = () => {
               type = "string"
               color = "primary"
               inputRef = {register({ required : true })}
-              //autoComplete="username"
               autoFocus 
             />
             </Grid>
@@ -117,7 +120,6 @@ export const ForgotPassword : React.FC = () => {
               variant="contained"
               color="primary"
               className={classes.submit}
-              href="/login"
             >
               ยืนยัน
             </Button>
