@@ -9,6 +9,7 @@ import { Model } from 'mongoose';
 import { OrganizersService } from '../organizers/organizers.service'; 
 import { email } from './config/constant';
 import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { Types } from 'mongoose';
 
 @Injectable()
 export class AuthService {
@@ -62,14 +63,21 @@ export class AuthService {
     }
   }
 
-  async changePassword( changePasswordDto : ChangePasswordDto ) : Promise<boolean> {
-    const res = await this.userModel.updateOne
-    (
-      { username : changePasswordDto.username }, 
-      { password : changePasswordDto.password }
-    ).exec()
+  async changePassword( changePasswordDto : ChangePasswordDto, userId : string ) : Promise<boolean> {
+    const hashNewPassword = await this.hashPassword(changePasswordDto.newPassword);
 
-    if ( res.nModified === 0 ){
+    const res = await this.userModel.findOne({ _id : Types.ObjectId(userId) })
+
+    console.log(changePasswordDto.oldPassword)
+    const match = await bcrypt.compare(changePasswordDto.oldPassword, res.password)
+
+    if ( !match ){
+      throw new HttpException('password not match',HttpStatus.BAD_REQUEST)
+    }
+
+    const res2 = await this.userModel.updateOne({ _id : Types.ObjectId(userId) }, { $set : { password : hashNewPassword } })
+
+    if ( res2.nModified === 0 ){
       throw new HttpException('username not found in database',HttpStatus.BAD_REQUEST);
     }
 
@@ -101,13 +109,17 @@ export class AuthService {
     }
   }
 
-  async resetPassword( email : string ) : Promise<boolean> {
-    const record = await this.organizersService.findEmail(email)
+  async resetPassword( username : string ) : Promise<boolean> {
+    const user = await this.userModel.findOne({ username : username })
+    const record = await this.organizersService.getProfile(String(user._id))
+
+    console.log(record)
     if ( !record ) {
       throw new HttpException('email not found in database', HttpStatus.BAD_REQUEST);
     }
-    const token = this.jwtService.sign({ username : record.user })
-    const sendMailRes = await this.sendMail( email, 'http://localhost:8080/reset-password/' + token );
+
+    const token = this.jwtService.sign({ userId : record.user })
+    const sendMailRes = await this.sendMail( record.email, 'http://localhost:8080/reset-password/' + token );
     return sendMailRes
   }
 }

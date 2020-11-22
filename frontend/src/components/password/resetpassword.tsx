@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,6 +12,9 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { ChangePasswordSchema } from './validator';
+import { useHistory } from 'react-router-dom';
 
 import { theme } from './../theme/theme';
 
@@ -58,17 +60,29 @@ const useStyles = makeStyles((theme) => ({
 
 //-------------------------------------- End Styles Part ------------------------
 
-type User = {
-  username : string
-  password : string
+type ChangePassword = {
+  oldPassword : string
+  newPassword : string
+  confirmNewPassword : string
 }
 
 export const ResetPassword : React.FC = () => {
     const classes = useStyles();
-    const { register, handleSubmit, setValue, errors } = useForm<User>();
+    const history = useHistory();
+    const { register, handleSubmit, setValue, errors } = useForm<ChangePassword>();
   
-    const onSubmit = async ( user : User ) => {
-      const response = await axios.post('http://localhost:3000/auth/login', user )
+    const onSubmit = async ( changePassword : ChangePassword ) => {
+      await ChangePasswordSchema.validate(changePassword);
+      const token = localStorage.getItem('token');
+      setAuthToken(token);
+      api.post('/auth/change-password',changePassword)
+      .then( res => {
+        alert('change password success');
+        history.push('/org/home')
+      } )
+      .catch( err => {
+        alert(err)
+      } )
     }
 
   return (
@@ -105,8 +119,6 @@ export const ResetPassword : React.FC = () => {
                   label="รหัสผ่านใหม่"
                   type="password"
                   inputRef = { register({ required : true }) }
-                  
-                  //*autoComplete="new-password" 
                 />
               </Grid>
 
@@ -123,7 +135,6 @@ export const ResetPassword : React.FC = () => {
                   label="ยืนยันรหัสผ่านใหม่"
                   type="password"
                   inputRef = { register({ required : true }) }
-                  //*autoComplete="new-password" 
                 />
               </Grid>
               <Grid item xs={1}></Grid>

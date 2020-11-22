@@ -1,5 +1,4 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
@@ -25,6 +24,8 @@ import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined'
 import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
 
 import { theme } from './../theme/theme';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { ChangePasswordSchema } from './validator';
 
 //-------------------------------------- Styles Part ----------------------------
 
@@ -71,19 +72,27 @@ const useStyles = makeStyles((theme) => ({
 
 //-------------------------------------- End Styles Part ------------------------
 
-type User = {
-  username : string
-  password : string
+type ChangePassword = {
+  oldPassword : string
+  newPassword : string
+  confirmNewPassword : string
 }
 
 export const ChangePassword : React.FC = () => {
-    const classes = useStyles();
-  const { register, handleSubmit, setValue, errors } = useForm<User>();
+  const classes = useStyles();
+  const { register, handleSubmit, setValue, errors } = useForm<ChangePassword>();
 
-  const onSubmit = async ( user : User ) => {
-    const response = await axios.post('http://localhost:3000/auth/login', user )
+  const onSubmit = async ( changePassword : ChangePassword ) => {
+    //console.log(changePassword);
+    //await ChangePasswordSchema.validate(changePassword);
+    const token = localStorage.getItem('token');
+    setAuthToken(token);
+    const res = await api.post('/auth/change-password',changePassword);
   }
 
+  useEffect( () => {
+    console.log('test');
+  } , [])
   return (
     <ThemeProvider theme={theme}>
     <div className={classes.root}>
@@ -119,7 +128,7 @@ export const ChangePassword : React.FC = () => {
     <Typography variant="h6" align="center" color="textPrimary">
             เปลี่ยนรหัสผ่าน
           </Typography>
-    <form className={classes.login} noValidate>
+      <form className={classes.login} noValidate onSubmit={ handleSubmit(onSubmit) }>
             <Grid container spacing={1}>
                 <Grid item xs={1}></Grid>
                 <Grid item xs={10}>
@@ -128,12 +137,11 @@ export const ChangePassword : React.FC = () => {
                   margin="dense"
                   required
                   fullWidth
-                  id="current-password"
-                  label="รหัสผ่านปัจจุบัน"
-                  name="current-password"
+                  id="oldPassword"
+                  label="รหัสผ่านเก่า"
+                  name="oldPassword"
                   type = "password"
                   inputRef = {register({ required : true })}
-                  //*autoComplete="current-password"
                   autoFocus
                 />
               </Grid>
@@ -145,15 +153,13 @@ export const ChangePassword : React.FC = () => {
                   margin="dense"
                   required
                   fullWidth
-                  id="new-password"
-                  name="new-password"
+                  id="newPassword"
+                  name="newPassword"
                   label="รหัสผ่านใหม่"
                   type="password"
                   inputRef = { register({ required : true }) }
-                  
-                  //*autoComplete="new-password" 
                 />
-              </Grid>
+                </Grid>
 
               <Grid item xs={1}></Grid>
               <Grid item xs={1}></Grid>
@@ -163,12 +169,11 @@ export const ChangePassword : React.FC = () => {
                   margin="dense"
                   required
                   fullWidth
-                  id="new-password"
-                  name="new-password"
-                  label="ยืนยันรหัสผ่านใหม่"
+                  id="newConfirmPassword"
+                  name="newConfirmPassword"
+                  label="รหัสผ่านใหม่"
                   type="password"
                   inputRef = { register({ required : true }) }
-                  //*autoComplete="new-password" 
                 />
               </Grid>
 
@@ -181,7 +186,6 @@ export const ChangePassword : React.FC = () => {
                     variant="contained"
                     color="primary"
                     className={classes.submit}
-                    //href="/org/home"
                   >
                     เปลี่ยนรหัสผ่าน
                   </Button>

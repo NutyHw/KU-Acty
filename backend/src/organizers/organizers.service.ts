@@ -48,7 +48,7 @@ export class OrganizersService {
     return await this.eventsService.getEventByOrgId(Types.ObjectId(organizer_id))
   }
 
-  async getProfile( orgainzer_id : string ) : Promise<any> {
+  async getProfile( orgainzer_id : string ) : Promise<Organizer> {
     return await this.organizerModel.findOne({ user : Types.ObjectId(orgainzer_id) })
   }
 }
