@@ -1,28 +1,14 @@
 import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-import { withStyles} from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { createMuiTheme } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import { relative } from 'path';
-import ExitToAppOutlinedIcon from '@material-ui/icons/ExitToAppOutlined';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import SearchOutlinedIcon from '@material-ui/icons/SearchOutlined';
-import PersonOutlineOutlinedIcon from '@material-ui/icons/PersonOutlineOutlined';
-import PostAddOutlinedIcon from '@material-ui/icons/PostAddOutlined';
-
+import { OrgHeader } from '../header/org.header';
 import { theme } from './../theme/theme';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { ChangePasswordSchema } from './validator';
@@ -38,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'none',
     },
   paper: {
-    marginTop: theme.spacing(3),
+    marginTop: theme.spacing(16),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
@@ -80,6 +66,7 @@ type ChangePassword = {
 
 export const ChangePassword : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { register, handleSubmit, setValue, errors } = useForm<ChangePassword>();
 
   const onSubmit = async ( changePassword : ChangePassword ) => {
@@ -88,6 +75,10 @@ export const ChangePassword : React.FC = () => {
     const token = localStorage.getItem('token');
     setAuthToken(token);
     const res = await api.post('/auth/change-password',changePassword);
+    alert("เปลี่ยนรหัสผ่านสำเร็จ");
+    history.push({
+      pathname : '/org/selfprofile'
+    })
   }
 
   useEffect( () => {
@@ -95,34 +86,7 @@ export const ChangePassword : React.FC = () => {
   } , [])
   return (
     <ThemeProvider theme={theme}>
-    <div className={classes.root}>
-      <AppBar position="static" elevation={0}>
-        <Toolbar>
-          <Typography variant="h4">KU ACTY</Typography>
-          <Box m={1} />
-          <Typography align="left" variant="body1" className={classes.title}>
-            ระบบตรวจสอบและค้นหากิจกรรม มหาวิทยาลัยเกษตรศาสตร์
-          </Typography>
-          <IconButton color="inherit" href="/#">
-              <PersonOutlineOutlinedIcon fontSize="large"/>
-          </IconButton>
-          
-          <IconButton color="inherit" href="/login">
-              <ExitToAppOutlinedIcon fontSize="large"/>
-          </IconButton>
-        </Toolbar>
-      </AppBar> 
-    </div>
-    <AppBar position="static" elevation={0} color="secondary" > 
-        <Toolbar variant="dense">
-            <ButtonGroup variant="text" color="default" aria-label="text primary button group">
-                <Button href="/org/home"><HomeOutlinedIcon/><Box m={0.25} />หน้าหลัก</Button>
-                <Button href="/org/createevent"><PostAddOutlinedIcon/><Box m={0.25} />ประกาศกิจกรรม</Button>
-                <Button href="/#"><SearchOutlinedIcon/><Box m={0.25} />ค้นหากิจกรรม</Button>
-                </ButtonGroup>
-        </Toolbar>
-      </AppBar>
-     
+      <OrgHeader/>
 
     <Container className={classes.paper} component="main" maxWidth="xs">
     <Typography variant="h6" align="center" color="textPrimary">
