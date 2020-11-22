@@ -20,6 +20,8 @@ export const OrgFeed : React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const [ feeds, setFeeds ] = useState<any[]>([]);
+  const [ viewStat, setViewStat ] = useState<any[]>([]);
+  const [ interestStat, setInterestStat ] = useState<any[]>([]);
 
   useEffect( () => {
     const token = localStorage.getItem('token')
@@ -28,7 +30,18 @@ export const OrgFeed : React.FC = () => {
     .then( res => {
       setFeeds(res.data)
     })
+
   }, [])
+
+  useEffect( () => {
+    const sortEventByView = feeds.sort( (a,b) => a.view_counts - b.view_counts )
+    .map( (elm) => ( { event_name : elm.event_name, view_counts : elm.view_counts } ) )
+    const sortEventByInterest = feeds.sort( (a,b) => a.interest_count - b.interest_count )
+    .map( (elm) => ( { event_name : elm.event_name, interest_count : elm.interest_count } ) )
+
+    setViewStat(sortEventByView);
+    setInterestStat(sortEventByInterest);
+  }, [ feeds ])
 
   const onClickDetail = ( eventId : string ) => {
     history.push({
@@ -135,26 +148,26 @@ export const OrgFeed : React.FC = () => {
           <Typography>จำนวนผู้เข้าชมหน้ารายละเอียดกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>event_name</Typography></Grid>
-            <Grid item xs><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>{ viewStat.length > 0 ? viewStat[0].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography>{ viewStat.length > 0 ? viewStat[0].view_counts : null }</Typography></Grid>
           </Grid>
           <Grid container>
             <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>event_name</Typography></Grid>
-            <Grid item xs><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>{ viewStat.length > 0 ? viewStat[viewStat.length-1].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography>{ viewStat.length > 0 ? viewStat[viewStat.length-1].view_counts : null }</Typography></Grid>
           </Grid>
           <br/>
 
           <Typography>จำนวนผู้กดสนใจกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>event_name</Typography></Grid>
-            <Grid item xs><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>{ interestStat.length > 0 ? interestStat[0].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography>{ interestStat.length > 0 ? interestStat[0].interest_count : null }</Typography></Grid>
           </Grid>
           <Grid container>
             <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>event_name</Typography></Grid>
-            <Grid item xs><Typography>0</Typography></Grid>
+            <Grid item xs={6}><Typography>{ interestStat.length > 0 ? interestStat[interestStat.length-1].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography>{ interestStat.length > 0 ? interestStat[interestStat.length-1].interest_count : null }</Typography></Grid>
           </Grid>
         </Container>
       </Grid>

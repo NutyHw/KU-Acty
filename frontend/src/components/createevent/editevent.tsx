@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -18,18 +19,9 @@ import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { GreenDesc, useStyles, MenuProps } from './style';
-import { theme } from '../theme/theme';
+import { theme } from './../theme/theme';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { OrgHeader } from '../header/org.header';
-
-const typenames = [
-  'กิจกรรมมหาวิทยาลัย',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาคุณธรรม จริยธรรม',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะการคิดและการเรียนรู้',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคลและการสื่อสาร',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาสุขภาพ',
-  'กิจกรรมเพื่อสังคม',
-];
 
 export function UploadButtons() {
   const classes = useStyles();
@@ -59,33 +51,45 @@ export function UploadButtons() {
 export const EditEvent : React.FC = () => {
   const classes = useStyles();
   const history = useHistory()
-  const [ eventType , setEventType] = useState<string[]>([]);
-  const [ status , setStatus] = useState<string[]>([]);
+  const [ eventTypeName, setEventTypeName ] = useState<string[]>([]);
+  const [ allType, setAllType ] = useState<any[]>([]);
+  const [ mapper, setMapper ] = useState<any>([]);
   const { register, handleSubmit, control } = useForm();
 
-  const handleChangeMultiple = (event : any) => {
-    setEventType(event.target.value as string[]);
-  };
+  useEffect( () => {
+    const token = localStorage.getItem('token');
+    setAuthToken(token);
+    api.get('/nisits/transcriptRule')
+    .then( res => {
+      setAllType(res.data)
+      const res2 = {}
+      for ( const type of res.data ){
+        res2[type.event_type_name] = type._id
+      }
+      setMapper(res2)
+    } )
+  }, [] )
 
-  const handleChangeStatus = (event : any) => {
-    setStatus(event.target.value as string[]);
+  const handleChangeMultiple = (event : any) => {
+    setEventTypeName(event.target.value as string[]);
   };
 
   const onSubmit = async ( data : any ) => {
     try{
-      const { event_start_date, event_end_date, event_start_time, event_end_time, event_type, status,  ...creatEvent } = data;
-      creatEvent.event_type = eventType;
+      const { event_start_date, event_end_date, event_start_time, event_end_time, event_type,  ...creatEvent } = data;
+      console.log(creatEvent)
       creatEvent.event_start_time = new Date(event_start_date + ' ' + event_start_time).toISOString()
       creatEvent.event_end_time = new Date(event_end_date + ' ' + event_end_time).toISOString()
+      creatEvent.event_type = eventTypeName.map( name => mapper[name] )
 
       const token = localStorage.getItem('token');
       setAuthToken(token);
-      await api.put('/events/:id',creatEvent)
+      await api.put('/events/',creatEvent)
       history.push({
         pathname : '/org/home'
       })
     } catch (err) {
-      alert("ERROR!")
+      alert(err)
       return ;
     }
   }
@@ -97,7 +101,7 @@ export const EditEvent : React.FC = () => {
         <ThemeProvider theme={theme}>
           <CssBaseline /><div className={classes.midpage}>    
           <Typography variant="h6" align="center" color="textPrimary">
-            แก้ไขกิจกรรม
+            ประกาศกิจกรรม
           </Typography>  
           </div>
             <form className={classes.login} onSubmit={ handleSubmit(onSubmit) }>
@@ -119,7 +123,7 @@ export const EditEvent : React.FC = () => {
                 </Grid>
                 
                 <Grid item xs={12}>
-                <FormControl variant="outlined" margin="dense" className={classes.formControl} >
+                <FormControl variant="outlined" className={classes.formControl} >
                   <InputLabel id="eventtype">ประเภทกิจกรรม</InputLabel>
                   <Controller 
                     render = { () => (
@@ -127,15 +131,15 @@ export const EditEvent : React.FC = () => {
                         labelId="eventtype"
                         id="eventtype"
                         multiple
-                        value={ eventType }
+                        value={ eventTypeName }
                         onChange={ handleChangeMultiple }
-                        renderValue={(selected) => (selected as string[]).join(', ')}
+                        renderValue={(selected) => ( selected as string[] ).join(', ')}
                         MenuProps={MenuProps}
                       >
-                        {typenames.map((name) => (
-                          <MenuItem key={name} value={name}>
-                            <Checkbox color="primary" checked={eventType.indexOf(name) > -1}/>
-                            <ListItemText primary={name} />
+                        {allType.map((elm) => (
+                          <MenuItem key={elm._id} value={elm.event_type_name}>
+                            <Checkbox color="primary" checked={eventTypeName.indexOf(elm.event_type_name) > -1}/>
+                            <ListItemText primary={elm.event_type_name} />
                           </MenuItem>
                         ))}
                       </Select>
@@ -143,25 +147,6 @@ export const EditEvent : React.FC = () => {
                    name = 'event_type'
                    control = { control }
                   />
-                </FormControl>
-                </Grid>
-                
-                <Grid item xs={12}>
-                <FormControl variant="outlined" margin="dense" className={classes.formControl}>
-                  <InputLabel>สถานะกิจกรรม</InputLabel>
-                  <Select
-                    native
-                    value={ status }
-                    onChange={ handleChangeStatus }
-                    label="Status"
-                    color="primary"
-                    name="status"
-                  >
-                    <option aria-label="None" value="" />
-                    <option value={'prepare'}>เตรียมจัดกิจกรรม</option>
-                    <option value={'open'}>เปิดรับสมัคร</option>
-                    <option value={'close'}>ปิดรับสมัคร</option>
-                  </Select>
                 </FormControl>
                 </Grid>
 
@@ -328,7 +313,7 @@ export const EditEvent : React.FC = () => {
                     
                     className={classes.submit}
                   >
-                    ยืนยันการแก้ไข
+                    ประกาศกิจกรรม
                   </Button>
                   </Grid>
                   </Grid>

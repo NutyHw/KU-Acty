@@ -43,4 +43,10 @@ export class NisitsController {
   async createTranscript(@Body() transcriptDto : TranscriptDto) : Promise<any> {
     return await this.nisitService.createTranscript(transcriptDto);
   }
+
+  @Get('transcriptRule')
+  @Role('organizer')
+  async getTranscriptRule() : Promise<any> {
+    return await this.nisitService.getTranscriptRule();
+  }
 }
