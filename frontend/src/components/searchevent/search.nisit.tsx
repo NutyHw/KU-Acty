@@ -72,7 +72,7 @@ export function SearchReslt( props : any ) {
             >
             <KeyboardArrowRightIcon/>รายละเอียด
             </Button><br/><br/>
-            <VisibilityIcon/> { el.view_counts } <StarIcon className={classes.yell}/> { el.interest_count }
+            <VisibilityIcon/> { el.view_counts } <StarIcon /> { el.interest_count }
             </Box>
           </Grid>
           <Typography component="span" variant="body2" color="textPrimary">
