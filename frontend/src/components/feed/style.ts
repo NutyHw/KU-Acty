@@ -32,11 +32,11 @@ export const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     flexBasis: '33.33%',
   },
+  secondaryText: {
+    fontSize: 15,
+  },
   button: {
     marginTop: 8,
-  },
-  yell: {
-    color: '#ffc107',
   },
 }));
 

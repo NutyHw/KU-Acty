@@ -55,14 +55,23 @@ export const OrgFeed : React.FC = () => {
     })
   }
 
+  function formatDateToString( date : Date ) { 
+    var dd = String(date.getDate()).padStart(2, '0');
+    var mm = String(date.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = date.getFullYear();
+    return dd + '/' + mm + '/' + yyyy;
+  }
+
   const renderFeed = () => {
     return feeds.map( el => {
       let startTime = new Date(el.event_start_time)
+      const updateDate = new Date(el.updated_at);
       var dd = String(startTime.getDate()).padStart(2, '0');
       var mm = String(startTime.getMonth() + 1).padStart(2, '0');
       var yyyy = startTime.getFullYear().toString();
       const formatDate = dd + '/' + mm + '/' + yyyy
       const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
+      const formatUpdate = formatDateToString(updateDate);
 
       return  <Box boxShadow={5}><Grid container className={classes.eventbox}>
         <Grid item xs={6} className={classes.paper}>
@@ -101,12 +110,12 @@ export const OrgFeed : React.FC = () => {
             </Button>
           </Link>
           <br/><br/>
-          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { formatUpdate }</Typography>
           <br/>
           <Grid item>
-            <Typography>
+            <Typography style={{display: 'flex', alignItems: 'center'}}>
               <VisibilityIcon/> { el.view_counts }
-              <StarIcon className={classes.yell}/> { el.interest_count }
+              <StarIcon/> { el.interest_count }
             </Typography>
           </Grid>
         </Grid>
@@ -148,26 +157,26 @@ export const OrgFeed : React.FC = () => {
           <Typography>จำนวนผู้เข้าชมหน้ารายละเอียดกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>{ viewStat.length > 0 ? viewStat[0].event_name : null }</Typography></Grid>
-            <Grid item xs><Typography>{ viewStat.length > 0 ? viewStat[0].view_counts : null }</Typography></Grid>
+            <Grid item xs={6}><Typography className={classes.secondaryText}>{ viewStat.length > 0 ? viewStat[viewStat.length-1].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography style={{display: 'flex', alignItems: 'center'}}><VisibilityIcon/>{ viewStat.length > 0 ? viewStat[viewStat.length-1].view_counts : null }</Typography></Grid>
           </Grid>
           <Grid container>
-            <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>{ viewStat.length > 0 ? viewStat[viewStat.length-1].event_name : null }</Typography></Grid>
-            <Grid item xs><Typography>{ viewStat.length > 0 ? viewStat[viewStat.length-1].view_counts : null }</Typography></Grid>
+            <Grid item xs={3}><Typography>ต่ำสุด:</Typography></Grid>
+            <Grid item xs={6}><Typography className={classes.secondaryText}>{ viewStat.length > 0 ? viewStat[0].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography style={{display: 'flex', alignItems: 'center'}}><VisibilityIcon/>{ viewStat.length > 0 ? viewStat[0].view_counts : null }</Typography></Grid>
           </Grid>
           <br/>
 
           <Typography>จำนวนผู้กดสนใจกิจกรรม</Typography>
           <Grid container>
             <Grid item xs={3}><Typography>สูงสุด:</Typography></Grid>
-            <Grid item xs={6}><Typography>{ interestStat.length > 0 ? interestStat[0].event_name : null }</Typography></Grid>
-            <Grid item xs><Typography>{ interestStat.length > 0 ? interestStat[0].interest_count : null }</Typography></Grid>
+            <Grid item xs={6}><Typography className={classes.secondaryText}>{ interestStat.length > 0 ? interestStat[interestStat.length-1].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography style={{display: 'flex', alignItems: 'center'}}><StarIcon/>{ interestStat.length > 0 ? interestStat[interestStat.length-1].interest_count : null }</Typography></Grid>
           </Grid>
           <Grid container>
-            <Grid item xs={3}><Typography>ต่ำสุด</Typography></Grid>
-            <Grid item xs={6}><Typography>{ interestStat.length > 0 ? interestStat[interestStat.length-1].event_name : null }</Typography></Grid>
-            <Grid item xs><Typography>{ interestStat.length > 0 ? interestStat[interestStat.length-1].interest_count : null }</Typography></Grid>
+            <Grid item xs={3}><Typography>ต่ำสุด:</Typography></Grid>
+            <Grid item xs={6}><Typography className={classes.secondaryText}>{ interestStat.length > 0 ? interestStat[0].event_name : null }</Typography></Grid>
+            <Grid item xs><Typography style={{display: 'flex', alignItems: 'center'}}><StarIcon/>{ interestStat.length > 0 ? interestStat[0].interest_count : null }</Typography></Grid>
           </Grid>
         </Container>
       </Grid>
