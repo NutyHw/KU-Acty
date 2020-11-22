@@ -98,9 +98,9 @@ export const NisitFeed : React.FC = () => {
           <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { formatUpdate }</Typography>
           <br/>
           <Grid item>
-            <Typography>
+            <Typography style={{display: 'flex', alignItems: 'center'}}>
               <VisibilityIcon/> { el.view_counts }
-              <StarIcon className={classes.yell}/> { el.interest_count }
+              <StarIcon/> { el.interest_count }
             </Typography>
           </Grid>
         </Grid>
