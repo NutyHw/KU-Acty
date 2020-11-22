@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useEffect, useState } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
@@ -7,22 +8,45 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { theme, GreenDesc, useStyles, MenuProps } from './style';
 import VisibilityIcon from '@material-ui/icons/Visibility';
-import TurnedInIcon from '@material-ui/icons/TurnedIn';
 import StarIcon from '@material-ui/icons/Star';
 import { OrgHeader } from '../header/org.header';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import  { Event } from './type'
-import { Mydata } from './chart';
+import { Chart } from './chart';
+import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 
 export const StatEvent : React.FC = () => {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState<string | false>(false);
+  const [ viewer, setViewer ] = useState<any[]>([]);
+  const [ follower, setFollower ] = useState<any[]>([]);
+  const [ eventDetail, setEventDetail ] = useState<any>(null);
+
   const handleChange = (panel: string) => (event: React.ChangeEvent<{}>, isExpanded: boolean) => {
     setExpanded(isExpanded ? panel : false);
   };
+
+  useEffect( () => {
+    const token = localStorage.getItem('token');
+    const eventId = localStorage.getItem('eventId');
+    setAuthToken(token);
+    api.get('/events/'+ eventId + '/stat/')
+    .then( res => {
+      setViewer(res.data.viewer);
+      setFollower(res.data.follower);
+    } )
+    
+    api.get('/events/' + eventId + '/detail')
+    .then( res => {
+      setEventDetail(res.data);
+    } )
+  }, [])
+
+  useEffect( () => {
+    console.log(eventDetail)
+  }, [ eventDetail ])
 
   return (
     <ThemeProvider theme={theme}>
@@ -34,21 +58,21 @@ export const StatEvent : React.FC = () => {
             ข้อมูลเชิงสถิติ:
           </Typography>  
           <Typography align="left" color="textPrimary">
-            ชื่อกิจกรรม:<br />
-            ผู้จัดกิจกรรม:
+            ชื่อกิจกรรม: { eventDetail ? eventDetail.eventDetail.event_name : null }<br />
+            ผู้จัดกิจกรรม: { eventDetail ? eventDetail.organizerDetail.organizer_name : null }
           </Typography>
           <Typography  align="left" color="textPrimary">
             <Grid container spacing={1}>
-            <Grid item xs={4}>วันที่จัด:</Grid>
-            <Grid item xs={4}>เวลาจัด:</Grid>
-            <Grid item xs={4}>จำนวนชั่วโมง:</Grid>
+              <Grid item xs={4}>วันที่จัด: { eventDetail ? eventDetail.eventDetail.event_start_time : null }</Grid>
+            <Grid item xs={4}>เวลาจัด:{ eventDetail ? eventDetail.eventDetail.event_start_time : null}</Grid>
+            <Grid item xs={4}>จำนวนชั่วโมง:{ eventDetail ? eventDetail.eventDetail.benefit_hour : null }</Grid>
             </Grid>
           </Typography>
           <Typography  align="left" color="textPrimary">
-            ประเภทกิจกรรม : 
+            ประเภทกิจกรรม : { eventDetail ? eventDetail.eventType : null }
           </Typography>
           <Typography align="right" color="textPrimary">
-            <VisibilityIcon/> 0 view <StarIcon/> 0 คน
+            <VisibilityIcon/> { eventDetail ? eventDetail.eventDetail.view_counts : null } view <StarIcon/> { eventDetail ? eventDetail.eventDetail.interest_count : null } คน
             <br />
           </Typography>
 
@@ -62,7 +86,7 @@ export const StatEvent : React.FC = () => {
             </AccordionSummary>
             <AccordionDetails>
                 <Box>
-                <Mydata/>
+                  <Chart { ...viewer }/>
                 </Box>
             </AccordionDetails>
         </Accordion>
@@ -77,7 +101,7 @@ export const StatEvent : React.FC = () => {
             </AccordionSummary>
             <AccordionDetails>
                 <Box>
-                  temp
+                  <Chart {...follower}/>
                 </Box>
             </AccordionDetails>
         </Accordion>

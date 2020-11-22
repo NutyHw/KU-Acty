@@ -10,6 +10,8 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { FollowDto } from './dto/follow.dto';
 import { QueryDto } from './dto/query.dto';
 import { CreateEventTypeDto } from './dto/create-event-type.dto';
+import { NisitsDocument, Nisits } from './schema/nisits.schema';
+import { ViewerDocument, Viewer } from './schema/view.schema';
 
 @Injectable()
 export class EventsService {
@@ -17,7 +19,9 @@ export class EventsService {
     @InjectModel(Event.name) private eventModel : Model<EventDocument>,
     @InjectModel(Follower.name) private followerModel : Model<FollowerDocument>,
     @InjectModel(Organizer.name) private organizerModel : Model<OrganizerDocument>,
-    @InjectModel(EventType.name) private eventTypeModel : Model<EventTypeDocument>
+    @InjectModel(EventType.name) private eventTypeModel : Model<EventTypeDocument>,
+    @InjectModel(Nisits.name) private nisitsModel : Model<NisitsDocument>,
+    @InjectModel(Viewer.name) private viewerModel : Model<ViewerDocument>
   ){}
 
   async findById( _id : Types.ObjectId ) : Promise<Event> {
@@ -79,8 +83,16 @@ export class EventsService {
     const eventType = eventType2.map( el => el.event_type_name )
     const followRecord = await this.followerModel.findOne({ nisit_id : Types.ObjectId(nisit_id), event_id : Types.ObjectId(_id) })
     const isFollow = followRecord ? true : false;
+    console.log(nisit_id,_id);
+    const isView = await this.viewerModel.findOne({ nisit_id : Types.ObjectId(nisit_id), event_id : Types.ObjectId(_id) })
 
-    await this.eventModel.updateOne( { _id : Types.ObjectId(_id) }, { $inc : { view_counts : 1 } } )
+    console.log(isView)
+    if ( !isView ){
+      const record = new this.viewerModel({ nisit_id : Types.ObjectId(nisit_id), event_id : Types.ObjectId(_id) })
+      await record.save()
+      await this.eventModel.updateOne( { _id : Types.ObjectId(_id) }, { $inc : { view_counts : 1 } } )
+    }
+
     return { eventDetail, organizerDetail, eventType, isFollow }
   }
 
@@ -163,4 +175,78 @@ export class EventsService {
   async getEventTypeForRule( eventTypeId : [ Types.ObjectId ] ) : Promise<any> { 
     return await this.eventTypeModel.find({ _id : { $in : eventTypeId } });
   }
+
+  async getEventStat( eventId : string ) : Promise<any> {
+    const allFollower = await this.followerModel.find({ event_id : Types.ObjectId(eventId) })
+
+    const followerGender = await this.nisitsModel.aggregate([
+      { $match : { user : { $in : allFollower.map( elm => elm.nisit_id ) } } },
+      { $group : { 
+        _id : { 'gender' : '$gender' },
+        key : { $first : '$gender' },
+        data : { $sum : 1 }
+      } }
+    ])
+
+    const followerFacaulty = await this.nisitsModel.aggregate([
+      { $match : { user : { $in : allFollower.map( elm => elm.nisit_id ) } } },
+      { $group : { 
+        _id : { 'facaulty' : '$facaulty' },
+        key : { $first : '$facaulty' },
+        data : { $sum : 1 }
+      } }
+    ])
+
+    const followerYear = await this.nisitsModel.aggregate([
+      { $match : { user : { $in : allFollower.map( elm => elm.nisit_id ) } } },
+      { $group : { 
+        _id : { 'year' : '$year' },
+        key : { $first : '$year' },
+        data : { $sum : 1 }
+      } }
+    ])
+
+    const allViewer = await this.viewerModel.find({ event_id : Types.ObjectId(eventId) })
+
+    const viewerGender = await this.nisitsModel.aggregate([
+      { $match : { user : { $in : allViewer.map( elm => elm.nisit_id ) } } },
+      { $group : { 
+        _id : { 'gender' : '$gender' },
+        key : { $first : '$gender' },
+        data : { $sum : 1 }
+      } }
+    ])
+
+    const viewerFacaulty = await this.nisitsModel.aggregate([
+      { $match : { user : { $in : allViewer.map( elm => elm.nisit_id ) } } },
+      { $group : { 
+        _id : { 'facaulty' : '$facaulty' },
+        key : { $first : '$facaulty' },
+        data : { $sum : 1 }
+      } }
+    ])
+
+    const viewerYear = await this.nisitsModel.aggregate([
+      { $match : { user : { $in : allViewer.map( elm => elm.nisit_id ) } } },
+      { $group : { 
+        _id : { 'year' : '$year' },
+        key : { $first : '$year' },
+        data : { $sum : 1 }
+      } }
+    ])
+
+    return {
+      follower : { 
+        gender : followerGender,
+        major  : followerFacaulty,
+        year : followerYear
+      },
+      viewer : {
+        gender : viewerGender,
+        major : viewerFacaulty,
+        year : viewerYear
+      }
+    }
+  }
+
 }

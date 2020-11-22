@@ -124,11 +124,11 @@ export const OrgFeed : React.FC = () => {
           <Link onClick = { () => onClickEdit(el._id) } style={{ textDecoration: 'none' }}>
             <Button className={classes.button} variant="contained" color="primary" style={{minWidth: 128}}>แก้ไขรายละเอียด</Button><br/>
           </Link>
-          <Link href="/org/statevent" style={{ textDecoration: 'none' }}>
+          <Link onClick={ () => {
+            localStorage.setItem('eventId',el._id)
+            history.push('/org/statevent');
+            } } style={{ textDecoration: 'none' }}>
             <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>สถิติกิจกรรม</Button><br/>
-          </Link>
-          <Link href="/org/eventstatistic" style={{ textDecoration: 'none' }}>
-            <Button className={classes.button} variant="outlined" style={{minWidth: 128}}>ลบกิจกรรม</Button>
           </Link>
         </Grid>
     </Grid></Box>

@@ -60,4 +60,10 @@ export class EventsController {
   async createEventType(@Body() createEventTypeDto : CreateEventTypeDto){
     return await this.eventService.createEventType(createEventTypeDto);
   }
+
+  @Get(':id/stat')
+  @Role('organizer')
+  async getEventStat(@Param() id : any){
+    return await this.eventService.getEventStat( id.id );
+  }
 }
