@@ -139,7 +139,7 @@ export const SearchEvent : React.FC = () => {
             ค้นหากิจกรรม
           </Typography>  
           <Grid container spacing={1}>
-          <Grid item xs={4}>
+          <Grid item xs={6}>
           <TextField
                   variant="outlined"
                   margin="dense"
@@ -153,7 +153,7 @@ export const SearchEvent : React.FC = () => {
                 />
           </Grid>
 
-          <Grid item xs={2}>
+          <Grid item xs={3}>
           <TextField
                     variant="outlined"
                     margin="dense"
@@ -170,7 +170,7 @@ export const SearchEvent : React.FC = () => {
                   </TextField>
             </Grid>
 
-            <Grid item xs={2}>
+            <Grid item xs={3}>
             <TextField
                     variant="outlined"
                     margin="dense"
@@ -187,7 +187,7 @@ export const SearchEvent : React.FC = () => {
               </TextField>
             </Grid>
 
-            <Grid item xs={4}>
+            <Grid item xs={11}>
             <Autocomplete
               multiple
               id="type"
@@ -197,8 +197,8 @@ export const SearchEvent : React.FC = () => {
               onChange = { eventTypeChange }
               />
             </Grid>
-            </Grid>
-            <Grid container spacing={1}>
+            
+            
             <Grid item xs={1}>
             <Button 
                     type="submit"
@@ -207,12 +207,11 @@ export const SearchEvent : React.FC = () => {
                     onClick={ search }
                     className={classes.submit}><SearchOutlinedIcon/> ค้นหา </Button>
             </Grid>
-            <Grid item xs={1}>
             </Grid>
-            </Grid>
-            </ThemeProvider>
+            </ThemeProvider> 
             <Typography variant="h6" align="center" color="textPrimary">
-            ผลการค้นหา
+             <br/>
+            {"ผลการค้นหา"}
           </Typography>    
       </Container></div>
       <br/>
