@@ -45,7 +45,7 @@ export class Event {
   status : string
 
   @Prop({ required : true })
-  event_type : [ string ]
+  event_type : [ Types.ObjectId ]
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

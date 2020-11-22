@@ -9,7 +9,7 @@ export type FollowerDocument = Follower & Document;
 
 export class Follower {
   @Prop({ required : true })
-  student_id : Types.ObjectId
+  nisit_id : Types.ObjectId
 
   @Prop({ required : true })
   event_id : Types.ObjectId

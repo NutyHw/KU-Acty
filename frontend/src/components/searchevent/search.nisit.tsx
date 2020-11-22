@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { NisitHeader } from '../header/nisit.header';
-// material ui import
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -18,6 +17,7 @@ import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import Chip from '@material-ui/core/Chip';
 import { theme } from './../theme/theme';
 import StarIcon from '@material-ui/icons/Star';
+import { useHistory  } from 'react-router-dom';
 
 
 const typenames = [
@@ -30,10 +30,13 @@ const typenames = [
 ];
 
 export function SearchReslt( props : any ) {
+  const history = useHistory();
   const classes = useStyles();
 
   const renderResult = () => {
     return props.searchResult.map( ( el : any ) => {
+      const startTimeDate = new Date(el.event_start_time);
+      const startTime = startTimeDate.getDate() + '/' + startTimeDate.getMonth() + '/' + startTimeDate.getFullYear();
       return <React.Fragment>
       <Box 
       className={classes.actybox}
@@ -49,13 +52,25 @@ export function SearchReslt( props : any ) {
               <Typography component="span" variant="body2" color="textPrimary">
                 <Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography>
                 สถานที่จัด : { el.place }<br/>
-                เริ่มจัดกิจกรรม : { el.start_date }
+                เริ่มจัดกิจกรรม : { startTime }
               </Typography>
             </Box>
           </Grid>
           <Grid item xs={2}>
             <Box>
-            <Button type="submit" variant="contained" color="primary" className={classes.submit}><KeyboardArrowRightIcon/>รายละเอียด</Button><br/><br/>
+            <Button 
+              type="submit" 
+              variant="contained" 
+              color="primary" 
+              className={classes.submit}
+              onClick={ () => { 
+                history.push({
+                  pathname: '/nisit/eventdetail/' + el._id
+                })
+              } }
+            >
+            <KeyboardArrowRightIcon/>รายละเอียด
+            </Button><br/><br/>
             <VisibilityIcon/> { el.view_counts } <StarIcon className={classes.yell}/> { el.interest_count }
             </Box>
           </Grid>
@@ -98,8 +113,8 @@ export const SearchEvent : React.FC = () => {
 
   useEffect( () => {
     console.log(searchResult);
-    
   }, [ searchResult ])
+
   const search = async () => {
     const payload = {
       event_name : eventName,

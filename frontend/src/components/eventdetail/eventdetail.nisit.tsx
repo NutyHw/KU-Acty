@@ -65,6 +65,11 @@ export const NisitEventDetail : React.FC = () => {
   const { id } = useParams();
 
   const [ event, setEvent ] = useState();
+  const [ isFollow, setFollow ] = useState(false);
+
+  function padDigits (number : number, digits : number) {
+    return Array(Math.max(digits - String(number).length + 1, 0)).join('0') + number;
+  }
 
   useEffect( () => {
     const token = localStorage.getItem('token')
@@ -75,18 +80,32 @@ export const NisitEventDetail : React.FC = () => {
       const startTime = new Date(eventData.eventDetail.event_start_time)
       const endTime = new Date(eventData.eventDetail.event_end_time)
 
-      eventData.eventDetail.event_start_date = startTime.getDay() + '/' + startTime.getMonth() + '/' + ( startTime.getFullYear() + 543 )
-      eventData.eventDetail.event_start_clock = startTime.getHours() + ':' + startTime.getMinutes()
+      eventData.eventDetail.event_start_date = padDigits(startTime.getDate(),2) + '/' + padDigits(startTime.getMonth(),2) + '/' + ( startTime.getFullYear() + 543 )
+      eventData.eventDetail.event_start_clock = padDigits(startTime.getHours(),2) + ':' + padDigits(startTime.getMinutes(),2)
 
-      eventData.eventDetail.event_end_date = endTime.getDay() + '/' + endTime.getMonth() + '/' + ( endTime.getFullYear() + 543 )
-      eventData.eventDetail.event_end_clock = endTime.getHours() + ':' + endTime.getMinutes()
+      eventData.eventDetail.event_end_date = padDigits(endTime.getDate(),2) + '/' + padDigits(endTime.getMonth(),2) + '/' + ( endTime.getFullYear() + 543 )
+      eventData.eventDetail.event_end_clock = padDigits(endTime.getHours(),2) + ':' + padDigits(endTime.getMinutes(),2)
       setEvent(eventData);
+      setFollow(eventData.isFollow)
     } )
   }, [])
 
   //แก้เป็น interest_count++
   function handleClick() {
-    alert('interest count ++');
+    const token = localStorage.getItem('token');
+    setAuthToken(token);
+    if ( isFollow ){
+      api.post('/events/unfollow', { event_id : event.eventDetail._id })
+      .catch( err => {
+        throw new Error(err);
+      } )
+    } else {
+      api.post('/events/follow', { event_id : event.eventDetail._id })
+      .catch( err => {
+        throw new Error(err);
+      } )
+    }
+    setFollow(!isFollow);
   }
 
   return (
@@ -115,7 +134,7 @@ export const NisitEventDetail : React.FC = () => {
 
                 <Grid item xs={6}>
                 <Typography> 
-                  ประเภทกิจกรรม : { event ? event.eventDetail.event_type : null }
+                  ประเภทกิจกรรม : { event ? event.eventType : null }
                   </Typography>
                 </Grid>
 
@@ -175,10 +194,11 @@ export const NisitEventDetail : React.FC = () => {
                 <Grid item xs>
                   <Button variant="contained" color="primary" onClick={handleClick}>สนใจกิจกรรมนี้</Button><br/><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <VisibilityIcon />view_count
+                    <VisibilityIcon /> { event ? event.eventDetail.view_counts : null }
                   </Typography><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <StarIcon/>int_count
+                    <StarIcon color={ isFollow ? "error" : "primary" }/> 
+                    { event ? event.eventDetail.interest_count : null }
                   </Typography>
                 </Grid>
               </Grid>

@@ -1,3 +1,4 @@
+//@ts-nocheck
 import { Model, Types } from 'mongoose';
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
@@ -38,25 +39,31 @@ export class EventsService {
     return res;
   }
 
-  async followEvent( followDto : FollowDto ) : Promise<boolean> {
+  async followEvent( followDto : FollowDto ) : Promise<any> {
     const record = {
-      event_id : new Types.ObjectId(followDto.event_id),
-      student_id : new Types.ObjectId(followDto.student_id)
+      event_id : Types.ObjectId(followDto.event_id),
+      nisit_id : followDto.nisit_id
     }
+    const res = await this.followerModel.findOne(record);
+
+    if ( res ){
+      throw new HttpException('nisit already follow this event',HttpStatus.BAD_REQUEST);
+    }
+
+    await this.eventModel.updateOne({ _id : record.event_id },{ $inc : { interest_count : 1 } })
     const follower = new this.followerModel(record);
-    if ( follower ){
-      return true;
-    } else {
-      throw new HttpException('internal error',HttpStatus.INTERNAL_SERVER_ERROR)
-    }
+    return follower.save();
   }
 
   async unFollow( followDto : FollowDto ) : Promise<true> {
     const record = {
-      event_id : new Types.ObjectId(followDto.event_id),
-      student_id : new Types.ObjectId(followDto.student_id)
+      event_id : Types.ObjectId(followDto.event_id),
+      nisit_id : followDto.nisit_id
     }
-    const res = await this.followerModel.deleteOne(record).exec();
+
+    const res = await this.followerModel.deleteOne(record);
+    await this.eventModel.updateOne({ _id : record.event_id },{ $inc : { interest_count : -1 } })
+
     if ( res.deletedCount === 0 ){
       throw new HttpException('event_id not match',HttpStatus.BAD_REQUEST)
     } else {
@@ -64,13 +71,19 @@ export class EventsService {
     }
   }
 
-  async getDetailedEvent( _id : string ) : Promise<any> {
-    const eventDetail =  await this.eventModel.findById(new Types.ObjectId(_id)).exec();
-    const organizerDetail = await this.organizerModel.findOne({ user : new Types.ObjectId(eventDetail.organizer_id) }).exec()
-    return { eventDetail, organizerDetail }
+  async getDetailedEvent( _id : string, nisit_id : string ) : Promise<any> {
+    const eventDetail =  await this.eventModel.findById(Types.ObjectId(_id));
+    const organizerDetail = await this.organizerModel.findOne({ user : eventDetail.organizer_id })
+    const eventType2 = await this.eventTypeModel.find({ _id : { $in : eventDetail.event_type } })
+    const eventType = eventType2.map( el => el.event_type_name )
+    const followRecord = await this.followerModel.findOne({ nisit_id : Types.ObjectId(nisit_id), event_id : Types.ObjectId(_id) })
+    const isFollow = followRecord ? true : false;
+
+    await this.eventModel.updateOne( { _id : Types.ObjectId(_id) }, { $inc : { view_counts : 1 } } )
+    return { eventDetail, organizerDetail, eventType, isFollow }
   }
 
-  async searchEvent( queryDto : QueryDto ) : Promise<Event[]> {
+  async searchEvent( queryDto : QueryDto ) : Promise<any[]> {
     const pipeline = new Array<any>();
 
     pipeline.push({ $match : { 'status' : 'active' } })
@@ -93,20 +106,26 @@ export class EventsService {
 
 
     const res = await this.eventModel.aggregate<any>(pipeline);
+    for ( const event of res ){
+      const eventType = await this.eventTypeModel.find({ _id : { $in : event.event_type } });
+      event.event_type = eventType.map( el => el.event_type_name );
+    }
     return res;
   }
 
-  async getFollowEvent( _id : string ) : Promise<Event[]>{
+  async getFollowEvent( _id : string ) : Promise<any[]>{
     const res = await this.followerModel.find(
-      { student_id : _id  }
+      { nisit_id : Types.ObjectId(_id)  }
     )
-    const allEventsId = res.map( (elm) => elm._id )
-    const res2 = await this.eventModel.aggregate([
-      { $match : { event_start_time : { $gt : new Date() } } },
-      { $match : { _id : { $in : allEventsId } } },
-    ]).sort({ event_start_time : 1 })
 
-    return res2;
+    const allEventsId = res.map( (elm) => Types.ObjectId(elm.event_id) )
+
+    const feeds = await this.eventModel.find({ _id : { $in : allEventsId } })
+    for ( const feed of feeds ){
+      const eventType = await this.eventTypeModel.find({ _id : { $in : feed.event_type } });
+      feed.event_type = eventType.map( el => el.event_type_name )
+    }
+    return feeds
   }
 
   async getCreateEvent( _id : string ) : Promise<Event[]> {

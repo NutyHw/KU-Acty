@@ -30,22 +30,22 @@ export class EventsController {
   }
 
   @Get(':id/detail')
-  @Role('organizer')
-  async getDetailedEvent(@Param() param : { id : string }){
-    return await this.eventService.getDetailedEvent(param.id)
+  @Role('organizer','nisit')
+  async getDetailedEvent(@Param() param : { id : string }, @Request() req : any){
+    return await this.eventService.getDetailedEvent(param.id, req.user.userId)
   }
 
   @Post('follow')
   @Role('nisit')
   async followEvent(@Body() followDto : FollowDto, @Request() req : any ){
-    followDto.student_id = Types.ObjectId(req.user.userId);
+    followDto.nisit_id = Types.ObjectId(req.user.userId);
     return await this.eventService.followEvent(followDto)
   }
 
   @Post('unfollow')
   @Role('nisit')
   async unFollowEvent(@Body() followDto : FollowDto, @Request() req : any){
-    followDto.student_id = Types.ObjectId(req.user.userId);
+    followDto.nisit_id = Types.ObjectId(req.user.userId);
     return await this.eventService.unFollow(followDto);
   }
 
