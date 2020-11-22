@@ -40,6 +40,7 @@ export class CreateEventDto {
   status : string
 
   @IsString()
+  @IsMongoId()
   @IsNotEmpty()
-  event_type : string
+  event_type : [ string ]
 }

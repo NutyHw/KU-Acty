@@ -20,6 +20,7 @@ export const SelfProfile : React.FC = () => {
   const classes = useStyles();
   const history = useHistory();
   const [ feeds, setFeeds ] = useState<any[]>([]);
+  const [ org, setOrg ] = useState<any>(null);
 
   useEffect( () => {
     const token = localStorage.getItem('token')
@@ -28,6 +29,11 @@ export const SelfProfile : React.FC = () => {
     .then( res => {
       setFeeds(res.data)
     })
+
+    api.get('/organizers/profile')
+    .then( res => {
+      setOrg(res.data);
+    } )
   }, [])
 
   const onClick = ( eventId : string ) => {
@@ -101,13 +107,13 @@ export const SelfProfile : React.FC = () => {
       <OrgHeader />
       <Grid container>
         <Container className={classes.head} maxWidth="xs">
-          <Typography variant="h5" className={classes.headerText}>Insert Org Name here</Typography>
+          <Typography variant="h5" className={classes.headerText}>{ org ? org.organizer_name : null }</Typography>
           <br/>
-          <Typography>ที่ตั้ง: </Typography>
-          <Typography>ช่องทางติดต่อ: </Typography>
+          <Typography>ที่ตั้ง: { org ? org.location  : null }</Typography>
+          <Typography>ช่องทางติดต่อ: { org ? org.contact : null}</Typography>
           <br/>
           <div>
-              <Typography>รายละเอียด: </Typography>
+              <Typography>รายละเอียด: { org ? org.description : null }</Typography>
           </div>
           <br/>
           <Box>

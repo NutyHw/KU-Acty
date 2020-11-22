@@ -25,8 +25,9 @@ export class EventsService {
   }
 
   async createEvent(createEventDto : CreateEventDto) : Promise<Event>{
-    const createEvent = new this.eventModel(createEventDto);
-    return await createEvent.save();
+    createEventDto.event_type = createEventDto.event_type.map( event_type => Types.ObjectId(event_type) )
+    const newEvent = new this.eventModel(createEventDto);
+    return await newEvent.save();
   }
 
   async updateEvent(_id : string, createEventDto : CreateEventDto) : Promise<any> {
@@ -132,6 +133,10 @@ export class EventsService {
     const res = await this.eventModel.find(
       { organizer_id : new Types.ObjectId(_id) }
     )
+    for ( const event of res ){
+      const eventType = await this.eventTypeModel.find({ _id : { $in : event.event_type } });
+      event.event_type = eventType.map( el => el.event_type_name );
+    }
     return res;
   }
 
@@ -146,5 +151,16 @@ export class EventsService {
 
   async findEventTypeById( _id : Types.ObjectId ) : Promise<any> {
     return await this.eventTypeModel.findOne({ _id : _id })
+  }
+
+  async getEventByOrgId( organizer_id : Types.ObjectId ) : Promise<any> {
+    const viewCounts = await this.eventModel.find({ organizer_id : organizer_id }).sort({ view_counts : -1 });
+    const interestCount = await this.eventModel.find({ organizer_id : organizer_id }).sort({ interest_count : -1 });
+
+    return { viewCount, interestCount }
+  }
+
+  async getEventTypeForRule( eventTypeId : [ Types.ObjectId ] ) : Promise<any> { 
+    return await this.eventTypeModel.find({ _id : { $in : eventTypeId } });
   }
 }

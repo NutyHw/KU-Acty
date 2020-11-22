@@ -13,6 +13,7 @@ import { NisitHeader  } from '../header/nisit.header';
 import { useParams } from 'react-router-dom';
 import { theme } from './../theme/theme';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
+import { useHistory } from 'react-router-dom';
 
 //-------------------------------------- Styles Part ----------------------------
 const GreenDesc = withStyles({
@@ -62,6 +63,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const NisitEventDetail : React.FC = () => {
   const classes = useStyles();
+  const history = useHistory();
   const { id } = useParams();
 
   const [ event, setEvent ] = useState();
@@ -90,7 +92,6 @@ export const NisitEventDetail : React.FC = () => {
     } )
   }, [])
 
-  //แก้เป็น interest_count++
   function handleClick() {
     const token = localStorage.getItem('token');
     setAuthToken(token);
@@ -127,9 +128,15 @@ export const NisitEventDetail : React.FC = () => {
                 </Grid>
               
                 <Grid item xs={12}>
+                <Button 
+                    onClick={ () => {
+                      localStorage.setItem('orgId',event.organizerDetail.user)
+                      history.push('/nisit/orgprofile')
+                } }>
                 <Typography variant="h6">
                   ผู้จัดกิจกรรม : { event ? event.organizerDetail.organizer_name : null }
                   </Typography>
+                </Button>
                 </Grid>
 
                 <Grid item xs={6}>

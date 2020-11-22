@@ -41,6 +41,14 @@ export class OrganizersService {
   }
 
   async findEmail( email : string ) : Promise<Organizer> {
-    return await this.organizerModel.findOne({ email : email }).exec()
+    return await this.organizerModel.findOne({ email : email })
+  }
+
+  async eventStat( organizer_id : string ) : Promise<any> {
+    return await this.eventsService.getEventByOrgId(Types.ObjectId(organizer_id))
+  }
+
+  async getProfile( orgainzer_id : string ) : Promise<any> {
+    return await this.organizerModel.findOne({ user : Types.ObjectId(orgainzer_id) })
   }
 }

@@ -1,4 +1,4 @@
-import { Controller, Post, Param , UseInterceptors, UploadedFile, Body, UseGuards, Req, Get } from '@nestjs/common';
+import { Controller, Post, Param , UseInterceptors, UploadedFile, Body, UseGuards, Request, Get } from '@nestjs/common';
 import { OrganizerDto } from './dto/organizers.dto';
 import { OrganizersService } from './organizers.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -25,7 +25,36 @@ export class OrganizersController {
   @Get('/feed')
   @UseGuards(JwtAuthGuard,RolesGuard)
   @Role('organizer')
-  async feed( @Req() req ) : Promise<any> {
+  async feed( @Request() req : any ) : Promise<any> {
     return await this.organizerService.feed(req.user.userId);
+  }
+
+  @Get('/stat')
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role('organizer')
+  async stat( @Request() req : any ) : Promise<any> {
+    return await this.organizerService.eventStat(req.user.userId)
+  }
+
+  @Get('/profile')
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role('organizer')
+  async selfProfile( @Request() req : any ) : Promise<any> {
+    return await this.organizerService.getProfile(req.user.userId)
+  }
+
+  @Get(':id/profile')
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role('nisit','organizer')
+  async profile( @Param() organizer_id : any ) : Promise<any>{
+    return await this.organizerService.getProfile(organizer_id.id)
+  }
+
+  @Get(':id/feed')
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role('nisit','organizer')
+  async viewFeed( @Param() id : any ) : Promise<any> {
+    console.log(id)
+    return await this.organizerService.feed(id.id);
   }
 }
