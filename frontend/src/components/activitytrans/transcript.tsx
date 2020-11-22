@@ -5,9 +5,11 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ThemeProvider from '@material-ui/styles/ThemeProvider';
 import { useStyles } from './style';
 import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import { NisitHeader } from '../header/nisit.header';
+import { theme } from './../theme/theme';
 
 export const NisitTranscript : React.FC = () => {
   const classes = useStyles();
@@ -70,9 +72,14 @@ export const NisitTranscript : React.FC = () => {
   }
 
   return (
+    <ThemeProvider theme={theme}>
     <div className={classes.root}>
     <NisitHeader />
+    <Typography align="center" className={classes.textHead}>
+      จำนวนกิจกรรมทั้งหมด {transcript ? transcript.eventCount : null} กิจกรรม {transcript ? transcript.sumHours : null} ชั่วโมง
+    </Typography>
       { render() }
     </div>
+    </ThemeProvider>
   );
 }
