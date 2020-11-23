@@ -91,9 +91,6 @@ export const OrgEventDetail : React.FC = () => {
     } )
   }, [])
   
-  useEffect( () => {
-    console.log(event)
-  }, [ event ])
   return (
       <Container component="main" maxWidth="md">
         <OrgHeader/>

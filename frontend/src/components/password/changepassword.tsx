@@ -70,8 +70,6 @@ export const ChangePassword : React.FC = () => {
   const { register, handleSubmit, setValue, errors } = useForm<ChangePassword>();
 
   const onSubmit = async ( changePassword : ChangePassword ) => {
-    //console.log(changePassword);
-    //await ChangePasswordSchema.validate(changePassword);
     const token = localStorage.getItem('token');
     setAuthToken(token);
     const res = await api.post('/auth/change-password',changePassword);
@@ -81,9 +79,6 @@ export const ChangePassword : React.FC = () => {
     })
   }
 
-  useEffect( () => {
-    console.log('test');
-  } , [])
   return (
     <ThemeProvider theme={theme}>
       <OrgHeader/>

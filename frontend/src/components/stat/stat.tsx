@@ -57,10 +57,6 @@ export const StatEvent : React.FC = () => {
     } )
   }, [])
 
-  useEffect( () => {
-    console.log(eventDetail)
-  }, [ eventDetail ])
-
   return (
     <ThemeProvider theme={theme}>
       <OrgHeader/>

@@ -68,7 +68,6 @@ export const ForgotPassword : React.FC = () => {
     const { register, handleSubmit, setValue, errors } = useForm<User>();
   
     const onSubmit = async ( user : User ) => {
-      console.log(user)
       api.post('/auth/reset-password', user )
       .catch( err => {
         alert(err);

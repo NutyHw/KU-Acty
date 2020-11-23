@@ -45,7 +45,7 @@ export class NisitsController {
   }
 
   @Get('transcriptRule')
-  @Role('organizer')
+  @Role('organizer','nisit')
   async getTranscriptRule() : Promise<any> {
     return await this.nisitService.getTranscriptRule();
   }

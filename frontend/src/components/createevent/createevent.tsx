@@ -77,7 +77,6 @@ export const CreateEvent : React.FC = () => {
   const onSubmit = async ( data : any ) => {
     try{
       const { event_start_date, event_end_date, event_start_time, event_end_time, event_type,  ...creatEvent } = data;
-      console.log(creatEvent)
       creatEvent.event_start_time = new Date(event_start_date + ' ' + event_start_time).toISOString()
       creatEvent.event_end_time = new Date(event_end_date + ' ' + event_end_time).toISOString()
       creatEvent.event_type = eventTypeName.map( name => mapper[name] )

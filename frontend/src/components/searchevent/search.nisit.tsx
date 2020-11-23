@@ -21,15 +21,6 @@ import StarIcon from '@material-ui/icons/Star';
 import { useHistory  } from 'react-router-dom';
 
 
-const typenames = [
-  'กิจกรรมมหาวิทยาลัย',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาคุณธรรม จริยธรรม',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะการคิดและการเรียนรู้',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคลและการสื่อสาร',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาสุขภาพ',
-  'กิจกรรมเพื่อสังคม',
-];
-
 export function SearchReslt( props : any ) {
   const history = useHistory();
   const classes = useStyles();
@@ -37,7 +28,7 @@ export function SearchReslt( props : any ) {
   const renderResult = () => {
     return props.searchResult.map( ( el : any ) => {
       const startTimeDate = new Date(el.event_start_time);
-      const startTime = startTimeDate.getDate() + '/' + startTimeDate.getMonth() + '/' + startTimeDate.getFullYear();
+      const startTime = startTimeDate.getDate() + '/' + startTimeDate.getMonth() + '/' + (startTimeDate.getFullYear() + 543);
       return <React.Fragment>
       <Box 
       className={classes.actybox}

@@ -1,13 +1,11 @@
 version: "3.7"
 services:
   frontend:
-    container_name : react-docker
+    container_name : frontend-prod
     build:
       context: .
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
     ports:
-      - 8080:8080
-    command: npm start
-    stdin_open: true
+      - 8080:80

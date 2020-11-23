@@ -44,12 +44,17 @@ export const Profile_OrgView : React.FC = () => {
 
   const renderFeed = () => {
     return feeds.map( el => {
-      let startTime = new Date(el.event_start_time)
+      let startTime = new Date(el.event_start_time);
+      let updateTime = new Date(el.updated_at);
       var dd = String(startTime.getDate()).padStart(2, '0');
       var mm = String(startTime.getMonth() + 1).padStart(2, '0');
-      var yyyy = startTime.getFullYear().toString();
+      var yyyy = (startTime.getFullYear() + 543).toString();
       const formatDate = dd + '/' + mm + '/' + yyyy
       const formatTime = startTime.getHours().toString().padStart(2, '0') + ':' + startTime.getMinutes().toString().padStart(2,'0')
+      dd = String(updateTime.getDate()).padStart(2, '0');
+      mm = String(updateTime.getMonth() + 1).padStart(2, '0');
+      yyyy = (updateTime.getFullYear() + 543).toString();
+      const formatUpdate = dd + '/' + mm + '/' + yyyy
 
       return  <Box boxShadow={5}><Grid container className={classes.eventbox} justify="space-between">
         <Grid item xs={6} className={classes.paper}>
@@ -88,7 +93,7 @@ export const Profile_OrgView : React.FC = () => {
             </Button>
           </Link>
           <br/><br/>
-          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
+          <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { formatUpdate }</Typography>
           <br/>
           <Grid item>
             <Typography style={{display: 'flex', alignItems: 'center'}}>
