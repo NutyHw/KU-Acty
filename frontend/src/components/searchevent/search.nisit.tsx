@@ -1,3 +1,4 @@
+//@ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { NisitHeader } from '../header/nisit.header';
 import Button from '@material-ui/core/Button';
@@ -95,6 +96,8 @@ export const SearchEvent : React.FC = () => {
   const [ startDate, setStartDate ] = useState(null);
   const [ endDate, setEndDate ] = useState(null);
   const [ searchResult, setSearchResult ] = useState<any[]>([]);
+  const [ allType, setAllType ] = useState<any[]>([]);
+  const [ mapper, setMapper ] = useState<any>([]);
   
   const searchOnChange = ( e: any ) => {
     setEventName(e.target.value);
@@ -113,13 +116,23 @@ export const SearchEvent : React.FC = () => {
   }
 
   useEffect( () => {
-    console.log(searchResult);
-  }, [ searchResult ])
+    const token = localStorage.getItem('token');
+    setAuthToken(token);
+    api.get('/nisits/transcriptRule')
+    .then( res => {
+      setAllType(res.data)
+      const res2 = {}
+      for ( const type of res.data ){
+        res2[type.event_type_name] = type._id
+      }
+      setMapper(res2)
+    })
+  }, [ ])
 
   const search = async () => {
     const payload = {
       event_name : eventName,
-      event_type : eventType,
+      event_type : eventType.map( name => mapper[name] ),
       event_start_time : startDate,
       event_end_time : endDate
     }
@@ -192,7 +205,7 @@ export const SearchEvent : React.FC = () => {
             <Autocomplete
               multiple
               id="type"
-              options={typenames}
+              options={ allType.map( elm => elm.event_type_name ) }
               filterSelectedOptions
               renderInput={(params) => (<TextField {...params} label="เลือกประเภทของกิจกรรม" placeholder="ประเภทของกิจกรรม" />)}
               onChange = { eventTypeChange }

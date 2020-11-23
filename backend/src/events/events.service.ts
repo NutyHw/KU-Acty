@@ -100,7 +100,7 @@ export class EventsService {
   async searchEvent( queryDto : QueryDto ) : Promise<any[]> {
     const pipeline = new Array<any>();
 
-    pipeline.push({ $match : { 'status' : 'active' } })
+    pipeline.push({ $match : { 'status' : 'เตรียมจัดกิจกรรม' } })
 
     if ( queryDto.event_name != '' ){
       pipeline.push({ $match : { event_name : { '$regex' : new RegExp(queryDto.event_name) } }})
@@ -111,11 +111,11 @@ export class EventsService {
     }
 
     if ( queryDto.event_end_time){
-      pipeline.push({ $match : { event_start_time : { $lte :  new Date(queryDto.event_end_time) } }})
+      pipeline.push({ $match : { event_end_time : { $lte :  new Date(queryDto.event_end_time) } }})
     }
 
     if ( queryDto.event_type.length != 0 ){
-      pipeline.push({ $match : { event_type : { $elemMatch : { $in : queryDto.event_type } } } } )
+      pipeline.push({ $match : { event_type : { $elemMatch : { $in : queryDto.event_type.map( id => Types.ObjectId(id) ) } } } } )
     }
 
 

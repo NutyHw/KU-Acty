@@ -1,6 +1,6 @@
+//@ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { OrgHeader } from '../header/org.header';
-// material ui import
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -18,24 +18,18 @@ import { api, setAuthToken } from '../../api/jsonPlaceholder.instance';
 import Chip from '@material-ui/core/Chip';
 import { theme } from './../theme/theme';
 import StarIcon from '@material-ui/icons/Star';
+import { useHistory  } from 'react-router-dom';
 
-
-const typenames = [
-  'กิจกรรมมหาวิทยาลัย',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาคุณธรรม จริยธรรม',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะการคิดและการเรียนรู้',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาทักษะเสริมสร้างความสัมพันธ์ระหว่างบุคคลและการสื่อสาร',
-  'กิจกรรมเพื่อเสริมสร้างสมรรถนะ ด้านพัฒนาสุขภาพ',
-  'กิจกรรมเพื่อสังคม',
-];
 
 export function SearchReslt( props : any ) {
+  const history = useHistory();
   const classes = useStyles();
 
   const renderResult = () => {
     return props.searchResult.map( ( el : any ) => {
+      const startTimeDate = new Date(el.event_start_time);
+      const startTime = startTimeDate.getDate() + '/' + startTimeDate.getMonth() + '/' + startTimeDate.getFullYear();
       return <React.Fragment>
-      
       <Box 
       className={classes.actybox}
       boxShadow={10}
@@ -49,9 +43,9 @@ export function SearchReslt( props : any ) {
             <Box>
               <Typography component="span" variant="body2" color="textPrimary">
                 <Typography variant="h6" align="left" color="textPrimary">{ el.event_name }</Typography>
-                สถานที่จัด : {el.place} <br/>
-                เริ่มจัดกิจกรรม : <Chip size="small" label={el.start_date}/><br/>
-                {'_________________________________________________________________________________________'}
+                สถานที่จัด : {el.place}<br/>
+                เริ่มจัดกิจกรรม : <Chip size="small" label={startTime}/><br/>
+                {'______________________________________________________________________________________'}
               </Typography>
             </Box>
           </Grid>
@@ -60,11 +54,16 @@ export function SearchReslt( props : any ) {
             <Button 
               type="submit" 
               variant="contained" 
-              color="primary" className={
-              classes.submit} 
-              href={ '/org/eventdetail/' + el._id } 
+              color="primary" 
+              className={classes.submit}
+              onClick={ () => { 
+                history.push({
+                  pathname: '/nisit/eventdetail/' + el._id
+                })
+              } }
             >
-              <KeyboardArrowRightIcon/>รายละเอียด</Button><br/><br/>
+            <KeyboardArrowRightIcon/>รายละเอียด
+            </Button><br/><br/>
             <VisibilityIcon/> { el.view_counts } <StarIcon /> { el.interest_count }
             </Box>
           </Grid>
@@ -88,6 +87,8 @@ export const SearchEventOrg : React.FC = () => {
   const [ startDate, setStartDate ] = useState(null);
   const [ endDate, setEndDate ] = useState(null);
   const [ searchResult, setSearchResult ] = useState<any[]>([]);
+  const [ allType, setAllType ] = useState<any[]>([]);
+  const [ mapper, setMapper ] = useState<any>([]);
   
   const searchOnChange = ( e: any ) => {
     setEventName(e.target.value);
@@ -106,13 +107,23 @@ export const SearchEventOrg : React.FC = () => {
   }
 
   useEffect( () => {
-    console.log(searchResult);
-    
-  }, [ searchResult ])
+    const token = localStorage.getItem('token');
+    setAuthToken(token);
+    api.get('/nisits/transcriptRule')
+    .then( res => {
+      setAllType(res.data)
+      const res2 = {}
+      for ( const type of res.data ){
+        res2[type.event_type_name] = type._id
+      }
+      setMapper(res2)
+    })
+  }, [ ])
+
   const search = async () => {
     const payload = {
       event_name : eventName,
-      event_type : eventType,
+      event_type : eventType.map( name => mapper[name] ),
       event_start_time : startDate,
       event_end_time : endDate
     }
@@ -185,7 +196,7 @@ export const SearchEventOrg : React.FC = () => {
             <Autocomplete
               multiple
               id="type"
-              options={typenames}
+              options={ allType.map( elm => elm.event_type_name ) }
               filterSelectedOptions
               renderInput={(params) => (<TextField {...params} label="เลือกประเภทของกิจกรรม" placeholder="ประเภทของกิจกรรม" />)}
               onChange = { eventTypeChange }
