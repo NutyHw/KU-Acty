@@ -1,4 +1,4 @@
-import { Controller, Post, Param , UseInterceptors, UploadedFile, Body, UseGuards, Request, Get } from '@nestjs/common';
+import { Controller, Post, Param , UseInterceptors, UploadedFile, Body, UseGuards, Request, Get, Put } from '@nestjs/common';
 import { OrganizerDto } from './dto/organizers.dto';
 import { OrganizersService } from './organizers.service';
 import { FileInterceptor } from '@nestjs/platform-express';
@@ -6,6 +6,7 @@ import { Organizer } from './schema/organizer.schema';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { RolesGuard } from '../auth/role.guard';
 import { Role } from '../auth/role.decorator';
+import { Types } from 'mongoose';
 
 @Controller('organizers')
 export class OrganizersController {
@@ -56,5 +57,13 @@ export class OrganizersController {
   async viewFeed( @Param() id : any ) : Promise<any> {
     console.log(id)
     return await this.organizerService.feed(id.id);
+  }
+
+  @Put('/profile')
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Role('organizer')
+  async updateProfile( @Body() organizerDto : OrganizerDto, @Request() req : any ) : Promise<any> {
+    organizerDto.user = Types.ObjectId(req.user.userId);
+    return await this.organizerService.editProfile(organizerDto)
   }
 }

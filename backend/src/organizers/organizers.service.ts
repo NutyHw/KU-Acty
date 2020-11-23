@@ -51,4 +51,12 @@ export class OrganizersService {
   async getProfile( orgainzer_id : string ) : Promise<Organizer> {
     return await this.organizerModel.findOne({ user : Types.ObjectId(orgainzer_id) })
   }
+
+  async editProfile( organizerDto : OrganizerDto ) : Promise<any> {
+    const json = JSON.stringify(organizerDto);
+    const updated = JSON.parse(json);
+    updated.user = Types.ObjectId(updated.user);
+    console.log(updated)
+    return await this.organizerModel.updateOne({ user : organizerDto.user }, { $set : updated })
+  }
 }

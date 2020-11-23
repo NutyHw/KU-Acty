@@ -45,7 +45,7 @@ export const EditProfile : React.FC = () => {
           <Typography variant="h6" align="center" color="textPrimary">
             แก้ไขรายละเอียดองค์กร
           </Typography>  
-      <form className={classes.login} noValidate //onSubmit={handleSubmit(onSubmit)} 
+      <form className={classes.login} noValidate onSubmit={handleSubmit(onSubmit)} 
       >
       <Grid container spacing={1}>
               <Grid item xs={12}>
@@ -142,7 +142,6 @@ export const EditProfile : React.FC = () => {
                   fullWidth
                   variant="contained"
                   color="primary"
-                  
                 >
                   ยืนยัน
                 </Button>

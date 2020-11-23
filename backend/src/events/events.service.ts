@@ -170,7 +170,7 @@ export class EventsService {
     const viewCounts = await this.eventModel.find({ organizer_id : organizer_id }).sort({ view_counts : -1 });
     const interestCount = await this.eventModel.find({ organizer_id : organizer_id }).sort({ interest_count : -1 });
 
-    return { viewCount, interestCount }
+    return { viewCounts, interestCount }
   }
 
   async getEventTypeForRule( eventTypeId : [ Types.ObjectId ] ) : Promise<any> { 
