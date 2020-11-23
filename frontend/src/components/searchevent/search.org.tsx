@@ -58,13 +58,15 @@ export function SearchReslt( props : any ) {
               className={classes.submit}
               onClick={ () => { 
                 history.push({
-                  pathname: '/nisit/eventdetail/' + el._id
+                  pathname: '/org/eventdetail/' + el._id
                 })
               } }
             >
             <KeyboardArrowRightIcon/>รายละเอียด
             </Button><br/><br/>
-            <VisibilityIcon/> { el.view_counts } <StarIcon /> { el.interest_count }
+            <Typography style={{display: 'flex', alignItems: 'center'}}>
+              <VisibilityIcon/><Box m={0.25} />{ el.view_counts }<Box m={1} /><StarIcon /><Box m={0.25} /> { el.interest_count }
+            </Typography>
             </Box>
           </Grid>
           <Typography component="span" variant="body2" color="textPrimary">
