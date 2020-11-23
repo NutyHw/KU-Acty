@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import { withStyles} from '@material-ui/core/styles';
@@ -205,10 +206,10 @@ export const NisitEventDetail : React.FC = () => {
                 <Grid item xs>
                   <Button variant="contained" color={ isFollow ? "primary" : "default"} onClick={handleClick}>{ isFollow ? "คุณสนใจกิจกรรมนี้" : "เพิ่มกิจกรรมที่สนใจ"}</Button><br/><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <VisibilityIcon />  { event ? event.eventDetail.view_counts : null }
+                    <VisibilityIcon /><Box m={0.25} />  { event ? event.eventDetail.view_counts : null }
                   </Typography><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <StarIcon className={ isFollow ? classes.yell : classes.menu} color={ isFollow ? "primary" : "disabled"}/>  
+                    <StarIcon className={ isFollow ? classes.yell : classes.menu} color={ isFollow ? "primary" : "disabled"}/><Box m={0.25} />  
                       { event ? event.eventDetail.interest_count : null }
                   </Typography>
                 </Grid>

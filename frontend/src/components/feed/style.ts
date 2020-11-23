@@ -38,6 +38,10 @@ export const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: 8,
   },
+
+  yell: {
+    color: '#ffc107',
+  },
 }));
 
 //-------------------------------------- End Styles Part --------------------------

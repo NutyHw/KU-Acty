@@ -68,17 +68,17 @@ export const StatEvent : React.FC = () => {
       <Container component="main" maxWidth="md">
           <CssBaseline />   
           <Typography variant="h6" align="center" color="textPrimary">
-            ข้อมูลเชิงสถิติ:
+            สถิติกิจกรรม
           </Typography>  
           <Typography align="left" color="textPrimary">
-            ชื่อกิจกรรม: { eventDetail ? eventDetail.eventDetail.event_name : null }<br />
-            ผู้จัดกิจกรรม: { eventDetail ? eventDetail.organizerDetail.organizer_name : null }
+            ชื่อกิจกรรม : { eventDetail ? eventDetail.eventDetail.event_name : null }<br />
+            ผู้จัดกิจกรรม : { eventDetail ? eventDetail.organizerDetail.organizer_name : null }
           </Typography>
           <Typography  align="left" color="textPrimary">
             <Grid container spacing={1}>
-              <Grid item xs={4}>วันที่จัด: { eventDetail ? eventDetail.eventDetail.event_start_date : null }</Grid>
-            <Grid item xs={4}>เวลาจัด:{ eventDetail ? eventDetail.eventDetail.event_start_clock : null}</Grid>
-            <Grid item xs={4}>จำนวนชั่วโมง:{ eventDetail ? eventDetail.eventDetail.benefit_hour : null }</Grid>
+              <Grid item xs={4}>วันที่จัด : { eventDetail ? eventDetail.eventDetail.event_start_date : null }</Grid>
+            <Grid item xs={4}>เวลาที่จัด : { eventDetail ? eventDetail.eventDetail.event_start_clock : null}</Grid>
+            <Grid item xs={4}>จำนวนชั่วโมง : { eventDetail ? eventDetail.eventDetail.benefit_hour : null }</Grid>
             </Grid>
           </Typography>
           <Typography  align="left" color="textPrimary">

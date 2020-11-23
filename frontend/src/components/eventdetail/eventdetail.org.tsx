@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
@@ -184,10 +185,10 @@ export const OrgEventDetail : React.FC = () => {
               <Grid container>
                 <Grid item xs>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <VisibilityIcon /> { event ? event.eventDetail.view_counts : null }
+                    <VisibilityIcon /><Box m={0.25} /> { event ? event.eventDetail.view_counts : null }
                   </Typography><br/>
                   <Typography style={{display: 'flex', alignItems: 'center'}}>
-                    <StarIcon/>{ event ? event.eventDetail.interest_count : null }
+                    <StarIcon/><Box m={0.25} />{ event ? event.eventDetail.interest_count : null }
                   </Typography>
                 </Grid>
               </Grid>

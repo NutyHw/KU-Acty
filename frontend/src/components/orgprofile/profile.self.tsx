@@ -91,9 +91,9 @@ export const SelfProfile : React.FC = () => {
           <Typography className={classes.secondaryHeading}>แก้ไขล่าสุด { el.updated_at }</Typography>
           <br/>
           <Grid item>
-            <Typography>
-              <VisibilityIcon/> { el.view_counts }
-              <StarIcon className={classes.yell}/> { el.interest_count }
+            <Typography style={{display: 'flex', alignItems: 'center'}}>
+              <VisibilityIcon/><Box m={0.25} /> { el.view_counts }<Box m={1} />
+              <StarIcon/><Box m={0.25} /> { el.interest_count }
             </Typography>
           </Grid>
         </Grid>

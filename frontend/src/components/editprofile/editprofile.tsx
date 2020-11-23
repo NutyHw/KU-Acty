@@ -29,7 +29,7 @@ export const EditProfile : React.FC = () => {
       setAuthToken(token);
       await api.put('/organizers/profile', org );
       history.push({
-        pathname : '/org/home'
+        pathname : '/org/selfprofile'
       })
     } catch( err ) {
       throw new Error(err)

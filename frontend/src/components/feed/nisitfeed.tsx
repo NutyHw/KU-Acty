@@ -99,8 +99,8 @@ export const NisitFeed : React.FC = () => {
           <br/>
           <Grid item>
             <Typography style={{display: 'flex', alignItems: 'center'}}>
-              <VisibilityIcon/> { el.view_counts }
-              <StarIcon/> { el.interest_count }
+              <VisibilityIcon/> <Box m={0.25} />{ el.view_counts }<Box m={1} />
+              <StarIcon className={classes.yell} /><Box m={0.25} /> { el.interest_count }
             </Typography>
           </Grid>
         </Grid>
