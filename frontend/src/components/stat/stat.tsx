@@ -38,9 +38,22 @@ export const StatEvent : React.FC = () => {
       setFollower(res.data.follower);
     } )
     
+    function padDigits (number : number, digits : number) {
+      return Array(Math.max(digits - String(number).length + 1, 0)).join('0') + number;
+    }
+
     api.get('/events/' + eventId + '/detail')
     .then( res => {
-      setEventDetail(res.data);
+      const eventData = res.data
+      const startTime = new Date(eventData.eventDetail.event_start_time)
+      const endTime = new Date(eventData.eventDetail.event_end_time)
+
+      eventData.eventDetail.event_start_date = padDigits(startTime.getDate(),2) + '/' + padDigits(startTime.getMonth(),2) + '/' + ( startTime.getFullYear() + 543 )
+      eventData.eventDetail.event_start_clock = padDigits(startTime.getHours(),2) + ':' + padDigits(startTime.getMinutes(),2)
+
+      eventData.eventDetail.event_end_date = padDigits(endTime.getDate(),2) + '/' + padDigits(endTime.getMonth(),2) + '/' + ( endTime.getFullYear() + 543 )
+      eventData.eventDetail.event_end_clock = padDigits(endTime.getHours(),2) + ':' + padDigits(endTime.getMinutes(),2)
+      setEventDetail(eventData);
     } )
   }, [])
 
@@ -63,8 +76,8 @@ export const StatEvent : React.FC = () => {
           </Typography>
           <Typography  align="left" color="textPrimary">
             <Grid container spacing={1}>
-              <Grid item xs={4}>วันที่จัด: { eventDetail ? eventDetail.eventDetail.event_start_time : null }</Grid>
-            <Grid item xs={4}>เวลาจัด:{ eventDetail ? eventDetail.eventDetail.event_start_time : null}</Grid>
+              <Grid item xs={4}>วันที่จัด: { eventDetail ? eventDetail.eventDetail.event_start_date : null }</Grid>
+            <Grid item xs={4}>เวลาจัด:{ eventDetail ? eventDetail.eventDetail.event_start_clock : null}</Grid>
             <Grid item xs={4}>จำนวนชั่วโมง:{ eventDetail ? eventDetail.eventDetail.benefit_hour : null }</Grid>
             </Grid>
           </Typography>

@@ -37,8 +37,9 @@ export class EventsService {
   async updateEvent(_id : string, createEventDto : CreateEventDto) : Promise<any> {
     const temp = JSON.stringify(createEventDto);
     const updated = JSON.parse(temp);
+    updated.event_type = updated.event_type.map( elm => Types.ObjectId(elm) )
     const res = await this.eventModel.updateOne(
-        { _id : new Types.ObjectId(_id) },
+        { _id : Types.ObjectId(_id) },
         { '$set' : updated }
       )
     return res;

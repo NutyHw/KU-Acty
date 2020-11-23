@@ -1,8 +1,7 @@
 //@ts-nocheck
 import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from 'react-hook-form';
-import { useHistory } from 'react-router-dom';
-// material ui import
+import { useHistory, useParams } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -49,10 +48,10 @@ export function UploadButtons() {
 }
 
 export const EditEvent : React.FC = () => {
+  const { id } = useParams();
   const classes = useStyles();
   const history = useHistory()
   const [ eventTypeName, setEventTypeName ] = useState<string[]>([]);
-  const [ status, setStatus ] = useState<string[]>([]);
   const [ allType, setAllType ] = useState<any[]>([]);
   const [ mapper, setMapper ] = useState<any>([]);
   const { register, handleSubmit, control } = useForm();
@@ -75,20 +74,17 @@ export const EditEvent : React.FC = () => {
     setEventTypeName(event.target.value as string[]);
   };
 
-  const handleChangeStatus = (event : any) => {
-    setStatus(event.target.value as string[]);
-  };
   const onSubmit = async ( data : any ) => {
     try{
       const { event_start_date, event_end_date, event_start_time, event_end_time, event_type, status,  ...creatEvent } = data;
-      console.log(creatEvent)
       creatEvent.event_start_time = new Date(event_start_date + ' ' + event_start_time).toISOString()
       creatEvent.event_end_time = new Date(event_end_date + ' ' + event_end_time).toISOString()
       creatEvent.event_type = eventTypeName.map( name => mapper[name] )
+      creatEvent.status = status;
 
       const token = localStorage.getItem('token');
       setAuthToken(token);
-      await api.put('/events/',creatEvent)
+      await api.put('/events/' + id,creatEvent)
       history.push({
         pathname : '/org/home'
       })
@@ -131,17 +127,19 @@ export const EditEvent : React.FC = () => {
                   <InputLabel>สถานะกิจกรรม</InputLabel>
                   <Select
                     native
-                    onChange={ handleChangeStatus }
+                    //onChange={ handleChangeStatus }
                     label="สถานะกิจกรรม"
+                    labelId="status"
                     id="status"
                     color="primary"
                     name="status"
+                    inputRef = { register({ required : true }) }
                   >
                     <option aria-label="None" value="" />
-                    <option value={'prepare'}>เตรียมจัดกิจกรรม</option>
-                    <option value={'open'}>เปิดรับสมัคร</option>
-                    <option value={'close'}>ปิดรับสมัคร</option>
-                    <option value={'cancel'}>ยกเลิกกิจกรรม</option>
+                    <option value={'เตรียมจัดกิจกรรม'}>เตรียมจัดกิจกรรม</option>
+                    <option value={'เปิดรับสมัคร'}>เปิดรับสมัคร</option>
+                    <option value={'ปิดรับสมัคร'}>ปิดรับสมัคร</option>
+                    <option value={'ยกเลิกกิจกรรม'}>ยกเลิกกิจกรรม</option>
                   </Select>
                 </FormControl>
                 </Grid>
